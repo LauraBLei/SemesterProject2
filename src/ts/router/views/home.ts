@@ -1,3 +1,9 @@
 import { MakeHeader } from '../../ui/global/header';
+import { authGuard } from '../../utilities/authGuard';
 
-MakeHeader();
+const runPage = () => {
+  MakeHeader();
+  authGuard();
+};
+
+runPage();
