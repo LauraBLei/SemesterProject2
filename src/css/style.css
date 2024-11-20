@@ -3,7 +3,11 @@
 @tailwind utilities;
 
 body {
-  @apply flex gap-10 h-dvh;
+  @apply flex gap-10 h-dvh max-w-full;
+}
+
+main {
+  @apply flex flex-col w-full items-center gap-10;
 }
 
 header {
@@ -26,7 +30,7 @@ svg {
 }
 
 a {
-  @apply hover:bg-white/50 px-4 py-2;
+  @apply hover:bg-white/50 px-4 py-2 font-semibold;
 }
 
 .rotate svg {

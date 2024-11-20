@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body>
+    <header></header>
+    <main class="flex flex-col gap-10">
+      <h1 class="text-4xl font-bold mt-4">Log in</h1>
+      <div>
+        <form class="flex flex-col items-center gap-5" id="login" name="login">
+          <div
+            class="flex flex-col items-center gap-5 border-2 border-black px-20 py-10"
+          >
+            <input
+              class="border-2 border-black px-4 py-2"
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Email..."
+              required
+            />
+            <input
+              class="border-2 border-black px-4 py-2"
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Password..."
+              required
+            />
+          </div>
+          <div class="flex flex-col gap-3">
+            <button class="text-2xl font-bold">Login</button>
+            <a href="/auth/register/">Register</a>
+          </div>
+        </form>
+      </div>
+    </main>
+  </body>
+</html>

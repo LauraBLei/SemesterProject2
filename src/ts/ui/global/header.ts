@@ -1,6 +1,16 @@
 import { iconPaths } from '../../utilities/enums';
 import { CreateElement, Icon } from '../../utilities/components';
 
+export const MakeHeader = () => {
+  const loggedIn = localStorage.getItem('token');
+
+  if (loggedIn) {
+    LoggedIn();
+  } else {
+    LoggedOut();
+  }
+};
+
 const toggleSideBar = (sidebarID: string, btn: string) => {
   const toggleButton = document.getElementById(btn);
   const sidebar = document.getElementById(sidebarID);
@@ -9,7 +19,7 @@ const toggleSideBar = (sidebarID: string, btn: string) => {
   toggleButton?.classList.toggle('rotate');
 };
 
-export const Header = () => {
+const LoggedIn = () => {
   const header = document.querySelector('header');
   const sidebar = CreateElement({ element: 'nav', id: 'sidebar' });
   const button = CreateElement({
@@ -73,4 +83,47 @@ export const Header = () => {
 
   header?.appendChild(sidebar);
   sidebar.append(button, profile, home, myBids, createListing, logOut, search);
+};
+
+const LoggedOut = () => {
+  const header = document.querySelector('header');
+  const sidebar = CreateElement({
+    element: 'nav',
+    id: 'sidebar',
+    styling: 'pt-5',
+  });
+
+  const button = CreateElement({
+    element: 'button',
+    id: 'toggle-btn',
+    styling: 'place-self-center',
+  });
+
+  button.innerHTML = `
+                ${Icon(iconPaths.doubleArrows)}
+
+  `;
+  button.addEventListener('click', () =>
+    toggleSideBar('sidebar', 'toggle-btn')
+  );
+
+  const auth = CreateElement({
+    element: 'a',
+    href: '/auth/',
+    styling: 'flex gap-4',
+  });
+  auth.innerHTML = `${Icon(iconPaths.profile)}
+  <span id="navSpan">Login</span> `;
+
+  const home = CreateElement({
+    element: 'a',
+    href: '/',
+    styling: 'flex gap-4',
+  });
+
+  home.innerHTML = `${Icon(iconPaths.home)}
+  <span id="navSpan">Home</span> `;
+
+  header?.appendChild(sidebar);
+  sidebar.append(button, auth, home);
 };
