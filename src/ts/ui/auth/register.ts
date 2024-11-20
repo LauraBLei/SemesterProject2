@@ -18,6 +18,17 @@ export async function onRegister(event: any) {
     email: formData.get('email') ?? '',
     password: formData.get('password') ?? '',
   };
+  const email = (formData.get('email') ?? '').toString();
+
+  if (!email.endsWith('@stud.noroff.no')) {
+    const errorMessage = document.getElementById(
+      'error-message-register'
+    ) as HTMLDivElement;
+    if (errorMessage) {
+      errorMessage.classList.remove('hidden');
+    }
+    return;
+  }
 
   register(registerData);
 }
