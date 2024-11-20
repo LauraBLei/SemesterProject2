@@ -17,7 +17,9 @@ export async function login({ email, password }: loginForm) {
     email: email,
     password: password,
   };
-
+  const errorMessage = document.getElementById(
+    'error-message'
+  ) as HTMLDivElement;
   try {
     const response = await fetch(API.AUTH_LOGIN, {
       method: 'POST',
@@ -30,8 +32,10 @@ export async function login({ email, password }: loginForm) {
       localStorage.setItem('userInfo', JSON.stringify(data.data));
       localStorage.setItem('token', JSON.stringify(data.data.accessToken));
       window.location.href = '/';
+    } else {
+      if (errorMessage) errorMessage.classList.remove('hidden');
     }
   } catch (error) {
-    alert('Something went wrong trying to login');
+    if (errorMessage) errorMessage.classList.remove('hidden');
   }
 }
