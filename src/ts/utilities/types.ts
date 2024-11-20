@@ -3,6 +3,12 @@ export type loginForm = {
   password?: FormDataEntryValue;
 };
 
+export type registerForm = {
+  name?: FormDataEntryValue;
+  email?: FormDataEntryValue;
+  password?: FormDataEntryValue;
+};
+
 export type ElementHelper = {
   element: any;
   id?: string;

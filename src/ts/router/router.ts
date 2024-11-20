@@ -13,14 +13,8 @@ export default async function router(pathname = window.location.pathname) {
     case '/auth/register/':
       await import('./views/register.ts');
       break;
-    case '/post/':
+    case '/listing/':
       await import('./views/listing.ts');
-      break;
-    case '/post/edit/':
-      await import('./views/listingEdit.ts');
-      break;
-    case '/post/create/':
-      await import('./views/listingCreate.ts');
       break;
     case '/profile/':
       await import('./views/profile.ts');
