@@ -1,5 +1,6 @@
 import { iconPaths } from '../../utilities/enums';
 import { CreateElement, Icon } from '../../utilities/components';
+import { onLogout } from '../auth/logout';
 
 export const MakeHeader = () => {
   const loggedIn = localStorage.getItem('token');
@@ -37,12 +38,12 @@ const LoggedIn = () => {
 
   const profile = CreateElement({
     element: 'a',
-    styling: 'flex gap-2 items-center',
+    styling: 'flex gap-2 items-center buttonEffect',
     href: '/profile/',
   });
 
   profile.innerHTML = `
-        <div class="w-[40px] h-[40px] bg-gray-500 rounded-full">
+        <div class="w-[40px] h-[40px] bg-gray-500 rounded-full buttonEffect">
             <img src="" alt="">
         </div>
         <span id="navSpan">Username</span>
@@ -51,7 +52,7 @@ const LoggedIn = () => {
   const home = CreateElement({
     element: 'a',
     href: '/',
-    styling: 'flex gap-4',
+    styling: 'flex gap-4 buttonEffect',
   });
 
   home.innerHTML = `${Icon(iconPaths.home)}
@@ -60,22 +61,30 @@ const LoggedIn = () => {
   const myBids = CreateElement({
     element: 'a',
     href: '/myBids/',
-    styling: 'flex gap-4',
+    styling: 'flex gap-4 buttonEffect',
   });
   myBids.innerHTML = `${Icon(iconPaths.hammer)}
   <span id="navSpan">My Bids</span> `;
 
-  const createListing = CreateElement({ element: 'a', styling: 'flex gap-4' });
+  const createListing = CreateElement({
+    element: 'a',
+    styling: 'flex gap-4 buttonEffect',
+  });
   createListing.innerHTML = `${Icon(iconPaths.plus)}
   <span id="navSpan">Create Listing</span>`;
 
-  const logOut = CreateElement({ element: 'a', styling: 'flex gap-4' });
+  const logOut = CreateElement({
+    element: 'a',
+    styling: 'flex gap-4 buttonEffect',
+  });
   logOut.innerHTML = `${Icon(iconPaths.logOut)}
   <span id="navSpan">Log Out</span>
   `;
+  logOut.addEventListener('click', onLogout);
+
   const search = CreateElement({
     element: 'div',
-    styling: 'flex gap-4 hover:bg-white/50 px-4 py-2',
+    styling: 'flex gap-4 hover:bg-white/50 px-4 py-2 buttonEffect',
   });
   search.innerHTML = `${Icon(iconPaths.search)}
   <span id="navSpan">Search...</span>
