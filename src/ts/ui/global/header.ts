@@ -21,6 +21,8 @@ const toggleSideBar = (sidebarID: string, btn: string) => {
 };
 
 const LoggedIn = () => {
+  const user = JSON.parse(localStorage.getItem('userInfo') ?? '');
+
   const header = document.querySelector('header');
   const sidebar = CreateElement({ element: 'nav', id: 'sidebar' });
   const button = CreateElement({
@@ -43,10 +45,10 @@ const LoggedIn = () => {
   });
 
   profile.innerHTML = `
-        <div class="w-[40px] h-[40px] bg-gray-500 rounded-full buttonEffect">
-            <img src="" alt="">
+        <div class="w-[40px] h-[40px] bg-gray-500 rounded-full overflow-hidden">
+            <img class="object-cover" src="${user.avatar.url}" alt="User profile image">
         </div>
-        <span id="navSpan">Username</span>
+        <span id="navSpan">${user.name}</span>
   `;
 
   const home = CreateElement({

@@ -1,6 +1,6 @@
 export enum API {
   BASE = 'https://v2.api.noroff.dev',
-  KEY = '',
+  KEY = '6e4017bd-0f87-4e15-b29a-30f93e42bf6a',
   AUTH = `${API.BASE}/auth`,
   AUTH_LOGIN = `${API.AUTH}/login`,
   AUTH_REGISTER = `${API.AUTH}/register`,
