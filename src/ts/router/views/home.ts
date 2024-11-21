@@ -8,7 +8,7 @@ const runPage = async () => {
   authGuard();
 
   const carouselPosts = await readPosts({
-    limit: 3,
+    limit: 10,
     page: 1,
     sort: 'endsAt',
     sortOrder: 'asc',

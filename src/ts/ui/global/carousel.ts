@@ -4,7 +4,10 @@ import { listingObject } from '../../utilities/types';
 export const carousel = (posts: listingObject[]) => {
   const prevBtn = document.querySelector('div.prev-arrow')!;
   const nextBtn = document.querySelector('div.next-arrow')!;
-  const sectionContainer = document.querySelector('div.carousel-sections')!;
+  const sectionContainer = document.querySelector<HTMLDivElement>(
+    'div.carousel-sections'
+  )!;
+
   if (!sectionContainer || !prevBtn || !nextBtn) return;
   let currentIndex: number = 0;
   let slides: listingObject[] = posts;
@@ -24,7 +27,7 @@ export const carousel = (posts: listingObject[]) => {
   updateCarousel(sectionContainer, currentIndex);
 };
 
-const makeImage = (post: listingObject, sectionContainer: HTMLElement) => {
+const makeImage = (post: listingObject, sectionContainer: Element) => {
   const imageContainer = CreateElement({
     element: 'div',
     styling: 'flex items-center justify-center w-full h-full  overflow-hidden',
@@ -44,10 +47,7 @@ const makeImage = (post: listingObject, sectionContainer: HTMLElement) => {
   sectionContainer?.append(imageContainer);
 };
 
-const updateCarousel = (
-  sectionContainer: HTMLElement,
-  currentIndex: number
-) => {
+const updateCarousel = (sectionContainer: Element, currentIndex: number) => {
   // Hide all images
   const allImages = sectionContainer?.querySelectorAll('div');
   allImages?.forEach((image, index) => {
