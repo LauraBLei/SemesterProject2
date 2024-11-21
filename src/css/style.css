@@ -51,3 +51,15 @@ a {
 .buttonEffect {
   @apply hover:bg-white/50 px-4 py-2 font-semibold cursor-pointer;
 }
+
+.active {
+  @apply w-[30px] h-[30px] bg-yellow-400;
+}
+
+.idle {
+  @apply w-[20px] h-[20px]  bg-black;
+}
+
+.dot {
+  @apply rounded-full  scale-75 hover:scale-110 hover:bg-white border-2 border-black cursor-pointer transition-transform duration-300 ease-in-out transform;
+}

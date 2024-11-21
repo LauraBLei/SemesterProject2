@@ -7,27 +7,62 @@ export const carousel = (posts: listingObject[]) => {
   const sectionContainer = document.querySelector<HTMLDivElement>(
     'div.carousel-sections'
   )!;
+  const dotContainer =
+    document.querySelector<HTMLDivElement>('div.dot-section')!;
 
-  if (!sectionContainer || !prevBtn || !nextBtn) return;
   let currentIndex: number = 0;
   let slides: listingObject[] = posts;
 
-  posts.forEach((post) => makeImage(post, sectionContainer));
+  posts.forEach((post) => makeImage(post, sectionContainer, dotContainer));
+
+  const dots = document.querySelectorAll('.dot');
+
+  const updateCarousel = () => {
+    // Hide all images
+    const allImages = sectionContainer?.querySelectorAll('div');
+    allImages?.forEach((image, index) => {
+      if (index === currentIndex) {
+        image.classList.remove('hidden');
+      } else {
+        image.classList.add('hidden');
+      }
+    });
+    dots.forEach((dot, dotPosition) => {
+      if (currentIndex === dotPosition) {
+        dot.classList.add('active');
+        dot.classList.remove('idle');
+      } else {
+        dot.classList.remove('active');
+        dot.classList.add('idle');
+      }
+    });
+  };
 
   prevBtn?.addEventListener('click', () => {
     currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-    updateCarousel(sectionContainer, currentIndex);
+    updateCarousel();
   });
 
   nextBtn?.addEventListener('click', () => {
     currentIndex = (currentIndex + 1) % slides.length;
-    updateCarousel(sectionContainer, currentIndex);
+    updateCarousel();
   });
 
-  updateCarousel(sectionContainer, currentIndex);
+  updateCarousel();
+
+  dots.forEach((dot, dotPosition) => {
+    dot.addEventListener('click', () => {
+      currentIndex = dotPosition;
+      updateCarousel();
+    });
+  });
 };
 
-const makeImage = (post: listingObject, sectionContainer: Element) => {
+const makeImage = (
+  post: listingObject,
+  sectionContainer: Element,
+  dotContainer: Element
+) => {
   const imageContainer = CreateElement({
     element: 'div',
     styling: 'flex items-center justify-center w-full h-full  overflow-hidden',
@@ -43,18 +78,11 @@ const makeImage = (post: listingObject, sectionContainer: Element) => {
 
         `;
   }
+  const dot = CreateElement({
+    element: 'div',
+    styling: 'dot',
+  });
 
   sectionContainer?.append(imageContainer);
-};
-
-const updateCarousel = (sectionContainer: Element, currentIndex: number) => {
-  // Hide all images
-  const allImages = sectionContainer?.querySelectorAll('div');
-  allImages?.forEach((image, index) => {
-    if (index === currentIndex) {
-      image.classList.remove('hidden');
-    } else {
-      image.classList.add('hidden');
-    }
-  });
+  dotContainer?.append(dot);
 };
