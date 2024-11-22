@@ -32,6 +32,8 @@ export type ElementHelper = {
   styling?: string;
   text?: string;
   href?: string;
+  src?: string;
+  alt?: string;
 };
 
 export type readPostsAPI = {

@@ -3,15 +3,15 @@
 @tailwind utilities;
 
 body {
-  @apply flex gap-10 h-dvh max-w-full;
+  @apply flex h-dvh max-w-full;
 }
 
 main {
-  @apply flex flex-col w-full items-center gap-10;
+  @apply flex flex-col w-full h-full items-center gap-10 z-0 overflow-y-auto;
 }
 
 header {
-  @apply h-dvh;
+  @apply h-dvh z-50 block;
 }
 
 .headline {

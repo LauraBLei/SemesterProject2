@@ -65,16 +65,17 @@ const makeImage = (
 ) => {
   const imageContainer = CreateElement({
     element: 'div',
-    styling: 'flex items-center justify-center w-full h-full  overflow-hidden',
+    styling:
+      'flex items-center justify-center w-full h-full overflow-hidden object-cover min-h-[400px]',
   });
   if (post.media[0]) {
     imageContainer.innerHTML = `
-                    <img class="object-cover w-full" src="${post.media[0].url}" alt="Carousel Image">
+                    <img class="object-cover w-full h-full" src="${post.media[0].url}" alt="Carousel Image">
         `;
   } else {
     imageContainer.innerHTML = `
 
-        <p class="headline text-white ">Image not found</p>
+        <img src='/placeholder.jpg' alt='Image not found' class="object-cover w-full h-full"></img>
 
         `;
   }

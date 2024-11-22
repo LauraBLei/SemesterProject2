@@ -10,8 +10,8 @@
   <body>
     <header></header>
     <main>
-      <h1 class="headline">The Final Countdown for Rare Finds</h1>
-      <section class="w-full max-w-[1400px] max-h-[500px] h-full">
+      <section class="w-full max-w-[1400px] max-h-[400px] h-full">
+        <h1 class="headline text-center">The Final Countdown for Rare Finds</h1>
         <div
           class="flex w-full h-full relative scale-[.98] hover:scale-100 transition-transform duration-500 ease-in-out transform"
           id="carousel"
@@ -21,16 +21,24 @@
           ></div>
           <div class="carousel-sections-scroll w-full">
             <div
-              class="carousel-sections w-full h-full flex items-center justify-center bg-black"
+              class="carousel-sections min-h-[400px] w-full h-full flex items-center justify-center bg-black"
             ></div>
           </div>
           <div
             class="next-arrow h-full cursor-pointer w-[100px] right-0 bg-transparent hover:bg-gradient-to-l hover:from-white hover:to-transparent absolute"
           ></div>
         </div>
-        <div
-          class="dot-section flex w-full items-center justify-center gap-3 mt-2"
-        ></div>
+      </section>
+      <div
+        class="dot-section flex w-full items-center justify-center gap-3 mt-2"
+      ></div>
+      <section
+        class="min-h-[250px] flex items-center w-full mt-12 overflow-x-auto max-w-[1200px] whitespace-nowrap scroll-smooth"
+        id="categories"
+      ></section>
+      <section class="flex flex-col max-w-[1400px]" id="recentListings">
+        <h1 class="headline text-center p-4">Most Recent Listings</h1>
+        <div id="mostRecent" class="flex flex-wrap justify-evenly w-full"></div>
       </section>
     </main>
   </body>
