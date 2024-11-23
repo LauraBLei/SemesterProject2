@@ -1,6 +1,7 @@
 import { iconPaths } from '../../utilities/enums';
 import { CreateElement, Icon } from '../../utilities/components';
 import { onLogout } from '../auth/logout';
+import { createListing } from '../../router/views/listingCreate';
 
 export const MakeHeader = () => {
   const loggedIn = localStorage.getItem('token');
@@ -10,6 +11,7 @@ export const MakeHeader = () => {
   } else {
     LoggedOut();
   }
+  createListing();
 };
 
 const toggleSideBar = (sidebarID: string, btn: string) => {
@@ -71,6 +73,7 @@ const LoggedIn = () => {
   const createListing = CreateElement({
     element: 'a',
     styling: 'flex gap-4 buttonEffect',
+    id: 'createListingButton',
   });
   createListing.innerHTML = `${Icon(iconPaths.plus)}
   <span id="navSpan">Create Listing</span>`;
@@ -87,7 +90,7 @@ const LoggedIn = () => {
   const search = CreateElement({
     element: 'a',
     styling: 'flex gap-4 hover:bg-white/50 px-4 py-2 buttonEffect',
-    href: '/search/',
+    href: '/listing/search/',
   });
   search.innerHTML = `${Icon(iconPaths.search)}
   <span id="navSpan">Search...</span>

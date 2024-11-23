@@ -16,8 +16,7 @@ export default async function router(pathname = window.location.pathname) {
     case '/listing/':
       await import('./views/listing.ts');
       break;
-    case '/search/':
-      console.log('hei');
+    case '/listing/search/':
       await import('./views/search.ts');
       break;
     case '/profile/':
@@ -27,8 +26,6 @@ export default async function router(pathname = window.location.pathname) {
       await import('./views/myBids.ts');
       break;
     default:
-      console.log('Route not found for:', pathname);
-
       await import('./views/notFound.ts');
   }
 }

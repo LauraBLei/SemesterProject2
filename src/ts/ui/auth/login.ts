@@ -11,7 +11,6 @@ import { loginForm } from '../../utilities/types';
 
 export async function onLogin(event: any) {
   event.preventDefault();
-  console.log('click');
 
   const formData = new FormData(event.target);
   const loginData: loginForm = {

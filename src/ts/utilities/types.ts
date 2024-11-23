@@ -9,18 +9,24 @@ export type registerForm = {
   password?: FormDataEntryValue;
 };
 
-export type media = [
-  {
-    url: string;
-    alt: string;
-  },
-];
+export type createForm = {
+  title: FormDataEntryValue;
+  description: FormDataEntryValue;
+  tags: FormDataEntryValue[];
+  endsAt: FormDataEntryValue;
+  media: media[];
+};
+
+export type media = {
+  url: string;
+  alt: string;
+};
 
 export type listingObject = {
   id: string;
   title: string;
   description: string;
-  media: media;
+  media: media[];
   count: {
     bids: number;
   };
