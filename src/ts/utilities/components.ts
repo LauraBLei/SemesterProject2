@@ -92,8 +92,11 @@ export const MakeListing = (posts: listingObject[]) => {
     const description = CreateElement({
       element: 'p',
       text: `${post.description}`,
-      styling: 'text-white border-y-2 border-white py-2 overflow-x-auto',
+      styling: 'text-white py-2 overflow-x-auto',
     });
+    if (post.description) {
+      description.className = 'border-y-2 border-white';
+    }
 
     const userInfoDiv = CreateElement({
       element: 'div',

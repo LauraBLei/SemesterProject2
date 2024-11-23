@@ -48,11 +48,12 @@ export async function readPosts({
   limit = 12,
   page = 1,
   tag = '',
-  sort = '',
-  sortOrder = '',
-  active = false,
+  sort,
+  sortOrder,
+  active,
 }: readPostsAPI) {
   const queryParameters = `?limit=${limit}&page=${page}&_seller=true&_bids=true&_tag=${tag}&sort=${sort}&sortOrder=${sortOrder}&_active=${active}&`;
+
   try {
     const response = await fetch(API.AUCTION_LISTINGS + queryParameters, {
       method: 'GET',

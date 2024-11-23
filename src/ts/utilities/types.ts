@@ -24,6 +24,14 @@ export type listingObject = {
   count: {
     bids: number;
   };
+  seller: {
+    name: string;
+    avatar: {
+      url: string;
+      alt: string;
+    };
+    bio: string;
+  };
 };
 
 export type ElementHelper = {

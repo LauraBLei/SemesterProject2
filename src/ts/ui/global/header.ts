@@ -85,8 +85,9 @@ const LoggedIn = () => {
   logOut.addEventListener('click', onLogout);
 
   const search = CreateElement({
-    element: 'div',
+    element: 'a',
     styling: 'flex gap-4 hover:bg-white/50 px-4 py-2 buttonEffect',
+    href: '/search/',
   });
   search.innerHTML = `${Icon(iconPaths.search)}
   <span id="navSpan">Search...</span>
