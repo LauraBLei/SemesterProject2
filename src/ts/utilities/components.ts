@@ -95,7 +95,8 @@ export const MakeListing = (posts: listingObject[]) => {
       styling: 'text-white py-2 overflow-x-auto',
     });
     if (post.description) {
-      description.className = 'border-y-2 border-white';
+      description.classList.add('border-y-2');
+      description.classList.add('border-white');
     }
 
     const userInfoDiv = CreateElement({
