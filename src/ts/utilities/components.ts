@@ -64,11 +64,15 @@ export const MakeListing = (posts: listingObject[]) => {
         'max-w-[410px] max-h-[650] w-full h- full bg-black p-6 rounded-md m-4 justify-between',
     });
 
-    const imageDiv = CreateElement({ element: 'div' });
+    const imageDiv = CreateElement({
+      element: 'div',
+      styling:
+        'overflow-hidden w-[350px] h-[350px] flex items-center justify-center',
+    });
     if (post.media[0]) {
       const image = CreateElement({
         element: 'img',
-        styling: 'w-[350px] h-[350px]',
+        styling: 'w-full h-full object-cover',
         src: `${post.media[0].url}`,
         alt: `${post.media[0].alt}`,
       });
@@ -76,7 +80,7 @@ export const MakeListing = (posts: listingObject[]) => {
     } else {
       const image = CreateElement({
         element: 'img',
-        styling: 'w-[350px] h-[350px]',
+        styling: 'w-full h-full object-cover',
         src: `/placeholder.jpg`,
         alt: `Image not found`,
       });

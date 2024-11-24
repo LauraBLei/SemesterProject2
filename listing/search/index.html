@@ -8,6 +8,50 @@
   </head>
   <body>
     <header></header>
-    <main></main>
+    <main>
+      <div class="flex justify-center my-4 w-full max-w-[1400px]">
+        <form
+          id="sortListings"
+          class="flex justify-between w-full flex-wrap px-4"
+        >
+          <div class="flex gap-4">
+            <select
+              class="border-2 border-black cursor-pointer p-2"
+              name="category"
+              id="searchCategory"
+            >
+              <option value="" disabled selected>Category</option>
+              <option value="fine_art">Fine Art</option>
+              <option value="collectables">Collectables</option>
+              <option value="watches_jewelries">Watches and Jewelry</option>
+              <option value="decorative_art">Decorative Art</option>
+              <option value="classic_cars">Classic Cars</option>
+              <option value="furniture">Furniture</option>
+            </select>
+            <select
+              class="border-2 border-black cursor-pointer p-2"
+              name="sortBy"
+              id="searchSortBy"
+            >
+              <option value="" disabled selected>Sort By</option>
+
+              <option value="desc">New -> Old</option>
+              <option value="asc">Old -> New</option>
+            </select>
+          </div>
+          <div class="w-full max-w-[500px]">
+            <input
+              class="p-2 border-2 border-black w-full"
+              type="text"
+              name="searchBar"
+              id="searchBar"
+              placeholder="Search.."
+            />
+          </div>
+        </form>
+      </div>
+
+      <div id="searchListings"></div>
+    </main>
   </body>
 </html>
