@@ -4,13 +4,7 @@ import { onLogout } from '../auth/logout';
 import { createListing } from '../../router/views/listingCreate';
 
 export const MakeHeader = () => {
-  const loggedIn = localStorage.getItem('token');
-
-  if (loggedIn) {
-    LoggedIn();
-  } else {
-    LoggedOut();
-  }
+  Header();
   createListing();
 };
 
@@ -22,70 +16,56 @@ const toggleSideBar = (sidebarID: string, btn: string) => {
   toggleButton?.classList.toggle('rotate');
 };
 
-const LoggedIn = () => {
-  const user = JSON.parse(localStorage.getItem('userInfo') ?? '');
-
+const Header = () => {
+  const loggedIn = localStorage.getItem('token');
   const header = document.querySelector('header');
   const sidebar = CreateElement({ element: 'nav', id: 'sidebar' });
+  header?.appendChild(sidebar);
+
   const button = CreateElement({
     element: 'button',
     id: 'toggle-btn',
     styling: 'flex items-center',
   });
-  button.innerHTML = `
-                ${Icon(iconPaths.doubleArrows)}
-
+  button.innerHTML = `${Icon(iconPaths.doubleArrows)}
   `;
   button.addEventListener('click', () =>
     toggleSideBar('sidebar', 'toggle-btn')
   );
+  sidebar.append(button);
 
-  const profile = CreateElement({
-    element: 'a',
-    styling: 'flex gap-2 items-center buttonEffect',
-    href: '/profile/',
-  });
-
-  profile.innerHTML = `
-        <div class="w-[40px] h-[40px] bg-gray-500 rounded-full overflow-hidden">
-            <img class="object-cover" src="${user.avatar.url}" alt="User profile image">
-        </div>
-        <span id="navSpan">${user.name}</span>
-  `;
+  if (loggedIn) {
+    const user = JSON.parse(localStorage.getItem('userInfo') ?? '');
+    const profile = CreateElement({
+      element: 'a',
+      styling: 'flex gap-2 items-center buttonEffect',
+      href: '/profile/',
+    });
+    profile.innerHTML = `
+  <div class="w-[40px] h-[40px] bg-gray-500 rounded-full overflow-hidden">
+      <img class="object-cover" src="${user.avatar.url}" alt="User profile image">
+  </div>
+  <span id="navSpan">${user.name}</span>
+`;
+    sidebar.append(profile);
+  } else {
+    const auth = CreateElement({
+      element: 'a',
+      href: '/auth/',
+      styling: 'flex gap-4',
+    });
+    auth.innerHTML = `${Icon(iconPaths.profile)}
+  <span id="navSpan">Login</span> `;
+    sidebar.append(auth);
+  }
 
   const home = CreateElement({
     element: 'a',
     href: '/',
     styling: 'flex gap-4 buttonEffect',
   });
-
   home.innerHTML = `${Icon(iconPaths.home)}
   <span id="navSpan">Home</span> `;
-
-  const myBids = CreateElement({
-    element: 'a',
-    href: '/myBids/',
-    styling: 'flex gap-4 buttonEffect',
-  });
-  myBids.innerHTML = `${Icon(iconPaths.hammer)}
-  <span id="navSpan">My Bids</span> `;
-
-  const createListing = CreateElement({
-    element: 'a',
-    styling: 'flex gap-4 buttonEffect',
-    id: 'createListingButton',
-  });
-  createListing.innerHTML = `${Icon(iconPaths.plus)}
-  <span id="navSpan">Create Listing</span>`;
-
-  const logOut = CreateElement({
-    element: 'a',
-    styling: 'flex gap-4 buttonEffect',
-  });
-  logOut.innerHTML = `${Icon(iconPaths.logOut)}
-  <span id="navSpan">Log Out</span>
-  `;
-  logOut.addEventListener('click', onLogout);
 
   const search = CreateElement({
     element: 'a',
@@ -95,50 +75,31 @@ const LoggedIn = () => {
   search.innerHTML = `${Icon(iconPaths.search)}
   <span id="navSpan">Search...</span>
   `;
+  sidebar.append(home, search);
+  if (loggedIn) {
+    const myBids = CreateElement({
+      element: 'a',
+      href: '/myBids/',
+      styling: 'flex gap-4 buttonEffect',
+    });
+    myBids.innerHTML = `${Icon(iconPaths.hammer)}
+<span id="navSpan">My Bids</span> `;
+    const createListing = CreateElement({
+      element: 'a',
+      styling: 'flex gap-4 buttonEffect',
+      id: 'createListingButton',
+    });
+    createListing.innerHTML = `${Icon(iconPaths.plus)}
+<span id="navSpan">Create Listing</span>`;
+    const logOut = CreateElement({
+      element: 'a',
+      styling: 'flex gap-4 buttonEffect',
+    });
+    logOut.innerHTML = `${Icon(iconPaths.logOut)}
+<span id="navSpan">Log Out</span>
+`;
+    logOut.addEventListener('click', onLogout);
 
-  header?.appendChild(sidebar);
-  sidebar.append(button, profile, home, myBids, createListing, logOut, search);
-};
-
-const LoggedOut = () => {
-  const header = document.querySelector('header');
-  const sidebar = CreateElement({
-    element: 'nav',
-    id: 'sidebar',
-    styling: 'pt-5',
-  });
-
-  const button = CreateElement({
-    element: 'button',
-    id: 'toggle-btn',
-    styling: 'place-self-center',
-  });
-
-  button.innerHTML = `
-                ${Icon(iconPaths.doubleArrows)}
-
-  `;
-  button.addEventListener('click', () =>
-    toggleSideBar('sidebar', 'toggle-btn')
-  );
-
-  const auth = CreateElement({
-    element: 'a',
-    href: '/auth/',
-    styling: 'flex gap-4',
-  });
-  auth.innerHTML = `${Icon(iconPaths.profile)}
-  <span id="navSpan">Login</span> `;
-
-  const home = CreateElement({
-    element: 'a',
-    href: '/',
-    styling: 'flex gap-4',
-  });
-
-  home.innerHTML = `${Icon(iconPaths.home)}
-  <span id="navSpan">Home</span> `;
-
-  header?.appendChild(sidebar);
-  sidebar.append(button, auth, home);
+    sidebar.append(myBids, createListing, logOut);
+  }
 };
