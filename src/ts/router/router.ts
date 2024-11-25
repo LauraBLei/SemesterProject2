@@ -1,5 +1,4 @@
 export default async function router(pathname = window.location.pathname) {
-  console.log('pathname before router:', pathname);
   switch (pathname) {
     case '/':
       await import('./views/home.ts');

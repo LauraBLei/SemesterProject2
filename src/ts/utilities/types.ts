@@ -22,6 +22,27 @@ export type media = {
   alt: string;
 };
 
+export type Category = {
+  text: string;
+  tag: string;
+  src: string;
+};
+
+export type APIData = {
+  data: listingObject[];
+  meta: meta;
+};
+
+export type meta = {
+  isFirstPage: boolean;
+  isLastPage: boolean;
+  currentPage: number;
+  previousPage: null;
+  nextPage: number;
+  pageCount: number;
+  totalCount: number;
+};
+
 export type listingObject = {
   id: string;
   title: string;
@@ -57,4 +78,14 @@ export type readPostsAPI = {
   sort?: string;
   sortOrder?: string;
   active?: boolean;
+  search?: FormDataEntryValue;
+};
+
+export type makeListing = {
+  paginationDiv: HTMLDivElement;
+  section: HTMLDivElement;
+  posts: APIData;
+  API: string;
+  tag?: string;
+  search?: FormDataEntryValue;
 };

@@ -62,10 +62,9 @@ export async function readPosts({
 
     if (response.ok) {
       const data = await response.json();
+      console.log('blob', data);
 
-      const userPosts = data.data;
-
-      return userPosts;
+      return data;
     }
   } catch (error) {
     alert('something went wrong trying to fetch user posts');
@@ -100,10 +99,33 @@ export async function readPostsByUser(username: string, limit = 12, page = 1) {
     if (response.ok) {
       const data = await response.json();
 
-      const userPosts = data.data;
-      return userPosts;
+      return data;
     }
   } catch (error) {
     alert('something went wrong trying to fetch user posts');
+  }
+}
+
+export async function searchPosts({
+  limit = 12,
+  page = 1,
+  search = '',
+}: readPostsAPI) {
+  const queryParameters = `?limit=${limit}&page=${page}&_seller=true&_bids=true&q=${search}`;
+
+  try {
+    const response = await fetch(API.SEARCH + queryParameters, {
+      method: 'GET',
+      headers: headers(),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+
+      return data;
+    }
+  } catch (error) {
+    alert('something went wrong trying to fetch user posts');
+    console.log(error);
   }
 }

@@ -68,7 +68,7 @@ const MakePage = () => {
               <option value="" disabled selected>Category</option>
               <option value="fine_art">Fine Art</option>
               <option value="collectables">Collectables</option>
-              <option value="watches_jewelries">Watches and Jewelry</option>
+              <option value="watches_jewelry">Watches and Jewelry</option>
               <option value="decorative_art">Decorative Art</option>
               <option value="classic_cars">Classic Cars</option>
               <option value="furniture">Furniture</option>

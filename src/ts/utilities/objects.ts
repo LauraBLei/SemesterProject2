@@ -1,32 +1,34 @@
-export const categories = [
+import { Category } from './types';
+
+export const categories: Category[] = [
   {
     text: 'Fine Art',
-    tag: 'Fine_Art',
+    tag: 'fine_art',
     src: '/fineArt.jpg',
   },
   {
     text: 'Collectables',
-    tag: 'Collectables',
+    tag: 'collectables',
     src: '/collectables.jpg',
   },
   {
     text: 'Watches and Jewelry',
-    tag: 'Watches_Jewelry',
+    tag: 'watches_jewelry',
     src: '/watchesJewelry.jpg',
   },
   {
     text: 'Decorative Art',
-    tag: 'Decorative_Art',
+    tag: 'decorative_art',
     src: '/decorativeArt.jpg',
   },
   {
     text: 'Classic Cars',
-    tag: 'Classic_Cars',
+    tag: 'classic_cars',
     src: '/classicCars.jpg',
   },
   {
     text: 'Furniture',
-    tag: 'Furniture',
+    tag: 'furniture',
     src: '/furniture.jpg',
   },
 ];

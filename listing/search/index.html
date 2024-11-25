@@ -9,37 +9,17 @@
   <body>
     <header></header>
     <main>
-      <div class="flex justify-center my-4 w-full max-w-[1400px]">
+      <div
+        id="searchCategories"
+        class="min-h-[250px] flex items-center w-full mt-12 overflow-x-auto max-w-[1200px] whitespace-nowrap scroll-smooth"
+      ></div>
+      <div class="flex justify-center my-4 w-full max-w-[1400px] sticky">
         <form
           id="sortListings"
-          class="flex justify-between w-full flex-wrap px-4"
+          name="sortListings"
+          class="flex justify-evenly w-full flex-wrap px-4 gap-5"
         >
-          <div class="flex gap-4">
-            <select
-              class="border-2 border-black cursor-pointer p-2"
-              name="category"
-              id="searchCategory"
-            >
-              <option value="" disabled selected>Category</option>
-              <option value="fine_art">Fine Art</option>
-              <option value="collectables">Collectables</option>
-              <option value="watches_jewelries">Watches and Jewelry</option>
-              <option value="decorative_art">Decorative Art</option>
-              <option value="classic_cars">Classic Cars</option>
-              <option value="furniture">Furniture</option>
-            </select>
-            <select
-              class="border-2 border-black cursor-pointer p-2"
-              name="sortBy"
-              id="searchSortBy"
-            >
-              <option value="" disabled selected>Sort By</option>
-
-              <option value="desc">New -> Old</option>
-              <option value="asc">Old -> New</option>
-            </select>
-          </div>
-          <div class="w-full max-w-[500px]">
+          <div class="w-full max-w-[700px] mt-2">
             <input
               class="p-2 border-2 border-black w-full"
               type="text"
@@ -48,10 +28,19 @@
               placeholder="Search.."
             />
           </div>
+          <div class="mt-2">
+            <button class="p-2 border-2 border-black rounded-md">Search</button>
+          </div>
         </form>
       </div>
-
-      <div id="searchListings"></div>
+      <div
+        class="w-full flex flex-wrap justify-center"
+        id="searchListings"
+      ></div>
+      <div
+        class="w-full flex items-center justify-center"
+        id="pagination"
+      ></div>
     </main>
   </body>
 </html>

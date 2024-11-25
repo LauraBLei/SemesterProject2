@@ -1,10 +1,12 @@
 import { readPosts } from '../../api/listing/read';
 import { carousel } from '../../ui/global/carousel';
 import { MakeHeader } from '../../ui/global/header';
-import { CreateCategory, MakeListing } from '../../utilities/components';
+import { MakeListing } from '../../utilities/components';
 
 const runPage = async () => {
   MakeHeader();
+  const section = document.getElementById('mostRecent') as HTMLDivElement;
+  const paginationDiv = document.getElementById('pagination') as HTMLDivElement;
 
   const carouselPosts = await readPosts({
     limit: 10,
@@ -19,10 +21,14 @@ const runPage = async () => {
     sortOrder: 'desc',
     active: true,
   });
-
-  carousel(carouselPosts);
-  CreateCategory();
-  MakeListing(mostRecent);
+  carousel(carouselPosts.data);
+  MakeListing({
+    paginationDiv: paginationDiv,
+    section: section,
+    posts: mostRecent,
+    API: 'category',
+    tag: '',
+  });
 };
 
 runPage();
