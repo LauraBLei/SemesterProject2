@@ -1,6 +1,12 @@
-import { searchListings } from '../ui/listing/sortedListings';
+import { readPosts, searchPosts } from '../api/listing/read';
 import { categories } from './objects';
-import { ElementHelper, meta, listingObject, makeListing } from './types';
+import {
+  ElementHelper,
+  ListingObject,
+  MakeListingType,
+  APIData,
+  MakePaginationType,
+} from './types';
 
 export const Icon = (path: string) => {
   return `
@@ -30,6 +36,10 @@ export const CreateElement = ({
 };
 
 export const CreateCategory = (section: HTMLElement) => {
+  const paginationDiv = document.getElementById('pagination') as HTMLDivElement;
+  const searchListingDiv = document.getElementById(
+    'searchListings'
+  ) as HTMLDivElement;
   categories.forEach((key) => {
     const container = CreateElement({
       element: 'a',
@@ -48,7 +58,14 @@ export const CreateCategory = (section: HTMLElement) => {
     });
 
     container.addEventListener('click', () => {
-      searchListings('category', { limit: 12, page: 1, tag: key.tag });
+      MakeListing({
+        API: 'category',
+        limit: 12,
+        page: 1,
+        tag: key.tag,
+        paginationDiv: paginationDiv,
+        section: searchListingDiv,
+      });
     });
 
     const category = CreateElement({ element: 'p', text: `${key.text}` });
@@ -58,25 +75,63 @@ export const CreateCategory = (section: HTMLElement) => {
   });
 };
 
-export const MakeListing = ({
+export const MakeListing = async ({
   paginationDiv,
   section,
-  posts,
+  page,
+  limit,
   API = 'category',
   tag = '',
   search = '',
-}: makeListing) => {
-  console.log(posts);
+  sort = 'created',
+  sortOrder = 'desc',
+}: MakeListingType) => {
+  let data: APIData;
+  section.innerHTML = '';
 
-  posts.data.forEach((post) => {
+  if (API === 'search') {
+    data = await searchPosts({
+      limit: limit,
+      page: page,
+      search: search,
+    });
+  } else if (API === 'category') {
+    data = await readPosts({
+      limit: limit,
+      page: page,
+      tag: tag,
+      sortOrder: sortOrder,
+      sort: sort,
+    });
+  } else {
+    return;
+  }
+
+  if (data.data.length === 0) {
+    const errorMessage = CreateElement({
+      element: 'h1',
+      text: 'No posts found!',
+    });
+    section.append(errorMessage);
+    return;
+  }
+
+  data.data.forEach((post) => {
     makeSingleListing(post, section);
   });
 
-  makePagination(posts.meta, paginationDiv, API, tag, search);
+  makePagination({
+    meta: data.meta,
+    container: section,
+    paginationDiv: paginationDiv,
+    API: API,
+    tag: tag,
+    search: search,
+  });
 };
 
 export const makeSingleListing = (
-  post: listingObject,
+  post: ListingObject,
   section: HTMLDivElement
 ) => {
   const container = CreateElement({
@@ -152,58 +207,114 @@ export const makeSingleListing = (
   profileImageDiv.appendChild(profileImage);
 };
 
-export const makePagination = (
-  meta: meta,
-  container: HTMLDivElement,
-  API: string,
-  tag: string,
-  search: FormDataEntryValue
-) => {
+export const makePagination = ({
+  meta,
+  container,
+  API,
+  tag,
+  search,
+  paginationDiv,
+}: MakePaginationType) => {
   const currentPage = meta.currentPage;
   const nextPage = meta.nextPage;
   const previousPage = meta.previousPage;
-  container.innerHTML = '';
+  const lastPage = meta.pageCount;
+  paginationDiv.innerHTML = '';
+
+  const pageChoiceContainer = CreateElement({
+    element: 'div',
+    styling: 'flex gap-4',
+  });
+
+  const firstPage = CreateElement({
+    element: 'p',
+    id: 'firstPage',
+    text: '1',
+    styling:
+      'text-2xl font-semibold cursor-pointer scale-95 hover:scale-100 transition ease-in-out duration-300 transform',
+  });
+  paginationDiv.append(firstPage);
+  firstPage.addEventListener('click', () =>
+    MakeListing({
+      limit: 12,
+      page: 1,
+      search: search,
+      tag: tag,
+      paginationDiv: paginationDiv,
+      section: container,
+      API: API,
+    })
+  );
+  paginationDiv.append(pageChoiceContainer);
   if (meta.isFirstPage === false) {
     const previousPageElement = CreateElement({
       element: 'p',
+      id: 'prev',
       text: `${previousPage}`,
       styling:
-        'text-2xl font-semibold cursor-pointer scale-95 hover:scale-100 transition ease-in-out duration-300 transform',
+        'text-2xl font-semibold cursor-pointer scale-75 hover:scale-100  transition-transform duration-300 ease-in-out transform',
     });
-    container.append(previousPageElement);
-    if (API === 'search') {
-      previousPageElement.addEventListener('click', () =>
-        searchListings(API, { limit: 12, page: nextPage, search: search })
-      );
-    } else if (API === 'category') {
-      previousPageElement.addEventListener('click', () =>
-        searchListings(API, { limit: 12, page: nextPage, tag: tag })
-      );
-    }
+    pageChoiceContainer.append(previousPageElement);
+
+    previousPageElement.addEventListener('click', () =>
+      MakeListing({
+        limit: 12,
+        page: previousPage,
+        search: search,
+        tag: tag,
+        paginationDiv: paginationDiv,
+        section: container,
+        API: API,
+      })
+    );
   }
+
   const currentPageElement = CreateElement({
     element: 'p',
+    id: 'current',
     text: `${currentPage}`,
     styling: 'font-bold text-3xl',
   });
-  container.append(currentPageElement);
+  pageChoiceContainer.append(currentPageElement);
 
+  const lastPageNumber = CreateElement({
+    element: 'p',
+    text: `${lastPage}`,
+    styling:
+      'text-2xl font-semibold cursor-pointer scale-75 hover:scale-100  transition-transform duration-300 ease-in-out transform',
+  });
+  paginationDiv.append(lastPageNumber);
+  lastPageNumber.addEventListener('click', () =>
+    MakeListing({
+      limit: 12,
+      page: lastPage,
+      search: search,
+      tag: tag,
+      paginationDiv: paginationDiv,
+      section: container,
+      API: API,
+    })
+  );
   if (meta.isLastPage === false) {
     const nextPageElement = CreateElement({
       element: 'p',
+      id: 'next',
       text: `${nextPage}`,
       styling:
         'text-2xl font-semibold cursor-pointer scale-75 hover:scale-100  transition-transform duration-300 ease-in-out transform',
     });
-    container.append(nextPageElement);
-    if (API === 'search') {
-      nextPageElement.addEventListener('click', () =>
-        searchListings(API, { limit: 12, page: nextPage, search: search })
-      );
-    } else if (API === 'category') {
-      nextPageElement.addEventListener('click', () =>
-        searchListings(API, { limit: 12, page: nextPage, tag: tag })
-      );
-    }
+    pageChoiceContainer.append(nextPageElement);
+
+    nextPageElement.addEventListener('click', () =>
+      MakeListing({
+        limit: 12,
+        page: nextPage,
+        search: search,
+        tag: tag,
+        paginationDiv: paginationDiv,
+        section: container,
+        API: API,
+      })
+    );
   }
 };

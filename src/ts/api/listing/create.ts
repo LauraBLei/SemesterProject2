@@ -1,4 +1,4 @@
-import { createForm } from '../../utilities/types';
+import { CreateForm } from '../../utilities/types';
 import { API } from '../APIEndPoints';
 import { headers } from '../headers';
 
@@ -21,7 +21,7 @@ export async function createPost({
   tags,
   endsAt,
   media,
-}: createForm) {
+}: CreateForm) {
   const bodyElement = {
     title: title,
     description: description,

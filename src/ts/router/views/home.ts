@@ -15,19 +15,15 @@ const runPage = async () => {
     sortOrder: 'asc',
     active: true,
   });
-  const mostRecent = await readPosts({
-    limit: 12,
-    sort: 'created',
-    sortOrder: 'desc',
-    active: true,
-  });
   carousel(carouselPosts.data);
   MakeListing({
     paginationDiv: paginationDiv,
     section: section,
-    posts: mostRecent,
     API: 'category',
     tag: '',
+    limit: 12,
+    page: 1,
+    sort: 'created',
   });
 };
 

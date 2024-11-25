@@ -1,5 +1,5 @@
 import { register } from '../../api/auth/register';
-import { registerForm } from '../../utilities/types';
+import { RegisterForm } from '../../utilities/types';
 /**
  * Fetch Register form data and run the fetch call aka. Register a user
  * @param {object} event
@@ -13,7 +13,7 @@ export async function onRegister(event: any) {
 
   const formData = new FormData(event.target);
 
-  const registerData: registerForm = {
+  const registerData: RegisterForm = {
     name: formData.get('name') ?? '',
     email: formData.get('email') ?? '',
     password: formData.get('password') ?? '',

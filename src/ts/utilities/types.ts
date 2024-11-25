@@ -3,21 +3,21 @@ export type loginForm = {
   password?: FormDataEntryValue;
 };
 
-export type registerForm = {
+export type RegisterForm = {
   name?: FormDataEntryValue;
   email?: FormDataEntryValue;
   password?: FormDataEntryValue;
 };
 
-export type createForm = {
+export type CreateForm = {
   title: FormDataEntryValue;
   description: FormDataEntryValue;
   tags: FormDataEntryValue[];
   endsAt: FormDataEntryValue;
-  media: media[];
+  media: Media[];
 };
 
-export type media = {
+export type Media = {
   url: string;
   alt: string;
 };
@@ -29,25 +29,25 @@ export type Category = {
 };
 
 export type APIData = {
-  data: listingObject[];
-  meta: meta;
+  data: ListingObject[];
+  meta: Meta;
 };
 
-export type meta = {
+export type Meta = {
   isFirstPage: boolean;
   isLastPage: boolean;
   currentPage: number;
-  previousPage: null;
+  previousPage: number;
   nextPage: number;
   pageCount: number;
   totalCount: number;
 };
 
-export type listingObject = {
+export type ListingObject = {
   id: string;
   title: string;
   description: string;
-  media: media[];
+  media: Media[];
   count: {
     bids: number;
   };
@@ -71,7 +71,7 @@ export type ElementHelper = {
   alt?: string;
 };
 
-export type readPostsAPI = {
+export type ReadPostsAPI = {
   limit?: number;
   page?: number;
   tag?: string;
@@ -81,11 +81,23 @@ export type readPostsAPI = {
   search?: FormDataEntryValue;
 };
 
-export type makeListing = {
+export type MakeListingType = {
   paginationDiv: HTMLDivElement;
   section: HTMLDivElement;
-  posts: APIData;
   API: string;
   tag?: string;
   search?: FormDataEntryValue;
+  limit?: number;
+  page?: number;
+  sort?: string;
+  sortOrder?: string;
+};
+
+export type MakePaginationType = {
+  meta: Meta;
+  container: HTMLDivElement;
+  paginationDiv: HTMLDivElement;
+  API: string;
+  tag: string;
+  search: FormDataEntryValue;
 };

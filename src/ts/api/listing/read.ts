@@ -1,4 +1,4 @@
-import { readPostsAPI } from '../../utilities/types';
+import { ReadPostsAPI } from '../../utilities/types';
 import { API } from '../APIEndPoints';
 import { headers } from '../headers';
 
@@ -51,7 +51,7 @@ export async function readPosts({
   sort,
   sortOrder,
   active,
-}: readPostsAPI) {
+}: ReadPostsAPI) {
   const queryParameters = `?limit=${limit}&page=${page}&_seller=true&_bids=true&_tag=${tag}&sort=${sort}&sortOrder=${sortOrder}&_active=${active}&`;
 
   try {
@@ -110,7 +110,7 @@ export async function searchPosts({
   limit = 12,
   page = 1,
   search = '',
-}: readPostsAPI) {
+}: ReadPostsAPI) {
   const queryParameters = `?limit=${limit}&page=${page}&_seller=true&_bids=true&q=${search}`;
 
   try {

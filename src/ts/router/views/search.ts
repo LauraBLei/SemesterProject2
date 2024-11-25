@@ -1,11 +1,14 @@
 import { MakeHeader } from '../../ui/global/header';
-import { searchListings } from '../../ui/listing/sortedListings';
-import { CreateCategory } from '../../utilities/components';
+import { CreateCategory, MakeListing } from '../../utilities/components';
 
 const runPage = async () => {
   MakeHeader();
   const categoryContainer = document.getElementById('searchCategories');
   if (categoryContainer) CreateCategory(categoryContainer);
+  const paginationDiv = document.getElementById('pagination') as HTMLDivElement;
+  const searchListingDiv = document.getElementById(
+    'searchListings'
+  ) as HTMLDivElement;
 
   const form = document.getElementById('sortListings');
 
@@ -15,7 +18,14 @@ const runPage = async () => {
     const formData = new FormData(form);
     const search = formData.get('searchBar') ?? '';
     console.log('hello from eventlistener:', search);
-    searchListings('search', { limit: 12, page: 1, search: search });
+    MakeListing({
+      API: 'search',
+      limit: 12,
+      page: 1,
+      search: search,
+      paginationDiv: paginationDiv,
+      section: searchListingDiv,
+    });
   });
 };
 

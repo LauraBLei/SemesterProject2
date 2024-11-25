@@ -1,7 +1,7 @@
 import { CreateElement } from '../../utilities/components';
-import { listingObject } from '../../utilities/types';
+import { ListingObject } from '../../utilities/types';
 
-export const carousel = (posts: listingObject[]) => {
+export const carousel = (posts: ListingObject[]) => {
   const prevBtn = document.querySelector('div.prev-arrow')!;
   const nextBtn = document.querySelector('div.next-arrow')!;
   const sectionContainer = document.querySelector<HTMLDivElement>(
@@ -11,7 +11,7 @@ export const carousel = (posts: listingObject[]) => {
     document.querySelector<HTMLDivElement>('div.dot-section')!;
 
   let currentIndex: number = 0;
-  let slides: listingObject[] = posts;
+  let slides: ListingObject[] = posts;
 
   posts.forEach((post) => makeImage(post, sectionContainer, dotContainer));
 
@@ -59,7 +59,7 @@ export const carousel = (posts: listingObject[]) => {
 };
 
 const makeImage = (
-  post: listingObject,
+  post: ListingObject,
   sectionContainer: Element,
   dotContainer: Element
 ) => {

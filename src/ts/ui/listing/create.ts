@@ -1,10 +1,10 @@
 import { createPost } from '../../api/listing/create';
-import { createForm, media } from '../../utilities/types';
+import { CreateForm, Media } from '../../utilities/types';
 
 export const onCreate = (event: SubmitEvent) => {
   event?.preventDefault();
   const form = event.target as HTMLFormElement;
-  const images: media[] = [];
+  const images: Media[] = [];
   const tags: FormDataEntryValue[] = [];
   const formData = new FormData(form);
 
@@ -22,7 +22,7 @@ export const onCreate = (event: SubmitEvent) => {
     }
   });
 
-  const data: createForm = {
+  const data: CreateForm = {
     title: formData.get('title') ?? '',
     description: formData.get('description') ?? '',
     tags: tags,

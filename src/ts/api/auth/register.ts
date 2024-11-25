@@ -1,4 +1,4 @@
-import { registerForm } from '../../utilities/types';
+import { RegisterForm } from '../../utilities/types';
 import { API } from '../APIEndPoints';
 import { headers } from '../headers';
 
@@ -14,7 +14,7 @@ import { headers } from '../headers';
  * ```
  */
 
-export async function register({ name, email, password }: registerForm) {
+export async function register({ name, email, password }: RegisterForm) {
   const body = {
     name: name,
     email: email,
