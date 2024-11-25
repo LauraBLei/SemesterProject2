@@ -4,6 +4,34 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <script type="module" src="/src/main.ts"></script>
   </head>
-  <body></body>
+  <body>
+    <header></header>
+    <main>
+      <div class="flex flex-col max-w-[1400px] w-full">
+        <div id="banner" class="w-full border-b-2 border-green-900"></div>
+        <div
+          id="profileInfo"
+          class="max-w-[1200px] w-full h-full flex flex-col justify-center items-center"
+        >
+          <div class="w-full flex justify-evenly max-h-[100px] items-center">
+            <div id="updateProfile"></div>
+            <div
+              class="w-[100px] h-[100px] lg:w-[210px] lg:h-[210px] mt-[-50px] lg:mt-[-100px] overflow-hidden rounded-full border-2 border-green-900"
+              id="avatar"
+            ></div>
+            <div class="headline" id="username"></div>
+            <div class="flex gap-2 items-center" id="credits"></div>
+          </div>
+          <div id="bio" class="w-full flex justify-center mt-3"></div>
+        </div>
+        <h1 class="headline text-center mt-10">Your Listings</h1>
+        <div
+          id="userListings"
+          class="flex flex-wrap gap-5 w-full justify-center mt-4"
+        ></div>
+      </div>
+    </main>
+  </body>
 </html>

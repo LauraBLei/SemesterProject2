@@ -4,7 +4,6 @@ import { MakeHeader } from '../../ui/global/header';
 import { MakeListing } from '../../utilities/components';
 
 const runPage = async () => {
-  MakeHeader();
   const section = document.getElementById('mostRecent') as HTMLDivElement;
   const paginationDiv = document.getElementById('pagination') as HTMLDivElement;
 

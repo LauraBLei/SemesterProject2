@@ -59,6 +59,7 @@ export type ListingObject = {
     };
     bio: string;
   };
+  endsAt: string;
 };
 
 export type ElementHelper = {
@@ -100,4 +101,14 @@ export type MakePaginationType = {
   API: string;
   tag: string;
   search: FormDataEntryValue;
+};
+
+export type UserProfileAPI = {
+  name: string;
+  email: string;
+  bio: string;
+  avatar: Media;
+  banner: Media;
+  credits: number;
+  listings: ListingObject[];
 };

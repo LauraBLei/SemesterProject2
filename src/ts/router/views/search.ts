@@ -2,7 +2,6 @@ import { MakeHeader } from '../../ui/global/header';
 import { CreateCategory, MakeListing } from '../../utilities/components';
 
 const runPage = async () => {
-  MakeHeader();
   const categoryContainer = document.getElementById('searchCategories');
   if (categoryContainer) CreateCategory(categoryContainer);
   const paginationDiv = document.getElementById('pagination') as HTMLDivElement;
