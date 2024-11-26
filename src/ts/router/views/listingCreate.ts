@@ -2,6 +2,7 @@ import { onCreate } from '../../ui/listing/create';
 import { CreateElement } from '../../utilities/components';
 
 export const createListing = () => {
+  MakePage();
   const button = document.getElementById('closeCreateListing');
   const div = document.getElementById('createListing');
   const createListingButton = document.getElementById('createListingButton');

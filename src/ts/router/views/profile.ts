@@ -1,5 +1,6 @@
 import { readProfile } from '../../api/profile/read';
 import { createCountdownHTML } from '../../ui/global/countdown';
+import { onUpdateProfile } from '../../ui/profile/update';
 import { CreateElement, Icon } from '../../utilities/components';
 import { iconPaths } from '../../utilities/enums';
 import { UserProfileAPI } from '../../utilities/types';
@@ -7,6 +8,8 @@ import { UserProfileAPI } from '../../utilities/types';
 const runPage = async () => {
   const user = JSON.parse(localStorage.getItem('userInfo') ?? '');
   const userInfo: UserProfileAPI = await readProfile(user.name);
+  const form = document.getElementById('updateProfile');
+  form?.addEventListener('submit', onUpdateProfile);
   console.log(userInfo);
 
   MakeProfile(userInfo);
@@ -68,10 +71,9 @@ const MakeProfile = (userInfo: UserProfileAPI) => {
         <textarea
           class='w-full min-h-[200px] border-2 border-black p-2'
           name="bio"
-          id="bio"
+          id="bioInput"
           placeholder="write something about yourself..."
-          value=${userInfo.bio}
-        ></textarea>
+        >${userInfo.bio}</textarea>
         <button type='submit' class='border-2 border-black py-2 px-4 scale-95 hover:scale-100 transition ease-in-out duration-300 transform' type="submit">Update</button>
       </form>
   `;

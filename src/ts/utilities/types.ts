@@ -112,3 +112,14 @@ export type UserProfileAPI = {
   credits: number;
   listings: ListingObject[];
 };
+
+export type UpdateProfileInfo = {
+  avatar: MediaForm;
+  banner: MediaForm;
+  bio: FormDataEntryValue;
+};
+
+export type MediaForm = {
+  url: FormDataEntryValue;
+  alt: string;
+};
