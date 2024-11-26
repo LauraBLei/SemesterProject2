@@ -10,8 +10,10 @@ export const onCreate = (event: SubmitEvent) => {
 
   const category: FormDataEntryValue = formData.get('category') ?? '';
   tags.push(category);
+
   const imageInputs =
     form.querySelectorAll<HTMLInputElement>('input[type="url"]');
+
   imageInputs.forEach((input) => {
     const imageUrl = input.value.trim();
     if (imageUrl) {
@@ -21,7 +23,6 @@ export const onCreate = (event: SubmitEvent) => {
       });
     }
   });
-
   const data: CreateForm = {
     title: formData.get('title') ?? '',
     description: formData.get('description') ?? '',
@@ -30,6 +31,5 @@ export const onCreate = (event: SubmitEvent) => {
     media: images,
   };
 
-  console.log('form Data', data);
   createPost(data);
 };

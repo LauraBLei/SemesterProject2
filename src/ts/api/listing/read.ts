@@ -1,4 +1,4 @@
-import { ReadPostsAPI } from '../../utilities/types';
+import { ListingObject, ReadPostsAPI } from '../../utilities/types';
 import { API } from '../APIEndPoints';
 import { headers } from '../headers';
 
@@ -24,7 +24,7 @@ export async function readListing(id: string) {
 
     if (response.ok) {
       const data = await response.json();
-      const post = data.data;
+      const post: ListingObject = data.data;
       return post;
     }
   } catch (error) {

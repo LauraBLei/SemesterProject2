@@ -107,6 +107,7 @@ const MakeProfile = (userInfo: UserProfileAPI) => {
   ) as HTMLDivElement;
 
   userListings.forEach((listing) => {
+    const div = document.getElementById('editListing');
     const container = CreateElement({
       element: 'div',
       id: listing.id,
@@ -119,6 +120,7 @@ const MakeProfile = (userInfo: UserProfileAPI) => {
 
     const editButton = CreateElement({ element: 'button' });
     editButton.innerHTML = `${Icon(iconPaths.edit)}`;
+
     const deleteButton = CreateElement({ element: 'button' });
     deleteButton.innerHTML = `${Icon(iconPaths.delete)}`;
 
