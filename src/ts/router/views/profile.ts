@@ -4,6 +4,7 @@ import { onUpdateProfile } from '../../ui/profile/update';
 import { CreateElement, Icon } from '../../utilities/components';
 import { iconPaths } from '../../utilities/enums';
 import { UserProfileAPI } from '../../utilities/types';
+import { MakeCreateOrEditForm } from './listingEdit';
 
 const runPage = async () => {
   const user = JSON.parse(localStorage.getItem('userInfo') ?? '');
@@ -120,6 +121,11 @@ const MakeProfile = (userInfo: UserProfileAPI) => {
 
     const editButton = CreateElement({ element: 'button' });
     editButton.innerHTML = `${Icon(iconPaths.edit)}`;
+    editButton.addEventListener('click', () => {
+      const div = document.getElementById('createEditContainer');
+      div?.classList.remove('hidden');
+      MakeCreateOrEditForm({ id: listing.id, edit: true });
+    });
 
     const deleteButton = CreateElement({ element: 'button' });
     deleteButton.innerHTML = `${Icon(iconPaths.delete)}`;

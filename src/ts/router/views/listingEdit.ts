@@ -1,24 +1,33 @@
 import { list } from 'postcss';
 import { readListing } from '../../api/listing/read';
 import { CreateElement } from '../../utilities/components';
-import { ListingObject } from '../../utilities/types';
 
-export const createAndEdit = () => {};
+export const createAndEditContainer = () => {
+  const main = document.querySelector('main');
+  const div = CreateElement({
+    element: 'div',
+    id: 'createEditContainer',
+    styling:
+      'bg-black/50 w-full h-full absolute hidden flex items-center justify-center',
+  });
 
-// This is gonna be the hidden div in the header//
-const div = CreateElement({
-  element: 'div',
-  id: 'createEditContainer',
-  styling:
-    'bg-black/50 w-full h-full absolute hidden flex items-center justify-center',
-});
+  main?.append(div);
+};
 
-const MakeHTML = async ({ id, create, edit }: any) => {
+export const MakeCreateOrEditForm = async ({
+  id,
+  create = false,
+  edit = false,
+}: {
+  id?: string;
+  create?: boolean;
+  edit?: boolean;
+}) => {
   const container = document.getElementById(
     'createEditContainer'
   ) as HTMLDivElement;
   let listing;
-  if (edit) {
+  if (edit && id) {
     listing = await readListing(id);
   }
 
@@ -70,16 +79,17 @@ const MakeHTML = async ({ id, create, edit }: any) => {
   titleInput.name = 'title';
   titleInput.placeholder = 'Title...';
   titleInput.maxlength = '50';
+  titleInput.value = edit && listing ? listing.title : '';
   titleInput.required;
   const description = CreateElement({
     element: 'textarea',
     id: 'description',
     styling: 'w-full border-2 border-black p-2 min-h-[100px]',
   });
-  description.type = 'text';
   description.name = 'description';
   description.placeholder = 'Add a description...';
   description.maxlength = '300';
+  description.value = edit && listing ? listing.description : '';
   description.required;
 
   const sectionTwo = CreateElement({
