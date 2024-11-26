@@ -1,6 +1,5 @@
 import { readProfile } from '../../api/profile/read';
 import { createCountdownHTML } from '../../ui/global/countdown';
-import { MakeHeader } from '../../ui/global/header';
 import { CreateElement, Icon } from '../../utilities/components';
 import { iconPaths } from '../../utilities/enums';
 import { UserProfileAPI } from '../../utilities/types';
@@ -28,12 +27,57 @@ const MakeProfile = (userInfo: UserProfileAPI) => {
   const updateProfileDiv = document.getElementById(
     'updateProfile'
   ) as HTMLDivElement;
-  updateProfileDiv.innerHTML = `
-        <details>
-            <summary class='list-none' >${Icon(iconPaths.setting, '#00000', '40px')}</summary>
-            <div></div>
-        </details>
-    `;
+  const details = CreateElement({ element: 'details' });
+  const summary = CreateElement({
+    element: 'summary',
+    styling:
+      ' list-none cursor-pointer scale-95 hover:scale-100 transition ease-in-out duration-300 transform',
+  });
+  summary.innerHTML = `${Icon(iconPaths.setting, '#00000', '40px')}
+  `;
+  const div = CreateElement({
+    element: 'div',
+    styling:
+      'absolute z-20 bg-white border-2 border-black max-w-[500px] w-full p-4 max-h-[300px] overflow-y-auto',
+  });
+  div.innerHTML = `
+  <h2 class='headline text-center'>Update Profile</h2>
+      <form class='flex flex-col gap-4 items-center w-full' id="updateProfile">
+      <div class='flex flex-col gap-2 w-full'>
+      <label class='text-2xl font-semibold' for="avatarUrl">Profile picture:</label>
+      <input
+        class='w-full border-2 border-black p-2'
+        type="url"
+        name="avatarUrl"
+        id="avatarUrl"
+        placeholder="Profile Img url..."
+        value=${userInfo.avatar.url}
+      />
+      </div>
+      <div class='flex flex-col gap-2 w-full'>
+      <label class='text-2xl font-semibold' for="bannerUrl">Cover picture:</label>
+      <input
+        class='w-full border-2 border-black p-2'
+        type="url"
+        name="bannerUrl"
+        id="bannerUrl"
+        placeholder="Cover img url..."
+        value = ${userInfo.banner.url}
+      />
+      </div>
+        <textarea
+          class='w-full min-h-[200px] border-2 border-black p-2'
+          name="bio"
+          id="bio"
+          placeholder="write something about yourself..."
+          value=${userInfo.bio}
+        ></textarea>
+        <button type='submit' class='border-2 border-black py-2 px-4 scale-95 hover:scale-100 transition ease-in-out duration-300 transform' type="submit">Update</button>
+      </form>
+  `;
+
+  updateProfileDiv.append(details);
+  details.append(summary, div);
 
   const avatarDiv = document.getElementById('avatar') as HTMLDivElement;
   const avatar = CreateElement({
@@ -65,7 +109,7 @@ const MakeProfile = (userInfo: UserProfileAPI) => {
       element: 'div',
       id: listing.id,
       styling:
-        'bg-black text-white p-2 w-full max-w-[400px] cursor-pointer flex justify-evenly gap-4',
+        'bg-black text-white p-2 w-full max-w-[400px] cursor-pointer flex justify-evenly gap-4 scale-95 hover:scale-100 transition ease-in-out duration-300 transform',
     });
     const title = CreateElement({ element: 'p', text: listing.title });
 
