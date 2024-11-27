@@ -74,7 +74,9 @@ export type ElementHelper = {
   type?: string;
   name?: string;
   value?: string;
-  restricted?: boolean;
+  required?: boolean;
+  forLabel?: string;
+  placeholder?: string;
 };
 
 export type ReadPostsAPI = {

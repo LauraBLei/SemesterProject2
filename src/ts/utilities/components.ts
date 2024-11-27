@@ -29,23 +29,23 @@ export const CreateElement = ({
   type,
   name,
   value,
-  restricted,
+  required,
+  forLabel,
+  placeholder,
 }: ElementHelper) => {
   const item = document.createElement(element);
-  item.innerText = text ?? '';
-  item.id = id ?? '';
-  item.className = styling ?? '';
-  if (href) {
-    item.href = href;
-  }
-  item.src = src ?? '';
-  item.alt = alt ?? '';
-  item.name = name ?? '';
-  item.type = type ?? '';
-  item.value = value ?? '';
-  if (restricted) {
-    item.restricted;
-  }
+  if (text) item.innerText = text;
+  if (id) item.id = id;
+  if (styling) item.className = styling;
+  if (href) item.href = href;
+  if (src) item.src = src;
+  if (alt) item.alt = alt;
+  if (name) item.name = name;
+  if (type) item.type = type;
+  if (value) item.value = value;
+  if (required) item.required;
+  if (forLabel) item.htmlFor = forLabel;
+  if (placeholder) item.placeholder = placeholder;
   return item;
 };
 

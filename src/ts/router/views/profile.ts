@@ -44,40 +44,8 @@ const MakeProfile = (userInfo: UserProfileAPI) => {
     styling:
       'absolute z-20 bg-white border-2 border-black max-w-[500px] w-full p-4 max-h-[300px] overflow-y-auto',
   });
-  div.innerHTML = `
-  <h2 class='headline text-center'>Update Profile</h2>
-      <form class='flex flex-col gap-4 items-center w-full' id="updateProfile">
-      <div class='flex flex-col gap-2 w-full'>
-      <label class='text-2xl font-semibold' for="avatarUrl">Profile picture:</label>
-      <input
-        class='w-full border-2 border-black p-2'
-        type="url"
-        name="avatarUrl"
-        id="avatarUrl"
-        placeholder="Profile Img url..."
-        value=${userInfo.avatar.url}
-      />
-      </div>
-      <div class='flex flex-col gap-2 w-full'>
-      <label class='text-2xl font-semibold' for="bannerUrl">Cover picture:</label>
-      <input
-        class='w-full border-2 border-black p-2'
-        type="url"
-        name="bannerUrl"
-        id="bannerUrl"
-        placeholder="Cover img url..."
-        value = ${userInfo.banner.url}
-      />
-      </div>
-        <textarea
-          class='w-full min-h-[200px] border-2 border-black p-2'
-          name="bio"
-          id="bioInput"
-          placeholder="write something about yourself..."
-        >${userInfo.bio}</textarea>
-        <button type='submit' class='border-2 border-black py-2 px-4 scale-95 hover:scale-100 transition ease-in-out duration-300 transform' type="submit">Update</button>
-      </form>
-  `;
+
+  makeUpdateProfileForm(div, userInfo);
 
   updateProfileDiv.append(details);
   details.append(summary, div);
@@ -134,7 +102,10 @@ const MakeProfile = (userInfo: UserProfileAPI) => {
   });
 };
 
-const makeUpdateProfileForm = (container: HTMLDivElement) => {
+const makeUpdateProfileForm = (
+  container: HTMLDivElement,
+  userInfo: UserProfileAPI
+) => {
   const title = CreateElement({
     element: 'h2',
     text: 'Update Profile',
@@ -147,7 +118,69 @@ const makeUpdateProfileForm = (container: HTMLDivElement) => {
     styling: 'flex flex-col gap-4 items-center w-full',
   });
 
-  container.append(title);
+  const avatarContainer = CreateElement({
+    element: 'div',
+    styling: 'flex flex-col gap-2 w-full',
+  });
+  const avatarLabel = CreateElement({
+    element: 'label',
+    forLabel: 'avatarUrl',
+    text: 'Profile picture:',
+    styling: 'text-2xl font-semibold',
+  });
+  const avatarInput = CreateElement({
+    element: 'input',
+    type: 'url',
+    name: 'avatarUrl',
+    id: 'avatarUrl',
+    placeholder: 'Profile Img url',
+    value: `${userInfo.avatar.url}`,
+    styling: 'w-full border-2 border-black p-2',
+    required: true,
+  });
+
+  const bannerContainer = CreateElement({
+    element: 'div',
+    styling: 'flex flex-col gap-2 w-full',
+  });
+  const bannerLabel = CreateElement({
+    element: 'label',
+    forLabel: 'bannerUrl',
+    text: 'Cover picture:',
+  });
+  const bannerInput = CreateElement({
+    element: 'input',
+    type: 'url',
+    name: 'bannerUrl',
+    id: 'bannerUrl',
+    placeholder: 'Cover img url...',
+    value: `${userInfo.banner.url}`,
+    styling: 'w-full border-2 border-black p-2',
+    required: true,
+  });
+
+  const bio = CreateElement({
+    element: 'textarea',
+    name: 'bio',
+    id: 'bioInput',
+    placeholder: 'Write something about yourself...',
+    required: true,
+    styling: 'w-full min-h-[200px] border-2 border-black p-2',
+    text: `${userInfo.bio}`,
+  });
+
+  const submitButton = CreateElement({
+    element: 'button',
+    text: 'Update',
+    type: 'submit',
+    styling:
+      'border-2 border-black py-2 px-4 scale-95 hover:scale-100 transition ease-in-out duration-300 transform',
+  });
+
+  container.append(title, form);
+  form.append(avatarContainer, bannerContainer, bio, submitButton);
+  avatarContainer.append(avatarLabel, avatarInput);
+  bannerContainer.append(bannerLabel, bannerInput);
 };
 
 runPage();
