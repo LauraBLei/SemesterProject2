@@ -4,7 +4,7 @@ import { onUpdateProfile } from '../../ui/profile/update';
 import { CreateElement, Icon } from '../../utilities/components';
 import { iconPaths } from '../../utilities/enums';
 import { UserProfileAPI } from '../../utilities/types';
-import { MakeCreateOrEditForm } from './listingEdit';
+import { MakeCreateOrEditForm } from './listingCreateEdit';
 
 const runPage = async () => {
   const user = JSON.parse(localStorage.getItem('userInfo') ?? '');
@@ -132,6 +132,22 @@ const MakeProfile = (userInfo: UserProfileAPI) => {
     container.append(title, countDown, editButton, deleteButton);
     listingsContainer.append(container);
   });
+};
+
+const makeUpdateProfileForm = (container: HTMLDivElement) => {
+  const title = CreateElement({
+    element: 'h2',
+    text: 'Update Profile',
+    styling: 'headline text-center',
+  });
+
+  const form = CreateElement({
+    element: 'form',
+    id: 'updateProfile',
+    styling: 'flex flex-col gap-4 items-center w-full',
+  });
+
+  container.append(title);
 };
 
 runPage();

@@ -2,10 +2,10 @@ import { iconPaths } from '../../utilities/enums';
 import { CreateElement, Icon } from '../../utilities/components';
 import { onLogout } from '../auth/logout';
 import { createListing } from '../../router/views/listingCreate';
+import { MakeCreateOrEditForm } from '../../router/views/listingCreateEdit';
 
 export const MakeHeader = () => {
   Header();
-  createListing();
 };
 
 const toggleSideBar = (sidebarID: string, btn: string) => {
@@ -91,6 +91,11 @@ const Header = () => {
     });
     createListing.innerHTML = `${Icon(iconPaths.plus)}
 <span id="navSpan">Create Listing</span>`;
+    createListing.addEventListener('click', () => {
+      const div = document.getElementById('createEditContainer');
+      div?.classList.remove('hidden');
+      MakeCreateOrEditForm({ create: true });
+    });
     const logOut = CreateElement({
       element: 'a',
       styling: 'flex gap-4 buttonEffect',

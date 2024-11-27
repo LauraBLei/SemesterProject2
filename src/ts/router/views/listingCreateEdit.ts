@@ -1,4 +1,3 @@
-import { list } from 'postcss';
 import { readListing } from '../../api/listing/read';
 import { CreateElement } from '../../utilities/components';
 import { onEdit } from '../../ui/listing/update';
@@ -203,7 +202,7 @@ export const MakeCreateOrEditForm = async ({
   submitButton.type = 'submit';
 
   form.addEventListener('submit', (event: SubmitEvent) => {
-    edit && listing ? onEdit(event, listing.id) : create ? onCreate(event) : '';
+    edit ? onEdit(event, listing.id) : create ? onCreate(event) : '';
   });
 
   container.append(outerDiv);
@@ -234,6 +233,7 @@ export const MakeCreateOrEditForm = async ({
     container?.classList.add('hidden');
     form?.reset();
     additionalImageInputs.innerHTML = '';
+    container.innerHTML = '';
   });
   addImageInputButton?.addEventListener('click', () => {
     imageInputs(additionalImageInputs);

@@ -71,6 +71,10 @@ export type ElementHelper = {
   href?: string;
   src?: string;
   alt?: string;
+  type?: string;
+  name?: string;
+  value?: string;
+  restricted?: boolean;
 };
 
 export type ReadPostsAPI = {

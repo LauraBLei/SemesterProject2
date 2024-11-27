@@ -26,6 +26,10 @@ export const CreateElement = ({
   href,
   src,
   alt,
+  type,
+  name,
+  value,
+  restricted,
 }: ElementHelper) => {
   const item = document.createElement(element);
   item.innerText = text ?? '';
@@ -36,6 +40,12 @@ export const CreateElement = ({
   }
   item.src = src ?? '';
   item.alt = alt ?? '';
+  item.name = name ?? '';
+  item.type = type ?? '';
+  item.value = value ?? '';
+  if (restricted) {
+    item.restricted;
+  }
   return item;
 };
 

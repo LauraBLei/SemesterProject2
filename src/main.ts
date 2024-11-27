@@ -1,7 +1,7 @@
 import './css/style.css';
 
 import router from './ts/router/router';
-import { createAndEditContainer } from './ts/router/views/listingEdit';
+import { createAndEditContainer } from './ts/router/views/listingCreateEdit';
 import { MakeHeader } from './ts/ui/global/header';
 
 createAndEditContainer();
