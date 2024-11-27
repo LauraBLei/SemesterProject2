@@ -1,6 +1,8 @@
 import { list } from 'postcss';
 import { readListing } from '../../api/listing/read';
 import { CreateElement } from '../../utilities/components';
+import { onEdit } from '../../ui/listing/update';
+import { onCreate } from '../../ui/listing/create';
 
 export const createAndEditContainer = () => {
   const main = document.querySelector('main');
@@ -102,9 +104,6 @@ export const MakeCreateOrEditForm = async ({
   });
   select.name = 'Category';
   select.required;
-  if (edit && listing) {
-    select.value = listing.tag || '';
-  }
   const defaultOption = CreateElement({ element: 'option', text: 'Category' });
   defaultOption.value = '';
   defaultOption.disabled;
@@ -117,7 +116,7 @@ export const MakeCreateOrEditForm = async ({
   });
   collectables.value = 'collectables';
   const watchesAndJewelry = CreateElement({
-    element: 'options',
+    element: 'option',
     text: 'Watches and Jewelry',
   });
   watchesAndJewelry.value = 'watches_jewelry';
@@ -127,7 +126,7 @@ export const MakeCreateOrEditForm = async ({
   });
   decorativeArt.value = 'decorative_art';
   const classicCars = CreateElement({
-    element: 'options',
+    element: 'option',
     text: 'Classic Cars',
   });
   classicCars.value = 'classic_cars';
@@ -138,6 +137,7 @@ export const MakeCreateOrEditForm = async ({
     id: 'auctionDate',
     styling: 'm-2 border-2 border-black px-4 py-2',
   });
+
   dateInput.type = 'date';
   dateInput.name = 'auctionDate';
   dateInput.required;
@@ -202,6 +202,10 @@ export const MakeCreateOrEditForm = async ({
       : '';
   submitButton.type = 'submit';
 
+  form.addEventListener('submit', (event: SubmitEvent) => {
+    edit && listing ? onEdit(event, listing.id) : create ? onCreate(event) : '';
+  });
+
   container.append(outerDiv);
   outerDiv.append(exitDiv, headline, form);
   exitDiv.appendChild(exitButton);
@@ -219,4 +223,64 @@ export const MakeCreateOrEditForm = async ({
   );
   sectionThree.append(imageText, divImageInput);
   divImageInput.append(imageInput, additionalImageInputs, addImageInputButton);
+  if (edit && listing) {
+    console.log(listing);
+    if (listing.tags.length > 0) {
+      select.value = listing.tags[0];
+    }
+  }
+
+  exitButton?.addEventListener('click', () => {
+    container?.classList.add('hidden');
+    form?.reset();
+    additionalImageInputs.innerHTML = '';
+  });
+  addImageInputButton?.addEventListener('click', () => {
+    imageInputs(additionalImageInputs);
+  });
+};
+
+const imageInputs = (container: Element) => {
+  console.log(container);
+
+  const currentImageCount = container.querySelectorAll('input').length;
+  console.log('hello from click');
+  const addInput = document.getElementById('addImageInput');
+
+  console.log('imageCount', currentImageCount);
+
+  if (currentImageCount <= 1) {
+    const div = CreateElement({
+      element: 'div',
+      styling: 'w-full flex justify-between gap-2',
+    });
+    const newInput = document.createElement('input');
+    (newInput.type = 'url'),
+      (newInput.className = 'w-full border-2 border-black p-2');
+    newInput.placeholder = 'Add Image url...';
+    newInput.required;
+
+    const button = CreateElement({
+      element: 'button',
+      text: 'X',
+      styling:
+        'px-4 py-2 border-2  border-black rounded-full scale-95 hover:scale-100 transition ease-in-out duration-300',
+    });
+    button.type = 'button';
+
+    button.addEventListener('click', () => {
+      div.remove();
+      if (addInput) {
+        addInput.classList.remove('hidden');
+      }
+    });
+
+    container.append(div);
+    div.append(newInput, button);
+  }
+  if (currentImageCount === 1) {
+    if (addInput) {
+      addInput.classList.add('hidden');
+    }
+  }
 };

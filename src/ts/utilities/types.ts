@@ -60,7 +60,7 @@ export type ListingObject = {
     bio: string;
   };
   endsAt: string;
-  tag: [];
+  tags: string[];
 };
 
 export type ElementHelper = {

@@ -108,7 +108,6 @@ const MakeProfile = (userInfo: UserProfileAPI) => {
   ) as HTMLDivElement;
 
   userListings.forEach((listing) => {
-    const div = document.getElementById('editListing');
     const container = CreateElement({
       element: 'div',
       id: listing.id,
