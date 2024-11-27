@@ -1,4 +1,5 @@
 import { readPosts, searchPosts } from '../api/listing/read';
+import { iconPaths } from './enums';
 import { categories } from './objects';
 import {
   ElementHelper,
@@ -215,8 +216,19 @@ export const makeSingleListing = (
     text: `${post.seller.name}`,
   });
 
+  const seePost = CreateElement({
+    element: 'a',
+    href: '/listing/',
+    styling:
+      'scale-90 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer p-2 hover:bg-green-900 w-full flex justify-center text-white text-2xl items-end gap-3',
+  });
+  seePost.addEventListener('click', () => {
+    localStorage.setItem('id', JSON.stringify(post.id));
+  });
+  seePost.innerHTML = `View ${Icon(iconPaths.eye)}`;
+
   section?.append(container);
-  container.append(imageDiv, title, description, userInfoDiv);
+  container.append(imageDiv, title, description, userInfoDiv, seePost);
   userInfoDiv.append(profileImageDiv, username);
   profileImageDiv.appendChild(profileImage);
 };

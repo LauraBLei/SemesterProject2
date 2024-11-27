@@ -80,13 +80,17 @@ const MakeProfile = (userInfo: UserProfileAPI) => {
       element: 'div',
       id: listing.id,
       styling:
-        'bg-black text-white p-2 w-full max-w-[400px] cursor-pointer flex justify-evenly gap-4 scale-95 hover:scale-100 transition ease-in-out duration-300 transform',
+        'bg-black text-white p-2 w-full max-w-[500px] flex justify-evenly items-center gap-4',
     });
     const title = CreateElement({ element: 'p', text: listing.title });
 
     const countDown = createCountdownHTML(listing.endsAt);
 
-    const editButton = CreateElement({ element: 'button' });
+    const editButton = CreateElement({
+      element: 'button',
+      styling:
+        'scale-90 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer p-2 hover:bg-green-900',
+    });
     editButton.innerHTML = `${Icon(iconPaths.edit)}`;
     editButton.addEventListener('click', () => {
       const div = document.getElementById('createEditContainer');
@@ -94,10 +98,24 @@ const MakeProfile = (userInfo: UserProfileAPI) => {
       MakeCreateOrEditForm({ id: listing.id, edit: true });
     });
 
-    const deleteButton = CreateElement({ element: 'button' });
+    const deleteButton = CreateElement({
+      element: 'button',
+      styling:
+        'scale-90 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer p-2 hover:bg-green-900',
+    });
     deleteButton.innerHTML = `${Icon(iconPaths.delete)}`;
+    const seePost = CreateElement({
+      element: 'a',
+      href: '/listing/',
+      styling:
+        'scale-90 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer p-2 hover:bg-green-900',
+    });
+    seePost.addEventListener('click', () => {
+      localStorage.setItem('id', JSON.stringify(listing.id));
+    });
+    seePost.innerHTML = `${Icon(iconPaths.eye)}`;
 
-    container.append(title, countDown, editButton, deleteButton);
+    container.append(title, countDown, editButton, deleteButton, seePost);
     listingsContainer.append(container);
   });
 };
