@@ -61,6 +61,14 @@ export type ListingObject = {
   };
   endsAt: string;
   tags: string[];
+  bids: Bid[];
+};
+
+export type Bid = {
+  amount: number;
+  bidder: UserProfileAPI;
+  created: string;
+  id: string;
 };
 
 export type ElementHelper = {
