@@ -88,6 +88,7 @@ export type ElementHelper = {
 };
 
 export type ReadPostsAPI = {
+  username?: string;
   limit?: number;
   page?: number;
   tag?: string;

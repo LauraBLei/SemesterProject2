@@ -24,7 +24,6 @@ export async function readProfile(username: string) {
     );
     if (response.ok) {
       const profileData = await response.json();
-      console.log(profileData);
 
       return profileData.data;
     }

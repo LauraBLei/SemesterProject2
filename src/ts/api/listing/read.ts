@@ -84,12 +84,19 @@ export async function readPosts({
  * ```
  */
 
-export async function readPostsByUser(username: string, limit = 12, page = 1) {
-  const queryParameters = `?limit=${limit}&page=${page}&_seller=true&_bids=true&`;
+export async function readListingsByUser({
+  username,
+  limit = 12,
+  page = 1,
+  sort = 'created',
+  sortOrder = 'desc',
+  active,
+}: ReadPostsAPI) {
+  const queryParameters = `?limit=${limit}&page=${page}&_seller=true&_bids=true&sort=${sort}&sortOrder=${sortOrder}&_active=${active}&`;
 
   try {
     const response = await fetch(
-      API.AUCTION_LISTINGS + '/' + username + '/posts?' + queryParameters,
+      API.AUCTION_PROFILES + '/' + username + '/listings' + queryParameters,
       {
         method: 'GET',
         headers: headers(),
@@ -123,6 +130,37 @@ export async function searchPosts({
       const data = await response.json();
 
       return data;
+    }
+  } catch (error) {
+    alert('something went wrong trying to fetch user posts');
+    console.log(error);
+  }
+}
+
+export async function readBidsByUser({
+  username,
+  limit = 12,
+  page = 1,
+  sort = 'created',
+  sortOrder = 'desc',
+}: ReadPostsAPI) {
+  const queryParameters = `?limit=${limit}&page=${page}&sort=${sort}&sortOrder=${sortOrder}&_listings=true`;
+
+  try {
+    const response = await fetch(
+      API.AUCTION_PROFILES + '/' + username + '/bids' + queryParameters,
+      {
+        method: 'GET',
+        headers: headers(),
+      }
+    );
+
+    if (response.ok) {
+      const data = await response.json();
+
+      return data;
+    } else {
+      console.log(response);
     }
   } catch (error) {
     alert('something went wrong trying to fetch user posts');

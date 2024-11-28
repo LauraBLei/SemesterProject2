@@ -1,9 +1,11 @@
+import { readBidsByUser, readListingsByUser } from '../../api/listing/read';
 import { readProfile } from '../../api/profile/read';
 import { createCountdownHTML } from '../../ui/global/countdown';
+import { onDeletePost } from '../../ui/listing/delete';
 import { onUpdateProfile } from '../../ui/profile/update';
 import { CreateElement, Icon } from '../../utilities/components';
 import { iconPaths } from '../../utilities/enums';
-import { UserProfileAPI } from '../../utilities/types';
+import { ListingObject, UserProfileAPI } from '../../utilities/types';
 import { MakeCreateOrEditForm } from './listingCreateEdit';
 
 const runPage = async () => {
@@ -11,13 +13,38 @@ const runPage = async () => {
   const userInfo: UserProfileAPI = await readProfile(user.name);
   const form = document.getElementById('updateProfile');
   form?.addEventListener('submit', onUpdateProfile);
-  console.log(userInfo);
 
   MakeProfile(userInfo);
 };
 
-const MakeProfile = (userInfo: UserProfileAPI) => {
-  const userListings = userInfo.listings;
+const MakeProfile = async (userInfo: UserProfileAPI) => {
+  const fetchActiveListings = await readListingsByUser({
+    username: userInfo.name,
+    sort: 'created',
+    sortOrder: 'desc',
+  });
+
+  const activeListings: ListingObject[] = fetchActiveListings.data;
+
+  const fetchClosedListings = await readListingsByUser({
+    username: userInfo.name,
+    sort: 'endsAt',
+    sortOrder: 'asc',
+  });
+
+  const closedListings: ListingObject[] = fetchClosedListings.data;
+
+  const fetchUserBids = await readBidsByUser({
+    username: userInfo.name,
+    sort: 'created',
+    sortOrder: 'desc',
+  });
+
+  const userBids: ListingObject[] = fetchUserBids.data;
+
+  console.log('active: ', activeListings);
+  console.log('closed: ', closedListings);
+  console.log('user bids: ', fetchUserBids);
 
   const bannerDiv = document.getElementById('banner');
   const banner = CreateElement({
@@ -71,52 +98,26 @@ const MakeProfile = (userInfo: UserProfileAPI) => {
   const bio = document.getElementById('bio') as HTMLDivElement;
   bio.innerText = userInfo.bio;
 
-  const listingsContainer = document.getElementById(
-    'userListings'
+  const activeListingsContainer = document.getElementById(
+    'activeListings'
   ) as HTMLDivElement;
 
-  userListings.forEach((listing) => {
-    const container = CreateElement({
-      element: 'div',
-      id: listing.id,
-      styling:
-        'bg-black text-white p-2 w-full max-w-[500px] flex justify-evenly items-center gap-4',
-    });
-    const title = CreateElement({ element: 'p', text: listing.title });
+  const closedListingsContainer = document.getElementById(
+    'closedListings'
+  ) as HTMLDivElement;
 
-    const countDown = createCountdownHTML(listing.endsAt);
+  const userBidsContainer = document.getElementById(
+    'userBids'
+  ) as HTMLDivElement;
 
-    const editButton = CreateElement({
-      element: 'button',
-      styling:
-        'scale-90 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer p-2 hover:bg-green-900',
-    });
-    editButton.innerHTML = `${Icon(iconPaths.edit)}`;
-    editButton.addEventListener('click', () => {
-      const div = document.getElementById('createEditContainer');
-      div?.classList.remove('hidden');
-      MakeCreateOrEditForm({ id: listing.id, edit: true });
-    });
-
-    const deleteButton = CreateElement({
-      element: 'button',
-      styling:
-        'scale-90 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer p-2 hover:bg-green-900',
-    });
-    deleteButton.innerHTML = `${Icon(iconPaths.delete)}`;
-    const seePost = CreateElement({
-      element: 'a',
-      href: '/listing/',
-      styling:
-        'scale-90 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer p-2 hover:bg-green-900',
-    });
-    seePost.addEventListener('click', () => {
-      localStorage.setItem('id', JSON.stringify(listing.id));
-    });
-    seePost.innerHTML = `${Icon(iconPaths.eye)}`;
-
-    container.append(title, countDown, editButton, deleteButton, seePost);
-    listingsContainer.append(container);
+  activeListings.forEach((listing: ListingObject) => {
+    MakeActiveListings(listing, activeListingsContainer);
+  });
+  closedListings.forEach((listing: ListingObject) => {
+    MakeClosedListings(listing, closedListingsContainer);
+  });
+  userBids.forEach((listing: ListingObject) => {
+    MakeUserBids(listing, userBidsContainer);
   });
 };
 
@@ -201,4 +202,137 @@ const makeUpdateProfileForm = (
   bannerContainer.append(bannerLabel, bannerInput);
 };
 
+const MakeActiveListings = (
+  listing: ListingObject,
+  listingsContainer: HTMLDivElement
+) => {
+  const container = CreateElement({
+    element: 'div',
+    id: listing.id,
+    styling:
+      'bg-black text-white p-2 w-full  flex justify-evenly items-center gap-4',
+  });
+  const title = CreateElement({ element: 'p', text: listing.title });
+
+  const countDown = createCountdownHTML(listing.endsAt);
+
+  const editButton = CreateElement({
+    element: 'button',
+    styling:
+      'scale-90 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer p-2 hover:bg-green-900',
+  });
+  editButton.innerHTML = `${Icon(iconPaths.edit)}`;
+  editButton.addEventListener('click', () => {
+    const div = document.getElementById('createEditContainer');
+    div?.classList.remove('hidden');
+    MakeCreateOrEditForm({ id: listing.id, edit: true });
+  });
+
+  const deleteButton = CreateElement({
+    element: 'button',
+    styling:
+      'scale-90 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer p-2 hover:bg-green-900',
+  });
+  deleteButton.innerHTML = `${Icon(iconPaths.delete)}`;
+  deleteButton.addEventListener('click', () => {
+    onDeletePost(listing.id);
+  });
+  const seePost = CreateElement({
+    element: 'a',
+    href: '/listing/',
+    styling:
+      'scale-90 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer p-2 hover:bg-green-900',
+  });
+  seePost.addEventListener('click', () => {
+    localStorage.setItem('id', JSON.stringify(listing.id));
+  });
+  seePost.innerHTML = `${Icon(iconPaths.eye)}`;
+
+  container.append(title, countDown, editButton, deleteButton, seePost);
+  listingsContainer.append(container);
+};
+
+const MakeClosedListings = (
+  listing: ListingObject,
+  listingsContainer: HTMLDivElement
+) => {
+  const container = CreateElement({
+    element: 'div',
+    id: listing.id,
+    styling:
+      'bg-black text-white p-2 w-full flex justify-evenly items-center gap-4',
+  });
+  const title = CreateElement({ element: 'p', text: listing.title });
+
+  const countDown = createCountdownHTML(listing.endsAt);
+
+  const editButton = CreateElement({
+    element: 'button',
+    styling:
+      'scale-90 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer p-2 hover:bg-green-900',
+  });
+  editButton.innerHTML = `${Icon(iconPaths.edit)}`;
+  editButton.addEventListener('click', () => {
+    const div = document.getElementById('createEditContainer');
+    div?.classList.remove('hidden');
+    MakeCreateOrEditForm({ id: listing.id, edit: true });
+  });
+
+  const deleteButton = CreateElement({
+    element: 'button',
+    styling:
+      'scale-90 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer p-2 hover:bg-green-900',
+  });
+  deleteButton.innerHTML = `${Icon(iconPaths.delete)}`;
+  deleteButton.addEventListener('click', () => {
+    onDeletePost(listing.id);
+  });
+  const seePost = CreateElement({
+    element: 'a',
+    href: '/listing/',
+    styling:
+      'scale-90 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer p-2 hover:bg-green-900',
+  });
+  seePost.addEventListener('click', () => {
+    localStorage.setItem('id', JSON.stringify(listing.id));
+  });
+  seePost.innerHTML = `${Icon(iconPaths.eye)}`;
+
+  container.append(title, countDown, editButton, deleteButton, seePost);
+  listingsContainer.append(container);
+};
+
+const MakeUserBids = (
+  listing: ListingObject,
+  listingsContainer: HTMLDivElement
+) => {
+  const container = CreateElement({
+    element: 'div',
+    id: listing.id,
+    styling: 'bg-black w-full text-white flex justify-evenly ',
+  });
+  const title = CreateElement({ element: 'p', text: listing.listing.title });
+
+  const countDown = createCountdownHTML(listing.listing.endsAt);
+
+  const bidDiv = CreateElement({ element: 'div', styling: 'flex gap-2' });
+  const bid = CreateElement({ element: 'p', text: listing.amount });
+  const icon = CreateElement({ element: 'div' });
+  icon.innerHTML = `${Icon(iconPaths.credits)}`;
+
+  const seePost = CreateElement({
+    element: 'a',
+    href: '/listing/',
+    styling:
+      'scale-90 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer p-2 hover:bg-green-900',
+  });
+  seePost.addEventListener('click', () => {
+    localStorage.setItem('id', JSON.stringify(listing.listing.id));
+  });
+  seePost.innerHTML = `${Icon(iconPaths.eye)}`;
+
+  container.append(title, countDown, bidDiv, seePost);
+  listingsContainer.append(container);
+  bidDiv.append(bid, icon);
+};
 runPage();

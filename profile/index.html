@@ -30,7 +30,35 @@
         <div
           id="userListings"
           class="flex flex-wrap gap-5 w-full justify-center mt-4"
-        ></div>
+        >
+          <div class="w-full max-w-[400px]">
+            <h2 class="text-center text-2xl font-semibold my-4">
+              Your latest listings
+            </h2>
+            <div
+              id="activeListings"
+              class="flex flex-col gap-4 w-full max-h-[400px] overflow-auto"
+            ></div>
+          </div>
+
+          <div class="w-full max-w-[400px]">
+            <h2 class="text-center text-2xl font-semibold my-4">
+              Listings about to close
+            </h2>
+            <div
+              id="closedListings"
+              class="flex flex-col gap-4 w-full max-h-[400px] overflow-auto"
+            ></div>
+          </div>
+
+          <div class="w-full max-w-[400px]">
+            <h2 class="text-center text-2xl font-semibold my-4">Your bids</h2>
+            <div
+              class="flex flex-col gap-4 w-full max-h-[400px] overflow-auto"
+              id="userBids"
+            ></div>
+          </div>
+        </div>
       </div>
     </main>
   </body>
