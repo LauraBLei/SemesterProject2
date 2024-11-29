@@ -1,7 +1,7 @@
 import { iconPaths } from '../../utilities/enums';
-import { CreateElement, Icon } from '../../utilities/components';
+import { CreateElement } from './components/createElement';
+import { Icon } from './components/makeIcon';
 import { onLogout } from '../auth/logout';
-import { createListing } from '../../router/views/listingCreate';
 import { MakeCreateOrEditForm } from '../../router/views/listingCreateEdit';
 
 export const MakeHeader = () => {
@@ -77,13 +77,6 @@ const Header = () => {
   `;
   sidebar.append(home, search);
   if (loggedIn) {
-    const myBids = CreateElement({
-      element: 'a',
-      href: '/myBids/',
-      styling: 'flex gap-4 buttonEffect',
-    });
-    myBids.innerHTML = `${Icon(iconPaths.hammer)}
-<span id="navSpan">My Bids</span> `;
     const createListing = CreateElement({
       element: 'a',
       styling: 'flex gap-4 buttonEffect',
@@ -105,6 +98,6 @@ const Header = () => {
 `;
     logOut.addEventListener('click', onLogout);
 
-    sidebar.append(myBids, createListing, logOut);
+    sidebar.append(createListing, logOut);
   }
 };

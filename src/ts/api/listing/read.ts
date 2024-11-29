@@ -29,6 +29,7 @@ export async function readListing(id: string) {
     }
   } catch (error) {
     alert('something went wrong trying to fetch the post');
+    throw Error('fetch error');
   }
 }
 

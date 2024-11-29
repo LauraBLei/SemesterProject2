@@ -1,7 +1,8 @@
 import { readListing } from '../../api/listing/read';
-import { CreateElement } from '../../utilities/components';
 import { onEdit } from '../../ui/listing/update';
 import { onCreate } from '../../ui/listing/create';
+import { CreateElement } from '../../ui/global/components/createElement';
+import { ListingObject } from '../../utilities/types';
 
 export const createAndEditContainer = () => {
   const main = document.querySelector('main');
@@ -27,7 +28,7 @@ export const MakeCreateOrEditForm = async ({
   const container = document.getElementById(
     'createEditContainer'
   ) as HTMLDivElement;
-  let listing;
+  let listing: ListingObject | undefined;
   if (edit && id) {
     listing = await readListing(id);
   }
@@ -101,7 +102,7 @@ export const MakeCreateOrEditForm = async ({
     element: 'select',
     styling: 'm-4 border-2 border-black px-4 py-2',
   });
-  select.name = 'Category';
+  select.name = 'category';
   select.required;
   const defaultOption = CreateElement({ element: 'option', text: 'Category' });
   defaultOption.value = '';
@@ -202,7 +203,7 @@ export const MakeCreateOrEditForm = async ({
   submitButton.type = 'submit';
 
   form.addEventListener('submit', (event: SubmitEvent) => {
-    edit ? onEdit(event, listing.id) : create ? onCreate(event) : '';
+    edit && listing ? onEdit(event, listing.id) : create ? onCreate(event) : '';
   });
 
   container.append(outerDiv);

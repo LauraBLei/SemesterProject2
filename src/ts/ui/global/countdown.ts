@@ -37,3 +37,9 @@ export function createCountdownHTML(endsAt: string) {
 
   return countdownElement;
 }
+
+export const isAuctionClosed = (endsAt: string) => {
+  const currentDate = new Date();
+  const endsAtDate = new Date(endsAt);
+  return currentDate > endsAtDate;
+};

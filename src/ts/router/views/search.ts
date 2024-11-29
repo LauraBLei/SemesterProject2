@@ -1,5 +1,5 @@
-import { MakeHeader } from '../../ui/global/header';
-import { CreateCategory, MakeListing } from '../../utilities/components';
+import { CreateCategory } from '../../ui/global/components/createCategory';
+import { MakeListing } from '../../ui/global/components/makeListing';
 
 const runPage = async () => {
   const categoryContainer = document.getElementById('searchCategories');

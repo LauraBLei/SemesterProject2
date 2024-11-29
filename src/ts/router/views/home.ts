@@ -1,7 +1,6 @@
 import { readPosts } from '../../api/listing/read';
 import { carousel } from '../../ui/global/carousel';
-import { MakeHeader } from '../../ui/global/header';
-import { MakeListing } from '../../utilities/components';
+import { MakeListing } from '../../ui/global/components/makeListing';
 
 const runPage = async () => {
   const section = document.getElementById('mostRecent') as HTMLDivElement;

@@ -1,11 +1,15 @@
 import { readBidsByUser, readListingsByUser } from '../../api/listing/read';
 import { readProfile } from '../../api/profile/read';
-import { createCountdownHTML } from '../../ui/global/countdown';
+import { CreateElement } from '../../ui/global/components/createElement';
+import { Icon } from '../../ui/global/components/makeIcon';
+import {
+  createCountdownHTML,
+  isAuctionClosed,
+} from '../../ui/global/countdown';
 import { onDeletePost } from '../../ui/listing/delete';
 import { onUpdateProfile } from '../../ui/profile/update';
-import { CreateElement, Icon } from '../../utilities/components';
 import { iconPaths } from '../../utilities/enums';
-import { ListingObject, UserProfileAPI } from '../../utilities/types';
+import { Bid, ListingObject, UserProfileAPI } from '../../utilities/types';
 import { MakeCreateOrEditForm } from './listingCreateEdit';
 
 const runPage = async () => {
@@ -40,7 +44,7 @@ const MakeProfile = async (userInfo: UserProfileAPI) => {
     sortOrder: 'desc',
   });
 
-  const userBids: ListingObject[] = fetchUserBids.data;
+  const userBids: Bid[] = fetchUserBids.data;
 
   console.log('active: ', activeListings);
   console.log('closed: ', closedListings);
@@ -116,7 +120,7 @@ const MakeProfile = async (userInfo: UserProfileAPI) => {
   closedListings.forEach((listing: ListingObject) => {
     MakeClosedListings(listing, closedListingsContainer);
   });
-  userBids.forEach((listing: ListingObject) => {
+  userBids.forEach((listing: Bid) => {
     MakeUserBids(listing, userBidsContainer);
   });
 };
@@ -256,6 +260,9 @@ const MakeClosedListings = (
   listing: ListingObject,
   listingsContainer: HTMLDivElement
 ) => {
+  if (!isAuctionClosed(listing.endsAt)) {
+    return;
+  }
   const container = CreateElement({
     element: 'div',
     id: listing.id,
@@ -302,10 +309,7 @@ const MakeClosedListings = (
   listingsContainer.append(container);
 };
 
-const MakeUserBids = (
-  listing: ListingObject,
-  listingsContainer: HTMLDivElement
-) => {
+const MakeUserBids = (listing: Bid, listingsContainer: HTMLDivElement) => {
   const container = CreateElement({
     element: 'div',
     id: listing.id,
@@ -316,7 +320,7 @@ const MakeUserBids = (
   const countDown = createCountdownHTML(listing.listing.endsAt);
 
   const bidDiv = CreateElement({ element: 'div', styling: 'flex gap-2' });
-  const bid = CreateElement({ element: 'p', text: listing.amount });
+  const bid = CreateElement({ element: 'p', text: `${listing.amount}` });
   const icon = CreateElement({ element: 'div' });
   icon.innerHTML = `${Icon(iconPaths.credits)}`;
 

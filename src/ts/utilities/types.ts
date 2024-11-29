@@ -69,6 +69,7 @@ export type Bid = {
   bidder: UserProfileAPI;
   created: string;
   id: string;
+  listing: ListingObject;
 };
 
 export type ElementHelper = {

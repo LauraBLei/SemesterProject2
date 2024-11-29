@@ -1,5 +1,5 @@
-import { CreateElement } from '../../utilities/components';
 import { ListingObject } from '../../utilities/types';
+import { CreateElement } from './components/createElement';
 
 export const carousel = (posts: ListingObject[]) => {
   const prevBtn = document.querySelector('div.prev-arrow')!;

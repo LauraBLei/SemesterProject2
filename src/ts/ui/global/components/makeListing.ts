@@ -1,94 +1,13 @@
-import { readPosts, searchPosts } from '../api/listing/read';
-import { iconPaths } from './enums';
-import { categories } from './objects';
+import { readPosts, searchPosts } from '../../../api/listing/read';
+import { Icon } from './makeIcon';
+import { iconPaths } from '../../../utilities/enums';
 import {
-  ElementHelper,
+  APIData,
   ListingObject,
   MakeListingType,
-  APIData,
   MakePaginationType,
-} from './types';
-
-export const Icon = (
-  path: string,
-  color: string = '#FFFFFF',
-  size: string = '30px'
-) => {
-  return `
-      <svg xmlns="http://www.w3.org/2000/svg" height="${size}" viewBox="0 -960 960 960" width="${size}" fill="${color}"><path d="${path}"/></svg>
-      `;
-};
-
-export const CreateElement = ({
-  element,
-  styling,
-  text,
-  id,
-  href,
-  src,
-  alt,
-  type,
-  name,
-  value,
-  required,
-  forLabel,
-  placeholder,
-}: ElementHelper) => {
-  const item = document.createElement(element);
-  if (text) item.innerText = text;
-  if (id) item.id = id;
-  if (styling) item.className = styling;
-  if (href) item.href = href;
-  if (src) item.src = src;
-  if (alt) item.alt = alt;
-  if (name) item.name = name;
-  if (type) item.type = type;
-  if (value) item.value = value;
-  if (required) item.required;
-  if (forLabel) item.htmlFor = forLabel;
-  if (placeholder) item.placeholder = placeholder;
-  return item;
-};
-
-export const CreateCategory = (section: HTMLElement) => {
-  const paginationDiv = document.getElementById('pagination') as HTMLDivElement;
-  const searchListingDiv = document.getElementById(
-    'searchListings'
-  ) as HTMLDivElement;
-  categories.forEach((key) => {
-    const container = CreateElement({
-      element: 'a',
-      styling:
-        'flex flex-col items-center scale-90 hover:scale-100 transition-transform duration-300 ease-in-out transform',
-    });
-    const imageDiv = CreateElement({
-      element: 'div',
-      styling: 'rounded-full h-[162px] w-[162px] overflow-hidden',
-    });
-    const image = CreateElement({
-      element: 'img',
-      src: `${key.src}`,
-      alt: `${key.text}`,
-      styling: 'object-cover h-full w-full',
-    });
-
-    container.addEventListener('click', () => {
-      MakeListing({
-        API: 'category',
-        limit: 12,
-        page: 1,
-        tag: key.tag,
-        paginationDiv: paginationDiv,
-        section: searchListingDiv,
-      });
-    });
-
-    const category = CreateElement({ element: 'p', text: `${key.text}` });
-    section?.appendChild(container);
-    container.append(imageDiv, category);
-    imageDiv.appendChild(image);
-  });
-};
+} from '../../../utilities/types';
+import { CreateElement } from './createElement';
 
 export const MakeListing = async ({
   paginationDiv,

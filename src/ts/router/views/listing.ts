@@ -1,7 +1,11 @@
 import { readListing } from '../../api/listing/read';
-import { createCountdownHTML } from '../../ui/global/countdown';
+import { CreateElement } from '../../ui/global/components/createElement';
+import { Icon } from '../../ui/global/components/makeIcon';
+import {
+  createCountdownHTML,
+  isAuctionClosed,
+} from '../../ui/global/countdown';
 import { onBid } from '../../ui/listing/bid';
-import { CreateElement, Icon } from '../../utilities/components';
 import { iconPaths } from '../../utilities/enums';
 import { Bid, ListingObject, Media } from '../../utilities/types';
 
@@ -14,7 +18,8 @@ const runPage = async () => {
   if (listing) MakeImages(listing.media);
   if (listing) MakeContent(listing);
   if (listing) MakeBids(listing.bids);
-  form?.addEventListener('submit', (event) => onBid(event, id));
+  if (listing)
+    form?.addEventListener('submit', (event) => onBid(event, id, listing));
 };
 
 const MakeImages = (images: Media[]) => {
@@ -40,8 +45,17 @@ const MakeImages = (images: Media[]) => {
 };
 
 const MakeContent = (listing: ListingObject) => {
+  const loggedIn = localStorage.getItem('token');
+  const form = document.getElementById('bidForm');
+  const auctionClosed = document.getElementById('auctionClosed');
+  if (!loggedIn) form?.classList.add('hidden');
   const title = document.getElementById('listingTitle');
   if (listing.title && title) title.innerText = listing.title;
+
+  if (isAuctionClosed(listing.endsAt)) {
+    form?.classList.add('hidden');
+    auctionClosed?.classList.remove('hidden');
+  }
 
   const description = document.getElementById('description');
   if (listing.description && description)
