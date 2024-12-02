@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body>
+    <header></header>
+    <main>
+      <div
+        id="searchCategories"
+        class="min-h-[250px] flex items-center w-full mt-12 overflow-x-auto max-w-[1200px] whitespace-nowrap scroll-smooth"
+      ></div>
+      <div
+        class="flex justify-center my-4 w-full max-w-[1400px] sticky top-0 bg-white py-4"
+      >
+        <form
+          id="sortListings"
+          name="sortListings"
+          class="flex justify-evenly w-full flex-wrap px-4 gap-5"
+        >
+          <div class="w-full max-w-[700px] mt-2 sticky">
+            <input
+              class="p-2 border-2 border-black w-full"
+              type="text"
+              name="searchBar"
+              id="searchBar"
+              placeholder="Search.."
+            />
+          </div>
+          <div class="mt-2">
+            <button class="p-2 border-2 border-black rounded-md">Search</button>
+          </div>
+        </form>
+      </div>
+      <div
+        class="w-full flex flex-wrap justify-center"
+        id="searchListings"
+      ></div>
+      <div
+        class="w-full flex items-center justify-evenly mt-4"
+        id="pagination"
+      ></div>
+    </main>
+  </body>
+</html>

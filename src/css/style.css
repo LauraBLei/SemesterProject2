@@ -1,3 +1,65 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  @apply flex h-dvh max-w-full;
+}
+
+main {
+  @apply flex flex-col w-full h-full items-center gap-10 z-0 overflow-y-auto;
+}
+
+header {
+  @apply h-dvh z-50 block;
+}
+
+.headline {
+  @apply text-3xl font-semibold;
+}
+
+svg {
+  transition: rotate 150ms ease;
+}
+
+#sidebar {
+  @apply flex flex-col bg-black text-white h-dvh pl-4 sticky pr-10 gap-4  overflow-hidden text-nowrap self-start;
+}
+
+#toggle-btn {
+  @apply px-5 py-1 border-none cursor-pointer hover:bg-white/50;
+  svg {
+    transition: rotate 400ms ease;
+  }
+}
+
+a {
+  @apply hover:bg-white/50 px-4 py-2 font-semibold cursor-pointer;
+}
+
+.rotate svg {
+  rotate: 180deg;
+}
+
+#sidebar.close {
+  @apply w-[60px] px-2 items-center;
+  #navSpan {
+    @apply hidden;
+  }
+}
+
+.buttonEffect {
+  @apply hover:bg-white/50 px-4 py-2 font-semibold cursor-pointer;
+}
+
+.active {
+  @apply w-[30px] h-[30px] bg-yellow-400;
+}
+
+.idle {
+  @apply w-[20px] h-[20px]  bg-black;
+}
+
+.dot {
+  @apply rounded-full  scale-75 hover:scale-110 hover:bg-white border-2 border-black cursor-pointer transition-transform duration-300 ease-in-out transform;
+}
