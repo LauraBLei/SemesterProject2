@@ -11,8 +11,8 @@ export default {
       colors: {
         brandGreen: '#004225',
         brandWhite: '#FFFFFF',
-        brandYellow: '#DAA520',
-        brandBlack: '#2A2A2A',
+        brandYellow: '#E0B341',
+        brandBlack: '#1D1D1D',
       },
       fontFamily: {
         lato: ['Lato', 'sans-serif'],

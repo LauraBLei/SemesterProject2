@@ -75,3 +75,12 @@ svg {
     rotate: 180deg;
   }
 }
+
+@layer components {
+  .formInput {
+    @apply bg-brandGreen text-brandWhite placeholder:text-brandWhite/85 rounded-md w-full px-4 py-2;
+  }
+  .formInput:focus {
+    @apply bg-brandBlack text-brandYellow placeholder:text-brandYellow;
+  }
+}
