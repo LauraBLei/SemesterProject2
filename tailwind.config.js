@@ -7,7 +7,14 @@ export default {
     '!./node_modules//*',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        brandGreen: '#004225',
+        brandWhite: '#FFFFFF',
+        brandYellow: '#DAA520',
+        brandBlack: '#2A2A2A',
+      },
+    },
   },
   plugins: [],
 };
