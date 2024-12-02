@@ -14,6 +14,10 @@ export default {
         brandYellow: '#DAA520',
         brandBlack: '#2A2A2A',
       },
+      fontFamily: {
+        lato: ['Lato', 'sans-serif'],
+        playfairDisplay: ['"Playfair Display"', 'serif'],
+      },
     },
   },
   plugins: [],

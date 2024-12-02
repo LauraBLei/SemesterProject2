@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@400;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -18,9 +19,21 @@ svg {
   transition: rotate 150ms ease;
 }
 
+.active {
+  @apply w-[30px] h-[30px] bg-yellow-400;
+}
+
+.idle {
+  @apply w-[20px] h-[20px]  bg-black;
+}
+
+.dot {
+  @apply rounded-full  scale-75 hover:scale-110 hover:bg-white border-2 border-black cursor-pointer transition-transform duration-300 ease-in-out transform;
+}
+
 @layer components {
   .sidebar {
-    @apply w-[240px] border-l-2 border-brandBlack flex flex-col bg-brandGreen text-white h-dvh gap-4 overflow-hidden text-nowrap transition-all duration-300 ease-in-out;
+    @apply w-[240px] border-l-2 border-brandBlack flex flex-col bg-brandGreen text-white h-dvh gap-4 overflow-hidden text-nowrap transition-all duration-500 ease-in-out;
   }
 
   .sidebar.closed {
@@ -32,19 +45,19 @@ svg {
   }
 
   .sidebar #profileNav {
-    @apply max-w-[40px] max-h-[40px] min-h-[40px] min-w-[40px] transition-all duration-300 ease-in-out;
+    @apply max-w-[40px] max-h-[40px] min-h-[40px] min-w-[40px] transition-all duration-500 ease-in-out;
   }
   .sidebar.closed #profileNav {
-    @apply max-w-[30px] max-h-[30px] min-h-[30px] min-w-[30px] transition-all duration-300 ease-in-out;
+    @apply max-w-[30px] max-h-[30px] min-h-[30px] min-w-[30px] transition-all duration-500 ease-in-out;
   }
 }
 
 @layer components {
-  .buttonEffect {
-    @apply hover:bg-brandBlack w-full px-4 py-2 font-semibold cursor-pointer hover:shadow-md hover:shadow-black scale-95 hover:scale-100 transition ease-in-out duration-300 transform;
+  .navAnchor {
+    @apply font-playfairDisplay text-2xl hover:bg-brandBlack w-full px-4 py-2 font-semibold cursor-pointer hover:shadow-md hover:shadow-black scale-95 hover:scale-100 transition ease-in-out duration-300 transform;
   }
 
-  .buttonEffect.active {
+  .navAnchor.active {
     @apply bg-brandBlack scale-100 w-full items-center h-auto shadow-sm shadow-black;
   }
 }

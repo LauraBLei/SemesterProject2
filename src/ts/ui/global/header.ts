@@ -17,7 +17,7 @@ const toggleSideBar = (sidebarID: string, btn: string) => {
 };
 
 const toggleActive = () => {
-  const navLinks = document.querySelectorAll('.buttonEffect'); // Select all navigation links with the class 'nav-link'
+  const navLinks = document.querySelectorAll<HTMLAnchorElement>('.navAnchor'); // Select all navigation links with the class 'nav-link'
 
   navLinks.forEach((link) => {
     // Check if the link's href matches the current pathname
@@ -63,7 +63,7 @@ const Header = () => {
     const user = JSON.parse(localStorage.getItem('userInfo') ?? '');
     const profile = CreateElement({
       element: 'a',
-      styling: 'flex gap-2 items-center buttonEffect',
+      styling: 'flex gap-2 items-center navAnchor',
       href: '/profile/',
     });
     profile.innerHTML = `
@@ -77,10 +77,10 @@ const Header = () => {
     const auth = CreateElement({
       element: 'a',
       href: '/auth/',
-      styling: 'flex gap-4 buttonEffect',
+      styling: 'flex gap-4 items-center navAnchor',
     });
     auth.innerHTML = `
-      ${Icon(iconPaths.profile, authIconColor)}
+      <div>${Icon(iconPaths.profile, authIconColor)}</div>
       <span id="navSpan" class='navSpan'>Login</span> `;
     sidebar.append(auth);
   }
@@ -88,7 +88,7 @@ const Header = () => {
   const home = CreateElement({
     element: 'a',
     href: '/',
-    styling: 'flex gap-4 px-4 py-2 buttonEffect items-center ',
+    styling: 'flex gap-4 px-4 py-2 navAnchor items-center ',
   });
   home.innerHTML = `
     <div>${Icon(iconPaths.home, homeIconColor)}</div>
@@ -96,7 +96,7 @@ const Header = () => {
 
   const search = CreateElement({
     element: 'a',
-    styling: 'flex gap-4 px-4 py-2 buttonEffect',
+    styling: 'flex gap-4 px-4 py-2 items-center navAnchor',
     href: '/listing/search/',
   });
   search.innerHTML = `<div>${Icon(iconPaths.search, searchIconColor)}</div>
@@ -106,7 +106,7 @@ const Header = () => {
   if (loggedIn) {
     const createListing = CreateElement({
       element: 'a',
-      styling: 'flex gap-4 buttonEffect items-center',
+      styling: 'flex gap-4 navAnchor items-center',
       id: 'createListingButton',
     });
     createListing.innerHTML = `<div>${Icon(iconPaths.plus)}</div>
@@ -118,7 +118,7 @@ const Header = () => {
     });
     const logOut = CreateElement({
       element: 'a',
-      styling: 'flex gap-4 buttonEffect',
+      styling: 'flex gap-4 navAnchor items-center',
     });
     logOut.innerHTML = `<div>${Icon(iconPaths.logOut)}</div>
     <span id="navSpan" class='navSpan'>Log Out</span>`;
