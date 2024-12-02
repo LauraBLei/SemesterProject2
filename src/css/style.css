@@ -14,52 +14,51 @@ header {
   @apply h-dvh z-50 block;
 }
 
-.headline {
-  @apply text-3xl font-semibold;
-}
-
 svg {
   transition: rotate 150ms ease;
 }
 
-#sidebar {
-  @apply flex flex-col bg-black text-white h-dvh pl-4 sticky pr-10 gap-4  overflow-hidden text-nowrap self-start;
-}
-
-#toggle-btn {
-  @apply px-5 py-1 border-none cursor-pointer hover:bg-white/50;
-  svg {
-    transition: rotate 400ms ease;
+@layer components {
+  .sidebar {
+    @apply w-[240px] border-l-2 border-brandBlack flex flex-col bg-brandGreen text-white h-dvh gap-4 overflow-hidden text-nowrap transition-all duration-300 ease-in-out;
   }
-}
 
-a {
-  @apply hover:bg-white/50 px-4 py-2 font-semibold cursor-pointer;
-}
+  .sidebar.closed {
+    @apply w-[64px] overflow-hidden pl-0;
+  }
 
-.rotate svg {
-  rotate: 180deg;
-}
-
-#sidebar.close {
-  @apply w-[60px] px-2 items-center;
-  #navSpan {
+  .sidebar.closed #navSpan {
     @apply hidden;
   }
+
+  .sidebar #profileNav {
+    @apply max-w-[40px] max-h-[40px] min-h-[40px] min-w-[40px] transition-all duration-300 ease-in-out;
+  }
+  .sidebar.closed #profileNav {
+    @apply max-w-[30px] max-h-[30px] min-h-[30px] min-w-[30px] transition-all duration-300 ease-in-out;
+  }
 }
 
-.buttonEffect {
-  @apply hover:bg-white/50 px-4 py-2 font-semibold cursor-pointer;
+@layer components {
+  .buttonEffect {
+    @apply hover:bg-brandBlack w-full px-4 py-2 font-semibold cursor-pointer hover:shadow-md hover:shadow-black scale-95 hover:scale-100 transition ease-in-out duration-300 transform;
+  }
+
+  .buttonEffect.active {
+    @apply bg-brandBlack scale-100 w-full items-center h-auto shadow-sm shadow-black;
+  }
 }
 
-.active {
-  @apply w-[30px] h-[30px] bg-yellow-400;
-}
+@layer components {
+  .toggle-btn {
+    @apply px-5 py-1 border-none cursor-pointer scale-95 hover:scale-100 transition ease-in-out duration-300 transform;
+  }
 
-.idle {
-  @apply w-[20px] h-[20px]  bg-black;
-}
+  .toggle-btn svg {
+    transition: rotate 400ms ease;
+  }
 
-.dot {
-  @apply rounded-full  scale-75 hover:scale-110 hover:bg-white border-2 border-black cursor-pointer transition-transform duration-300 ease-in-out transform;
+  .rotate svg {
+    rotate: 180deg;
+  }
 }

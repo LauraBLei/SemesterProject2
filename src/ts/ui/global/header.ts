@@ -12,20 +12,45 @@ const toggleSideBar = (sidebarID: string, btn: string) => {
   const toggleButton = document.getElementById(btn);
   const sidebar = document.getElementById(sidebarID);
 
-  sidebar?.classList.toggle('close');
+  sidebar?.classList.toggle('closed');
   toggleButton?.classList.toggle('rotate');
+};
+
+const toggleActive = () => {
+  const navLinks = document.querySelectorAll('.buttonEffect'); // Select all navigation links with the class 'nav-link'
+
+  navLinks.forEach((link) => {
+    // Check if the link's href matches the current pathname
+    if (link.href === window.location.href) {
+      link.classList.toggle('active'); // Add 'active' class if it matches
+    } else {
+      return;
+    }
+  });
 };
 
 const Header = () => {
   const loggedIn = localStorage.getItem('token');
+  const isHomePage = window.location.pathname === '/';
+  const homeIconColor = isHomePage ? '#DAA520' : '#FFFFFF';
+  const isSearchPage = window.location.pathname === '/listing/search/';
+  const isAuthPage = ['/auth/', '/auth/login/', '/auth/register/'].includes(
+    window.location.pathname
+  );
+  const authIconColor = isAuthPage ? '#DAA520' : '#FFFFFF';
+  const searchIconColor = isSearchPage ? '#DAA520' : '#FFFFFF';
   const header = document.querySelector('header');
-  const sidebar = CreateElement({ element: 'nav', id: 'sidebar' });
+  const sidebar = CreateElement({
+    element: 'nav',
+    id: 'sidebar',
+    styling: 'sidebar closed',
+  });
   header?.appendChild(sidebar);
 
   const button = CreateElement({
     element: 'button',
     id: 'toggle-btn',
-    styling: 'flex items-center',
+    styling: 'toggle-btn flex items-center',
   });
   button.innerHTML = `${Icon(iconPaths.doubleArrows)}
   `;
@@ -42,8 +67,8 @@ const Header = () => {
       href: '/profile/',
     });
     profile.innerHTML = `
-  <div class="w-[40px] h-[40px] bg-gray-500 rounded-full overflow-hidden">
-      <img class="object-cover" src="${user.avatar.url}" alt="User profile image">
+  <div id='profileNav' class="profileNav min-w-[30px] min-h-[30px] max-h-[30px] max-w-[30px] flex items-center bg-brandBlack rounded-full overflow-hidden">
+      <img class="object-cover w-full h-full" src="${user.avatar.url}" alt="User profile image">
   </div>
   <span id="navSpan">${user.name}</span>
 `;
@@ -52,38 +77,40 @@ const Header = () => {
     const auth = CreateElement({
       element: 'a',
       href: '/auth/',
-      styling: 'flex gap-4',
+      styling: 'flex gap-4 buttonEffect',
     });
-    auth.innerHTML = `${Icon(iconPaths.profile)}
-  <span id="navSpan">Login</span> `;
+    auth.innerHTML = `
+      ${Icon(iconPaths.profile, authIconColor)}
+      <span id="navSpan" class='navSpan'>Login</span> `;
     sidebar.append(auth);
   }
 
   const home = CreateElement({
     element: 'a',
     href: '/',
-    styling: 'flex gap-4 buttonEffect',
+    styling: 'flex gap-4 px-4 py-2 buttonEffect items-center ',
   });
-  home.innerHTML = `${Icon(iconPaths.home)}
-  <span id="navSpan">Home</span> `;
+  home.innerHTML = `
+    <div>${Icon(iconPaths.home, homeIconColor)}</div>
+    <span id="navSpan" class='navSpan'>Home</span> `;
 
   const search = CreateElement({
     element: 'a',
-    styling: 'flex gap-4 hover:bg-white/50 px-4 py-2 buttonEffect',
+    styling: 'flex gap-4 px-4 py-2 buttonEffect',
     href: '/listing/search/',
   });
-  search.innerHTML = `${Icon(iconPaths.search)}
-  <span id="navSpan">Search...</span>
+  search.innerHTML = `<div>${Icon(iconPaths.search, searchIconColor)}</div>
+  <span id="navSpan" class='navSpan'>Search...</span>
   `;
   sidebar.append(home, search);
   if (loggedIn) {
     const createListing = CreateElement({
       element: 'a',
-      styling: 'flex gap-4 buttonEffect',
+      styling: 'flex gap-4 buttonEffect items-center',
       id: 'createListingButton',
     });
-    createListing.innerHTML = `${Icon(iconPaths.plus)}
-<span id="navSpan">Create Listing</span>`;
+    createListing.innerHTML = `<div>${Icon(iconPaths.plus)}</div>
+    <span id="navSpan">Create Listing</span>`;
     createListing.addEventListener('click', () => {
       const div = document.getElementById('createEditContainer');
       div?.classList.remove('hidden');
@@ -93,11 +120,11 @@ const Header = () => {
       element: 'a',
       styling: 'flex gap-4 buttonEffect',
     });
-    logOut.innerHTML = `${Icon(iconPaths.logOut)}
-<span id="navSpan">Log Out</span>
-`;
+    logOut.innerHTML = `<div>${Icon(iconPaths.logOut)}</div>
+    <span id="navSpan" class='navSpan'>Log Out</span>`;
     logOut.addEventListener('click', onLogout);
 
     sidebar.append(createListing, logOut);
   }
+  toggleActive();
 };
