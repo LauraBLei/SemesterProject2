@@ -1,7 +1,6 @@
 export function createCountdownHTML(endsAt: string) {
   // Create a container element for the countdown
   const countdownElement = document.createElement('div');
-
   // Parse the `endsAt` string into a Date object
   const endsAtDate = new Date(endsAt);
 
@@ -11,6 +10,7 @@ export function createCountdownHTML(endsAt: string) {
 
     if (timeDifference <= 0) {
       countdownElement.textContent = 'Closed';
+
       clearInterval(timerInterval); // Stop updating when countdown ends
       return;
     }
@@ -26,7 +26,7 @@ export function createCountdownHTML(endsAt: string) {
     const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
 
     // Update the countdown element's text content
-    countdownElement.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    countdownElement.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
   }
 
   // Run the updateCountdown function every second

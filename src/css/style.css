@@ -8,7 +8,7 @@ body {
 }
 
 main {
-  @apply flex flex-col w-full h-full items-center gap-10 z-0 overflow-y-auto;
+  @apply ml-16 md:ml-0 flex flex-col w-full h-full items-center gap-8 md:gap-14 z-0 overflow-y-auto;
 }
 
 header {
@@ -19,21 +19,23 @@ svg {
   transition: rotate 150ms ease;
 }
 
-.active {
-  @apply w-[30px] h-[30px] bg-yellow-400;
-}
+@layer components {
+  .active {
+    @apply bg-brandBlack shadow-sm shadow-black;
+  }
 
-.idle {
-  @apply w-[20px] h-[20px]  bg-black;
-}
+  .idle {
+    @apply scale-75 hover:scale-110;
+  }
 
-.dot {
-  @apply rounded-full  scale-75 hover:scale-110 hover:bg-white border-2 border-black cursor-pointer transition-transform duration-300 ease-in-out transform;
+  .dot {
+    @apply w-[15px] h-[15px] md:w-[20px] md:h-[20px] rounded-full  hover:bg-white border-2 border-brandBlack cursor-pointer transition-transform duration-300 ease-in-out transform;
+  }
 }
 
 @layer components {
   .sidebar {
-    @apply w-[240px] border-l-2 border-brandBlack flex flex-col bg-brandGreen text-white h-dvh gap-4 overflow-hidden text-nowrap transition-all duration-500 ease-in-out;
+    @apply w-[240px] border-l-2 border-brandBlack flex flex-col bg-brandGreen text-white h-dvh gap-4 overflow-hidden text-nowrap transition-all duration-500 ease-in-out absolute md:static;
   }
 
   .sidebar.closed {
@@ -54,7 +56,7 @@ svg {
 
 @layer components {
   .navAnchor {
-    @apply font-playfairDisplay text-2xl hover:bg-brandBlack w-full px-4 py-2 font-semibold cursor-pointer hover:shadow-md hover:shadow-black scale-95 hover:scale-100 transition ease-in-out duration-300 transform;
+    @apply font-playfairDisplay text-xl hover:bg-brandBlack w-full px-4 py-2 font-semibold cursor-pointer hover:shadow-md hover:shadow-black scale-95 hover:scale-100 transition ease-in-out duration-300 transform;
   }
 
   .navAnchor.active {
@@ -78,7 +80,7 @@ svg {
 
 @layer components {
   .formInput {
-    @apply bg-brandGreen text-brandWhite placeholder:text-brandWhite/85 rounded-md w-full px-4 py-2;
+    @apply bg-brandGreen text-brandWhite placeholder:text-brandWhite/85 placeholder:font-lato rounded-md px-4 py-2;
   }
   .formInput:focus {
     @apply bg-brandBlack text-brandYellow placeholder:text-brandYellow;

@@ -29,7 +29,7 @@ export const carousel = (posts: ListingObject[]) => {
     });
     dots.forEach((dot, dotPosition) => {
       if (currentIndex === dotPosition) {
-        dot.classList.add('active');
+        dot.classList.toggle('active');
         dot.classList.remove('idle');
       } else {
         dot.classList.remove('active');
@@ -63,10 +63,13 @@ const makeImage = (
   sectionContainer: Element,
   dotContainer: Element
 ) => {
+  const truncateText = (text: string, maxLength: number) => {
+    return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
+  };
   const imageContainer = CreateElement({
     element: 'div',
     styling:
-      'flex items-center justify-center w-full h-full overflow-hidden object-cover min-h-[400px]',
+      'flex items-center justify-center w-full h-full overflow-hidden object-cover h-full',
   });
   if (post.media[0]) {
     imageContainer.innerHTML = `
@@ -84,6 +87,19 @@ const makeImage = (
     styling: 'dot',
   });
 
+  const croppedTitle = truncateText(post.title, 20);
+  const title = CreateElement({
+    element: 'p',
+    text: croppedTitle,
+    styling:
+      'text-xl md:text-3xl w-full h-full absolute bg-brandBlack/50 text-white font-bold font-playfairDisplay flex items-center justify-center tracking-[8px] md:tracking-[10px]',
+  });
+
   sectionContainer?.append(imageContainer);
+  imageContainer.append(title);
   dotContainer?.append(dot);
+  imageContainer.addEventListener('click', () => {
+    localStorage.setItem('id', JSON.stringify(post.id));
+    window.location.href = '/listing/';
+  });
 };

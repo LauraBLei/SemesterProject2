@@ -8,6 +8,7 @@ import {
   MakePaginationType,
 } from '../../../utilities/types';
 import { CreateElement } from './createElement';
+import { createCountdownHTML } from '../countdown';
 
 export const MakeListing = async ({
   paginationDiv,
@@ -68,16 +69,23 @@ export const makeSingleListing = (
   post: ListingObject,
   section: HTMLDivElement
 ) => {
+  const truncateText = (text: string, maxLength: number) => {
+    if (text.length === 0) return '*No text found*';
+    return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
+  };
+  const croppedTitle = truncateText(post.title, 15);
+  const croppedDescription = truncateText(post.description, 50);
+
   const container = CreateElement({
     element: 'div',
     styling:
-      'max-w-[410px] max-h-[650] w-full h- full bg-black p-6 rounded-md m-4 justify-between',
+      'w-full md:w-[350px] h-auto bg-brandBlack shadow-sm shadow-brandBlack p-3 rounded-md flex flex-col justify-evenly',
   });
 
   const imageDiv = CreateElement({
     element: 'div',
     styling:
-      'overflow-hidden w-[350px] h-[350px] flex items-center justify-center',
+      'w-full h-[200px] flex items-center justify-center rounded-md overflow-hidden',
   });
   if (post.media[0]) {
     const image = CreateElement({
@@ -99,19 +107,20 @@ export const makeSingleListing = (
 
   const title = CreateElement({
     element: 'h2',
-    styling: 'text-white  text-center text-2xl py-2',
-    text: `${post.title}`,
+    styling:
+      'text-white font-playfairDisplay font-semibold  text-center text-lg md:text-2xl py-2',
+    text: croppedTitle,
   });
 
   const description = CreateElement({
     element: 'p',
-    text: `${post.description}`,
-    styling: 'text-white py-2 overflow-x-auto',
+    text: croppedDescription,
+    styling:
+      'text-white border-y-2 border-white font-lato text-sm md:text-lg py-2 overflow-x-auto max-h-[100px]  py-4 overflow-hidden ',
   });
-  if (post.description) {
-    description.classList.add('border-y-2');
-    description.classList.add('border-white');
-  }
+
+  const countDown = createCountdownHTML(post.endsAt);
+  countDown.className = 'text-2xl text-center py-2 text-brandWhite';
 
   const userInfoDiv = CreateElement({
     element: 'div',
@@ -120,7 +129,7 @@ export const makeSingleListing = (
 
   const profileImageDiv = CreateElement({
     element: 'div',
-    styling: 'h-[62px] w-[62px] overflow-hidden rounded-full',
+    styling: 'h-[40px] w-[40px] overflow-hidden rounded-full',
   });
 
   const profileImage = CreateElement({
@@ -131,7 +140,7 @@ export const makeSingleListing = (
 
   const username = CreateElement({
     element: 'p',
-    styling: 'text-2xl text-white',
+    styling: 'text-lg lg:text-2xl text-white font-lato',
     text: `${post.seller.name}`,
   });
 
@@ -139,15 +148,22 @@ export const makeSingleListing = (
     element: 'a',
     href: '/listing/',
     styling:
-      'scale-90 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer p-2 hover:bg-green-900 w-full flex justify-center text-white text-2xl items-end gap-3',
+      'scale-90 rounded-md hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer p-2 hover:bg-brandGreen w-full flex justify-center text-white text-2xl items-end gap-3',
   });
   seePost.addEventListener('click', () => {
     localStorage.setItem('id', JSON.stringify(post.id));
   });
-  seePost.innerHTML = `View ${Icon(iconPaths.eye)}`;
+  seePost.innerHTML = `${Icon(iconPaths.eye, '#E0B341', '30px')}`;
 
   section?.append(container);
-  container.append(imageDiv, title, description, userInfoDiv, seePost);
+  container.append(
+    imageDiv,
+    title,
+    description,
+    countDown,
+    userInfoDiv,
+    seePost
+  );
   userInfoDiv.append(profileImageDiv, username);
   profileImageDiv.appendChild(profileImage);
 };
@@ -174,9 +190,9 @@ export const makePagination = ({
   const firstPage = CreateElement({
     element: 'p',
     id: 'firstPage',
-    text: '1',
+    text: 'First page',
     styling:
-      'text-2xl font-semibold cursor-pointer scale-95 hover:scale-100 transition ease-in-out duration-300 transform',
+      'text-2xl font-playfairDisplay font-semibold cursor-pointer scale-75 hover:scale-100  transition-transform duration-300 ease-in-out transform',
   });
   paginationDiv.append(firstPage);
   firstPage.addEventListener('click', () =>
@@ -197,7 +213,7 @@ export const makePagination = ({
       id: 'prev',
       text: `${previousPage}`,
       styling:
-        'text-2xl font-semibold cursor-pointer scale-75 hover:scale-100  transition-transform duration-300 ease-in-out transform',
+        'text-2xl font-playfairDisplay font-semibold cursor-pointer scale-75 hover:scale-100  transition-transform duration-300 ease-in-out transform',
     });
     pageChoiceContainer.append(previousPageElement);
 
@@ -218,15 +234,15 @@ export const makePagination = ({
     element: 'p',
     id: 'current',
     text: `${currentPage}`,
-    styling: 'font-bold text-3xl',
+    styling: 'font-bold font-playfairDisplay text-3xl',
   });
   pageChoiceContainer.append(currentPageElement);
 
   const lastPageNumber = CreateElement({
     element: 'p',
-    text: `${lastPage}`,
+    text: `Last page`,
     styling:
-      'text-2xl font-semibold cursor-pointer scale-75 hover:scale-100  transition-transform duration-300 ease-in-out transform',
+      'text-2xl font-playfairDisplay font-semibold cursor-pointer scale-75 hover:scale-100  transition-transform duration-300 ease-in-out transform',
   });
   paginationDiv.append(lastPageNumber);
   lastPageNumber.addEventListener('click', () =>
@@ -246,7 +262,7 @@ export const makePagination = ({
       id: 'next',
       text: `${nextPage}`,
       styling:
-        'text-2xl font-semibold cursor-pointer scale-75 hover:scale-100  transition-transform duration-300 ease-in-out transform',
+        'text-2xl font-playfairDisplay font-semibold cursor-pointer scale-75 hover:scale-100  transition-transform duration-300 ease-in-out transform',
     });
     pageChoiceContainer.append(nextPageElement);
 

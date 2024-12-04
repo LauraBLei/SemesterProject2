@@ -10,7 +10,7 @@ export const createAndEditContainer = () => {
     element: 'div',
     id: 'createEditContainer',
     styling:
-      'bg-black/50 w-full h-full absolute hidden flex items-center justify-center',
+      'bg-black/50  w-full h-full absolute hidden flex justify-center z-50',
   });
 
   main?.append(div);
@@ -36,25 +36,26 @@ export const MakeCreateOrEditForm = async ({
   const outerDiv = CreateElement({
     element: 'div',
     styling:
-      'border-2 border-green-950 rounded-md max-w-[880px] w-full h-auto p-6 bg-white mt-6 overflow-y-auto',
+      'border-2 md:border-4 border-brandGreen rounded-md w-[250px] md:w-[400px] lg:w-[600px] h-fit p-6 bg-white mt-6 overflow-y-auto ',
   });
 
   const exitDiv = CreateElement({
     element: 'div',
-    styling: 'class="flex justify-end"',
+    styling: 'flex justify-self-end',
   });
 
   const exitButton = CreateElement({
     element: 'button',
     styling:
-      'px-4 py-2 border-2  border-black rounded-full scale-95 hover:scale-100 transition ease-in-out duration-300',
+      'font-playfairDisplay text-lg md:text-2xl border-black rounded-full scale-75 hover:scale-100 transition ease-in-out duration-300',
     id: 'exitButton',
     text: 'X',
   });
 
   const headline = CreateElement({
     element: 'h1',
-    styling: 'text-center border-b-2 border-black text-3xl p-2',
+    styling:
+      'font-playfairDisplay text-center border-b-2 border-black text-lg md:text-3xl p-2',
   });
   headline.innerText = create
     ? 'Create A Listing'
@@ -75,18 +76,17 @@ export const MakeCreateOrEditForm = async ({
   const titleInput = CreateElement({
     element: 'input',
     id: 'title',
-    styling: 'w-full border-2 border-black p-2',
+    styling: 'font-lato formInput w-full',
+    type: 'text',
+    name: 'title',
+    placeholder: 'Title...',
+    value: edit && listing ? listing.title : '',
+    required: true,
   });
-  titleInput.type = 'text';
-  titleInput.name = 'title';
-  titleInput.placeholder = 'Title...';
-  titleInput.maxlength = '50';
-  titleInput.value = edit && listing ? listing.title : '';
-  titleInput.required;
   const description = CreateElement({
     element: 'textarea',
     id: 'description',
-    styling: 'w-full border-2 border-black p-2 min-h-[100px]',
+    styling: 'font-lato formInput min-h-[100px] w-full',
   });
   description.name = 'description';
   description.placeholder = 'Add a description...';
@@ -96,11 +96,12 @@ export const MakeCreateOrEditForm = async ({
 
   const sectionTwo = CreateElement({
     element: 'div',
-    styling: 'flex flex-wrap justify-evenly w-full',
+    styling: 'flex flex-wrap justify-evenly w-full items-center',
   });
   const select = CreateElement({
     element: 'select',
-    styling: 'm-4 border-2 border-black px-4 py-2',
+    styling:
+      'formInput font-lato h-[40px] text-center list-none appearance-none cursor-pointer hover:bg-brandBlack hover:text-brandYellow',
   });
   select.name = 'category';
   select.required;
@@ -135,12 +136,12 @@ export const MakeCreateOrEditForm = async ({
   const dateInput = CreateElement({
     element: 'input',
     id: 'auctionDate',
-    styling: 'm-2 border-2 border-black px-4 py-2',
+    styling:
+      'border-brandGreen border-2 cursor-pointer appearance-none px-4 py-2 rounded-md',
+    type: 'date',
+    name: 'auctionDate',
+    required: true,
   });
-
-  dateInput.type = 'date';
-  dateInput.name = 'auctionDate';
-  dateInput.required;
   if (edit && listing) {
     const formattedDate = new Date(listing.endsAt).toISOString().split('T')[0];
     dateInput.value = formattedDate || '';
@@ -158,7 +159,7 @@ export const MakeCreateOrEditForm = async ({
   });
   const imageInput = CreateElement({
     element: 'input',
-    styling: 'w-full border-2 border-black p-2',
+    styling: 'w-full formInput',
   });
   imageInput.type = 'url';
   imageInput.name = 'url';
@@ -190,17 +191,21 @@ export const MakeCreateOrEditForm = async ({
     id: 'addImageInput',
     text: '+ Add another image',
     styling:
-      'px-4 py-2 border-2 mt-4 border-black rounded-3xl scale-95 hover:scale-100 transition ease-in-out duration-300',
+      'px-4 py-2 text:lg md:text-2xl  mt-4  rounded-md scale-95 hover:scale-100 hover:bg-brandBlack hover:text-brandYellow transition ease-in-out duration-300',
   });
   addImageInputButton.type = 'button';
 
-  const submitButton = CreateElement({ element: 'button' });
+  const submitButton = CreateElement({
+    element: 'button',
+    type: 'submit',
+    styling:
+      'my-4 px-4 py-2 w-full rounded-md font-playfairDisplay text-lg md:text-3xl scale-95 hover:scale-100 hover:bg-brandBlack hover:text-brandYellow transition ease-in-out duration-300 ',
+  });
   submitButton.innerText = create
     ? 'Create Listing'
     : edit
       ? 'Update Listing'
       : '';
-  submitButton.type = 'submit';
 
   form.addEventListener('submit', (event: SubmitEvent) => {
     edit && listing ? onEdit(event, listing.id) : create ? onCreate(event) : '';
@@ -247,8 +252,6 @@ const imageInputs = (container: Element) => {
   const currentImageCount = container.querySelectorAll('input').length;
   console.log('hello from click');
   const addInput = document.getElementById('addImageInput');
-
-  console.log('imageCount', currentImageCount);
 
   if (currentImageCount <= 1) {
     const div = CreateElement({
