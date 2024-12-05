@@ -193,7 +193,7 @@ export const makePagination = ({
     id: 'firstPage',
     text: 'First page',
     styling:
-      'text-2xl font-playfairDisplay font-semibold cursor-pointer scale-75 hover:scale-100  transition-transform duration-300 ease-in-out transform',
+      'text-sm md:text-2xl font-playfairDisplay font-semibold cursor-pointer scale-75 hover:scale-100  transition-transform duration-300 ease-in-out transform',
   });
   paginationDiv.append(firstPage);
   firstPage.addEventListener('click', () =>
@@ -214,7 +214,7 @@ export const makePagination = ({
       id: 'prev',
       text: `${previousPage}`,
       styling:
-        'text-2xl font-playfairDisplay font-semibold cursor-pointer scale-75 hover:scale-100  transition-transform duration-300 ease-in-out transform',
+        'text-lg md:text-2xl font-playfairDisplay font-semibold cursor-pointer scale-75 hover:scale-100  transition-transform duration-300 ease-in-out transform',
     });
     pageChoiceContainer.append(previousPageElement);
 
@@ -235,7 +235,7 @@ export const makePagination = ({
     element: 'p',
     id: 'current',
     text: `${currentPage}`,
-    styling: 'font-bold font-playfairDisplay text-3xl',
+    styling: 'font-bold font-playfairDisplay text-2xl md:text-3xl',
   });
   pageChoiceContainer.append(currentPageElement);
 
@@ -243,7 +243,7 @@ export const makePagination = ({
     element: 'p',
     text: `Last page`,
     styling:
-      'text-2xl font-playfairDisplay font-semibold cursor-pointer scale-75 hover:scale-100  transition-transform duration-300 ease-in-out transform',
+      'text-sm md:text-2xl font-playfairDisplay font-semibold cursor-pointer scale-75 hover:scale-100  transition-transform duration-300 ease-in-out transform',
   });
   paginationDiv.append(lastPageNumber);
   lastPageNumber.addEventListener('click', () =>
@@ -263,7 +263,7 @@ export const makePagination = ({
       id: 'next',
       text: `${nextPage}`,
       styling:
-        'text-2xl font-playfairDisplay font-semibold cursor-pointer scale-75 hover:scale-100  transition-transform duration-300 ease-in-out transform',
+        'text-lg md:text-2xl font-playfairDisplay font-semibold cursor-pointer scale-75 hover:scale-100  transition-transform duration-300 ease-in-out transform',
     });
     pageChoiceContainer.append(nextPageElement);
 
