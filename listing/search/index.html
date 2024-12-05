@@ -10,20 +10,24 @@
     <header></header>
     <main>
       <div
-        id="searchCategories"
-        class="min-h-[250px] flex items-center w-full mt-12 overflow-x-auto max-w-[1200px] whitespace-nowrap scroll-smooth"
-      ></div>
+        class="w-full max-w-[1200px] overflow-x-auto items-center min-h-[160px] md:min-h-[200px]"
+      >
+        <div
+          id="searchCategories"
+          class="h-auto flex gap-6 py-4 text-brandBlack text-sm md:text-lg font-semibold tracking-wider text-center w-full xl:justify-center"
+        ></div>
+      </div>
       <div
-        class="flex justify-center my-4 w-full max-w-[1400px] sticky top-0 bg-white py-4"
+        class="flex justify-center my-4 w-full max-w-[1400px] sticky z-30 top-0 bg-white py-4"
       >
         <form
           id="sortListings"
           name="sortListings"
-          class="flex justify-evenly w-full flex-wrap px-4 gap-5"
+          class="flex justify-evenly w-full px-4 gap-5"
         >
-          <div class="w-full max-w-[700px] mt-2 sticky">
+          <div class="w-full max-w-[700px] mt-2 block">
             <input
-              class="p-2 border-2 border-black w-full"
+              class="formInput w-full"
               type="text"
               name="searchBar"
               id="searchBar"
@@ -31,12 +35,16 @@
             />
           </div>
           <div class="mt-2">
-            <button class="p-2 border-2 border-black rounded-md">Search</button>
+            <button
+              class="font-playfairDisplay text-lg md:text-2xl py-2 px-4 bg-brandYellow text-brandBlack hover:bg-brandBlack hover:text-brandYellow rounded-md"
+            >
+              Search
+            </button>
           </div>
         </form>
       </div>
       <div
-        class="w-full flex flex-wrap justify-center"
+        class="w-full flex flex-wrap justify-center gap-6"
         id="searchListings"
       ></div>
       <div

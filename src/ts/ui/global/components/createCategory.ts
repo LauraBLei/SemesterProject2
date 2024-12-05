@@ -15,7 +15,8 @@ export const CreateCategory = (section: HTMLElement) => {
     });
     const imageDiv = CreateElement({
       element: 'div',
-      styling: 'rounded-full h-[162px] w-[162px] overflow-hidden',
+      styling:
+        'rounded-full h-[100px] w-[100px] md:h-[162px] md:w-[162px] overflow-hidden',
     });
     const image = CreateElement({
       element: 'img',
