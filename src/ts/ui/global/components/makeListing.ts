@@ -70,6 +70,7 @@ export const makeSingleListing = (
   section: HTMLDivElement
 ) => {
   const truncateText = (text: string, maxLength: number) => {
+    if (!text) return '*No text found*';
     if (text.length === 0) return '*No text found*';
     return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
   };
@@ -148,7 +149,7 @@ export const makeSingleListing = (
     element: 'a',
     href: '/listing/',
     styling:
-      'scale-90 rounded-md hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer p-2 hover:bg-brandGreen w-full flex justify-center text-white text-2xl items-end gap-3',
+      'scale-90 border-2 border-brandGreen rounded-md hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer p-2 hover:bg-brandGreen w-full flex justify-center text-white text-2xl items-end gap-3',
   });
   seePost.addEventListener('click', () => {
     localStorage.setItem('id', JSON.stringify(post.id));

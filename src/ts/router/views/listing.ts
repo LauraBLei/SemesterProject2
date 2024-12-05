@@ -13,7 +13,10 @@ const runPage = async () => {
   const id = JSON.parse(localStorage.getItem('id') ?? '');
   const form = document.getElementById('bidForm');
   const listing = await readListing(id);
+  const userInfo = JSON.parse(localStorage.getItem('userInfo') ?? '');
+
   console.log(listing?.bids);
+  if (userInfo.name === listing?.seller.name) form?.classList.add('hidden');
 
   if (listing) MakeImages(listing.media);
   if (listing) MakeContent(listing);
@@ -47,6 +50,7 @@ const MakeImages = (images: Media[]) => {
 const MakeContent = (listing: ListingObject) => {
   const loggedIn = localStorage.getItem('token');
   const form = document.getElementById('bidForm');
+  const userInfo = JSON.parse(localStorage.getItem('userInfo') ?? '');
   const auctionClosed = document.getElementById('auctionClosed');
   if (!loggedIn) form?.classList.add('hidden');
   const title = document.getElementById('listingTitle');
@@ -89,6 +93,8 @@ const MakeBids = (bids: Bid[]) => {
 
   if (bids.length === 0 && bidContainer) {
     bidContainer.innerText = 'There are currently no bids!';
+    bidContainer.className =
+      'text-lg text-brandBlack text-center font-lato font-semibold';
     return;
   }
 
@@ -96,7 +102,7 @@ const MakeBids = (bids: Bid[]) => {
     const container = CreateElement({
       element: 'div',
       styling:
-        'bg-black rounded-md max-w-[460px] w-full h-auto p-2 flex justify-between items-center ',
+        'bg-brandBlack rounded-md max-w-[460px] min-w-[250px] w-full h-auto p-2 flex justify-between items-center ',
     });
     const userInfoDiv = CreateElement({
       element: 'div',
@@ -104,7 +110,8 @@ const MakeBids = (bids: Bid[]) => {
     });
     const imageDiv = CreateElement({
       element: 'div',
-      styling: 'rounded-full max-w-[70px] w-full h-full overflow-hidden',
+      styling:
+        'rounded-full w-[30px] h-[30px]  md:w-[70px] md:h-[70px] w-full h-full overflow-hidden',
     });
     const image = CreateElement({
       element: 'img',
@@ -114,14 +121,14 @@ const MakeBids = (bids: Bid[]) => {
     const bidderName = CreateElement({
       element: 'p',
       text: `${bid.bidder.name}`,
-      styling: 'text-white text-2xl ',
+      styling: 'text-brandWhite text-lg md:text-2xl ',
     });
 
     const bidValue = CreateElement({
       element: 'div',
-      styling: 'text-white text-2xl flex gap-4 items-end',
+      styling: 'text-brandWhite text-lg md:text-2xl flex gap-4 items-center',
     });
-    bidValue.innerHTML = `${bid.amount} ${Icon(iconPaths.credits)}`;
+    bidValue.innerHTML = `${bid.amount} ${Icon(iconPaths.credits, '#E0B341')}`;
 
     bidContainer?.append(container);
     container.append(userInfoDiv, bidValue);

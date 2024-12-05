@@ -12,7 +12,6 @@ export const makeBid = async (id: string, bid: number) => {
       headers: headers(),
       body: JSON.stringify(body),
     });
-    console.log(response);
 
     if (response.ok) {
       alert(`you added a bid of ${bid} credits!`);

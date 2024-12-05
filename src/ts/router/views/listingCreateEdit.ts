@@ -55,7 +55,7 @@ export const MakeCreateOrEditForm = async ({
   const headline = CreateElement({
     element: 'h1',
     styling:
-      'font-playfairDisplay text-center border-b-2 border-black text-lg md:text-3xl p-2',
+      'font-playfairDisplay text-brandBlack text-center border-b-2 border-brandBlack text-lg md:text-3xl p-2',
   });
   headline.innerText = create
     ? 'Create A Listing'
@@ -151,7 +151,12 @@ export const MakeCreateOrEditForm = async ({
     element: 'div',
     styling: 'flex flex-col items-center w-full',
   });
-  const imageText = CreateElement({ element: 'h2', text: 'Images:' });
+  const imageText = CreateElement({
+    element: 'h2',
+    text: 'Images:',
+    styling:
+      'font-playfairDisplay text-brandBlack text-lg lg:text-2xl place-self-start mt-4 mb-2',
+  });
   const divImageInput = CreateElement({
     element: 'div',
     id: 'imageInput',
@@ -191,7 +196,7 @@ export const MakeCreateOrEditForm = async ({
     id: 'addImageInput',
     text: '+ Add another image',
     styling:
-      'px-4 py-2 text:lg md:text-2xl  mt-4  rounded-md scale-95 hover:scale-100 hover:bg-brandBlack hover:text-brandYellow transition ease-in-out duration-300',
+      'px-4 py-2 text-brandBlack text-lg md:text-2xl  mt-4  rounded-md scale-95 hover:scale-100 hover:bg-brandBlack hover:text-brandYellow transition ease-in-out duration-300',
   });
   addImageInputButton.type = 'button';
 
@@ -259,8 +264,7 @@ const imageInputs = (container: Element) => {
       styling: 'w-full flex justify-between gap-2',
     });
     const newInput = document.createElement('input');
-    (newInput.type = 'url'),
-      (newInput.className = 'w-full border-2 border-black p-2');
+    (newInput.type = 'url'), (newInput.className = 'w-full formInput');
     newInput.placeholder = 'Add Image url...';
     newInput.required;
 
@@ -268,7 +272,7 @@ const imageInputs = (container: Element) => {
       element: 'button',
       text: 'X',
       styling:
-        'px-4 py-2 border-2  border-black rounded-full scale-95 hover:scale-100 transition ease-in-out duration-300',
+        'font-playfairDisplay text-lg md:text-2xl border-black rounded-full scale-75 hover:scale-100 transition ease-in-out duration-300',
     });
     button.type = 'button';
 
