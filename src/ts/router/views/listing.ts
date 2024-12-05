@@ -111,7 +111,7 @@ const MakeBids = (bids: Bid[]) => {
     const imageDiv = CreateElement({
       element: 'div',
       styling:
-        'rounded-full w-[30px] h-[30px]  md:w-[70px] md:h-[70px] w-full h-full overflow-hidden',
+        'rounded-full w-[40px] h-[40px] md:w-[70px] md:h-[70px]  overflow-hidden',
     });
     const image = CreateElement({
       element: 'img',

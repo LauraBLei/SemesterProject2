@@ -80,7 +80,7 @@ svg {
 
 @layer components {
   .formInput {
-    @apply bg-brandGreen text-brandWhite placeholder:text-brandWhite/85 placeholder:font-lato rounded-md px-4 py-2;
+    @apply bg-brandGreen text-brandWhite placeholder:text-brandWhite/85 placeholder:font-lato rounded-md px-4 py-2 shadow-sm shadow-brandBlack;
   }
   .formInput:focus {
     @apply bg-brandBlack text-brandYellow placeholder:text-brandYellow;

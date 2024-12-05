@@ -68,12 +68,12 @@ const MakeProfile = async (userInfo: UserProfileAPI) => {
     styling:
       ' list-none cursor-pointer scale-95 hover:scale-100 transition ease-in-out duration-300 transform',
   });
-  summary.innerHTML = `${Icon(iconPaths.setting, '#00000', '40px')}
+  summary.innerHTML = `${Icon(iconPaths.setting, '#1D1D1D', '30px')}
   `;
   const div = CreateElement({
     element: 'div',
     styling:
-      'absolute z-20 bg-white border-2 border-black max-w-[500px] w-full p-4 max-h-[300px] overflow-y-auto',
+      'absolute z-20 bg-brandWhite border-2 rounded-md border-black w-[300px] md:w-[500px] p-4 h-auto',
   });
 
   makeUpdateProfileForm(div, userInfo);
@@ -95,8 +95,8 @@ const MakeProfile = async (userInfo: UserProfileAPI) => {
 
   const credits = document.getElementById('credits') as HTMLDivElement;
   credits.innerHTML = `
-  <span class='text-2xl font-semibold'>${userInfo.credits}</span>
-  <span>${Icon(iconPaths.credits, '#00000')}</span>
+  <span class='text-sm md:text-2xl font-semibold font-lato'>${userInfo.credits}</span>
+  <span>${Icon(iconPaths.credits, '#00000', '20px')}</span>
   `;
 
   const bio = document.getElementById('bio') as HTMLDivElement;
@@ -115,7 +115,7 @@ const MakeProfile = async (userInfo: UserProfileAPI) => {
   ) as HTMLDivElement;
 
   activeListings.forEach((listing: ListingObject) => {
-    MakeActiveListings(listing, activeListingsContainer);
+    MakeListings(listing, activeListingsContainer);
   });
   closedListings.forEach((listing: ListingObject) => {
     MakeClosedListings(listing, closedListingsContainer);
@@ -132,13 +132,14 @@ const makeUpdateProfileForm = (
   const title = CreateElement({
     element: 'h2',
     text: 'Update Profile',
-    styling: 'headline text-center',
+    styling:
+      'font-playfairDisplay font-semibold text-brandBlack text-lg md:text-2xl text-center border-b-2 border-brandBlack py-2',
   });
 
   const form = CreateElement({
     element: 'form',
     id: 'updateProfile',
-    styling: 'flex flex-col gap-4 items-center w-full',
+    styling: 'w-full flex flex-col gap-4 mt-2',
   });
 
   const avatarContainer = CreateElement({
@@ -149,7 +150,7 @@ const makeUpdateProfileForm = (
     element: 'label',
     forLabel: 'avatarUrl',
     text: 'Profile picture:',
-    styling: 'text-2xl font-semibold',
+    styling: 'text-lg font-semibold font-playfairDisplay text-brandBlack',
   });
   const avatarInput = CreateElement({
     element: 'input',
@@ -158,7 +159,7 @@ const makeUpdateProfileForm = (
     id: 'avatarUrl',
     placeholder: 'Profile Img url',
     value: `${userInfo.avatar.url}`,
-    styling: 'w-full border-2 border-black p-2',
+    styling: 'w-full formInput',
     required: true,
   });
 
@@ -170,6 +171,7 @@ const makeUpdateProfileForm = (
     element: 'label',
     forLabel: 'bannerUrl',
     text: 'Cover picture:',
+    styling: 'text-lg font-semibold font-playfairDisplay text-brandBlack',
   });
   const bannerInput = CreateElement({
     element: 'input',
@@ -178,7 +180,7 @@ const makeUpdateProfileForm = (
     id: 'bannerUrl',
     placeholder: 'Cover img url...',
     value: `${userInfo.banner.url}`,
-    styling: 'w-full border-2 border-black p-2',
+    styling: 'w-full formInput',
     required: true,
   });
 
@@ -188,7 +190,7 @@ const makeUpdateProfileForm = (
     id: 'bioInput',
     placeholder: 'Write something about yourself...',
     required: true,
-    styling: 'w-full min-h-[200px] border-2 border-black p-2',
+    styling: 'w-full min-h-[100px] formInput',
     text: `${userInfo.bio}`,
   });
 
@@ -197,7 +199,7 @@ const makeUpdateProfileForm = (
     text: 'Update',
     type: 'submit',
     styling:
-      'border-2 border-black py-2 px-4 scale-95 hover:scale-100 transition ease-in-out duration-300 transform',
+      'border-2 text-brandGreen tracking-widest font-semibold text-2xl border-brandGreen hover:bg-brandBlack hover:text-brandYellow py-2 px-4 scale-95 hover:scale-100 transition ease-in-out duration-300 transform',
   });
 
   container.append(title, form);
@@ -206,7 +208,7 @@ const makeUpdateProfileForm = (
   bannerContainer.append(bannerLabel, bannerInput);
 };
 
-const MakeActiveListings = (
+const MakeListings = (
   listing: ListingObject,
   listingsContainer: HTMLDivElement
 ) => {
@@ -214,18 +216,29 @@ const MakeActiveListings = (
     element: 'div',
     id: listing.id,
     styling:
-      'bg-black text-white p-2 w-full  flex justify-evenly items-center gap-4',
+      'bg-brandBlack text-brandWhite text-lg text-nowrap p-2 w-full  flex flex-col items-center gap-4 shadow-sm shadow-brandBlack',
   });
-  const title = CreateElement({ element: 'p', text: listing.title });
+  const title = CreateElement({
+    element: 'p',
+    text: listing.title,
+    styling: 'font-playfairDisplay font-semibold text-lg tracking-[8px]',
+  });
 
   const countDown = createCountdownHTML(listing.endsAt);
-
+  countDown.className =
+    'font-playfairDisplay font-semibold text-lg tracking-widest';
   const editButton = CreateElement({
     element: 'button',
     styling:
-      'scale-90 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer p-2 hover:bg-green-900',
+      'scale-75 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer  ',
   });
-  editButton.innerHTML = `${Icon(iconPaths.edit)}`;
+
+  const buttonContainer = CreateElement({
+    element: 'div',
+    styling: 'w-full flex justify-evenly',
+  });
+
+  editButton.innerHTML = `${Icon(iconPaths.edit, '#E0B341')}`;
   editButton.addEventListener('click', () => {
     const div = document.getElementById('createEditContainer');
     div?.classList.remove('hidden');
@@ -235,9 +248,9 @@ const MakeActiveListings = (
   const deleteButton = CreateElement({
     element: 'button',
     styling:
-      'scale-90 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer p-2 hover:bg-green-900',
+      'scale-75 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer  ',
   });
-  deleteButton.innerHTML = `${Icon(iconPaths.delete)}`;
+  deleteButton.innerHTML = `${Icon(iconPaths.delete, '#E0B341')}`;
   deleteButton.addEventListener('click', () => {
     onDeletePost(listing.id);
   });
@@ -245,14 +258,15 @@ const MakeActiveListings = (
     element: 'a',
     href: '/listing/',
     styling:
-      'scale-90 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer p-2 hover:bg-green-900',
+      'scale-75 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer ',
   });
   seePost.addEventListener('click', () => {
     localStorage.setItem('id', JSON.stringify(listing.id));
   });
-  seePost.innerHTML = `${Icon(iconPaths.eye)}`;
+  seePost.innerHTML = `${Icon(iconPaths.eye, '#E0B341')}`;
 
-  container.append(title, countDown, editButton, deleteButton, seePost);
+  container.append(title, countDown, buttonContainer);
+  buttonContainer.append(editButton, deleteButton, seePost);
   listingsContainer.append(container);
 };
 
@@ -263,80 +277,57 @@ const MakeClosedListings = (
   if (!isAuctionClosed(listing.endsAt)) {
     return;
   }
+  MakeListings(listing, listingsContainer);
   const container = CreateElement({
     element: 'div',
     id: listing.id,
     styling:
       'bg-black text-white p-2 w-full flex justify-evenly items-center gap-4',
   });
-  const title = CreateElement({ element: 'p', text: listing.title });
-
-  const countDown = createCountdownHTML(listing.endsAt);
-
-  const editButton = CreateElement({
-    element: 'button',
-    styling:
-      'scale-90 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer p-2 hover:bg-green-900',
-  });
-  editButton.innerHTML = `${Icon(iconPaths.edit)}`;
-  editButton.addEventListener('click', () => {
-    const div = document.getElementById('createEditContainer');
-    div?.classList.remove('hidden');
-    MakeCreateOrEditForm({ id: listing.id, edit: true });
-  });
-
-  const deleteButton = CreateElement({
-    element: 'button',
-    styling:
-      'scale-90 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer p-2 hover:bg-green-900',
-  });
-  deleteButton.innerHTML = `${Icon(iconPaths.delete)}`;
-  deleteButton.addEventListener('click', () => {
-    onDeletePost(listing.id);
-  });
-  const seePost = CreateElement({
-    element: 'a',
-    href: '/listing/',
-    styling:
-      'scale-90 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer p-2 hover:bg-green-900',
-  });
-  seePost.addEventListener('click', () => {
-    localStorage.setItem('id', JSON.stringify(listing.id));
-  });
-  seePost.innerHTML = `${Icon(iconPaths.eye)}`;
-
-  container.append(title, countDown, editButton, deleteButton, seePost);
-  listingsContainer.append(container);
 };
 
-const MakeUserBids = (listing: Bid, listingsContainer: HTMLDivElement) => {
+const MakeUserBids = (
+  listing: { listing: ListingObject; amount: number },
+  listingsContainer: HTMLDivElement
+) => {
+  console.log(listing);
+
   const container = CreateElement({
     element: 'div',
-    id: listing.id,
-    styling: 'bg-black w-full text-white flex justify-evenly ',
+    id: listing.listing.id,
+    styling:
+      'bg-brandBlack text-brandWhite text-lg text-nowrap p-2 w-full  flex flex-col items-center gap-4 shadow-sm shadow-brandBlack',
   });
-  const title = CreateElement({ element: 'p', text: listing.listing.title });
+
+  const title = CreateElement({
+    element: 'p',
+    text: listing.listing.title,
+    styling:
+      'font-playfairDisplay font-semibold text-lg tracking-[8px] text-wrap text-center',
+  });
+
+  const bid = CreateElement({
+    element: 'p',
+    text: `Bid: ${listing.amount}`,
+    styling: 'font-lato font-semibold text-lg text-brandYellow tracking-[8px]',
+  });
 
   const countDown = createCountdownHTML(listing.listing.endsAt);
-
-  const bidDiv = CreateElement({ element: 'div', styling: 'flex gap-2' });
-  const bid = CreateElement({ element: 'p', text: `${listing.amount}` });
-  const icon = CreateElement({ element: 'div' });
-  icon.innerHTML = `${Icon(iconPaths.credits)}`;
+  countDown.className =
+    'font-playfairDisplay font-semibold text-lg tracking-[8px]';
 
   const seePost = CreateElement({
     element: 'a',
     href: '/listing/',
     styling:
-      'scale-90 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer p-2 hover:bg-green-900',
+      'scale-75 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer p-2 ',
   });
   seePost.addEventListener('click', () => {
     localStorage.setItem('id', JSON.stringify(listing.listing.id));
   });
-  seePost.innerHTML = `${Icon(iconPaths.eye)}`;
+  seePost.innerHTML = `${Icon(iconPaths.eye, '#E0B341')}`;
 
-  container.append(title, countDown, bidDiv, seePost);
+  container.append(title, bid, countDown, seePost);
   listingsContainer.append(container);
-  bidDiv.append(bid, icon);
 };
 runPage();

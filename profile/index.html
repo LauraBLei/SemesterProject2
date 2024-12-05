@@ -10,54 +10,79 @@
     <header></header>
     <main>
       <div class="flex flex-col max-w-[1400px] w-full">
-        <div id="banner" class="w-full border-b-2 border-green-900"></div>
+        <div
+          id="banner"
+          class="w-full border-b-2 border-brandGreen shadow-sm shadow-brandBlack"
+        ></div>
         <div
           id="profileInfo"
           class="max-w-[1200px] w-full h-full flex flex-col justify-center items-center"
         >
-          <div class="w-full flex justify-evenly max-h-[100px] items-center">
-            <div id="updateProfile"></div>
+          <div class="w-full flex justify-center h-auto items-center">
             <div
-              class="w-[100px] h-[100px] lg:w-[210px] lg:h-[210px] mt-[-50px] lg:mt-[-100px] overflow-hidden rounded-full border-2 border-green-900"
+              class="w-[100px] h-[100px] md:w-[200px] md:h-[200px] mt-[-50px] md:mt-[-100px] overflow-hidden rounded-full border-2 border-brandGreen shadow-sm shadow-brandBlack"
               id="avatar"
             ></div>
-            <div class="headline" id="username"></div>
-            <div class="flex gap-2 items-center" id="credits"></div>
           </div>
-          <div id="bio" class="w-full flex justify-center mt-3"></div>
+          <div
+            class="flex flex-col gap-6 items-center justify-center mt-4 px-4"
+          >
+            <div class="flex gap-2 items-center justify-between w-full">
+              <div id="updateProfile"></div>
+              <div
+                class="text-lg md:text-2xl font-playfairDisplay font-semibold"
+                id="username"
+              ></div>
+              <div
+                class="flex gap-2 items-center justify-self-end"
+                id="credits"
+              ></div>
+            </div>
+            <div
+              id="bio"
+              class="w-full flex justify-center mt-3 max-w-[500px] text-sm md:text-lg text-brandBlack font-lato font-semibold"
+            ></div>
+          </div>
         </div>
-        <h1 class="headline text-center mt-10">Your Listings</h1>
         <div
           id="userListings"
-          class="flex flex-wrap gap-5 w-full justify-center mt-4"
+          class="flex flex-wrap gap-5 w-full justify-evenly mt-4"
         >
-          <div class="w-full max-w-[400px]">
-            <h2 class="text-center text-2xl font-semibold my-4">
+          <section class="w-full max-w-[600px]">
+            <h2
+              class="text-center font-playfairDisplay text-brandBlack tracking-widest text-2xl font-semibold my-4"
+            >
               Latest listings
             </h2>
             <div
               id="activeListings"
-              class="flex flex-col gap-4 w-full max-h-[400px] overflow-auto"
+              class="flex flex-col gap-4 w-full max-h-[400px] overflow-y-auto"
             ></div>
-          </div>
+          </section>
 
-          <div class="w-full max-w-[400px]">
-            <h2 class="text-center text-2xl font-semibold my-4">
+          <section class="w-full max-w-[600px]">
+            <h2
+              class="text-center font-playfairDisplay text-brandBlack tracking-widest text-2xl font-semibold my-4"
+            >
               Closed listings
             </h2>
             <div
               id="closedListings"
-              class="flex flex-col gap-4 w-full max-h-[400px] overflow-auto"
+              class="flex flex-col gap-4 w-full max-h-[400px] overflow-y-auto"
             ></div>
-          </div>
+          </section>
 
-          <div class="w-full max-w-[400px]">
-            <h2 class="text-center text-2xl font-semibold my-4">Your bids</h2>
+          <section class="w-full max-w-[600px]">
+            <h2
+              class="text-center font-playfairDisplay text-brandBlack tracking-widest text-2xl font-semibold my-4"
+            >
+              Your bids
+            </h2>
             <div
-              class="flex flex-col gap-4 w-full max-h-[400px] overflow-auto"
+              class="flex flex-col gap-4 w-full max-h-[400px] overflow-y-auto"
               id="userBids"
             ></div>
-          </div>
+          </section>
         </div>
       </div>
     </main>
