@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign up</title>
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body>
+    <header></header>
+    <main class="flex flex-col w-full items-center gap-10">
+      <img
+        class="w-[250px] h-auto"
+        src="/Logo-green.png"
+        alt="Luxora Auctions Logo in Green"
+      />
+      <h1
+        class="font-playfairDisplay tracking-[10px] text-3xl font-bold text-brandBlack"
+      >
+        Sign Up
+      </h1>
+      <div
+        class="border-2 border-brandYellow py-20 px-40 flex flex-col items-center gap-6"
+      >
+        <a
+          class="bg-brandGreen px-5 py-2 text-brandWhite rounded-md text-2xl font-playfairDisplay tracking-[8px] scale-95 hover:scale-100 transition ease-in-out duration-300 transform hover:bg-brandBlack hover:text-brandYellow font-semibold shadow-md shadow-black"
+          href="/auth/login/"
+          >Login</a
+        >
+        <p class="font-playfairDisplay text-xl font-semibold text-brandGreen">
+          OR
+        </p>
+        <a
+          class="text-xl font-playfairDisplay text-brandGreen tracking-[8px] font-semibold scale-95 hover:scale-100 transition ease-in-out duration-300 transform"
+          href="/auth/register/"
+          >Register a user</a
+        >
+      </div>
+    </main>
+  </body>
+</html>

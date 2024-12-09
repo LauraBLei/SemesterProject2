@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body>
+    <header></header>
+    <main>
+      <div
+        class="w-full max-w-[1200px] overflow-x-auto items-center min-h-[160px] md:min-h-[200px]"
+      >
+        <div
+          id="searchCategories"
+          class="h-auto flex gap-6 py-4 text-brandBlack text-sm md:text-lg font-semibold tracking-wider text-center w-full xl:justify-center"
+        ></div>
+      </div>
+      <div
+        class="flex justify-center my-4 w-full max-w-[1400px] sticky z-30 top-0 bg-white py-4"
+      >
+        <form
+          id="sortListings"
+          name="sortListings"
+          class="flex justify-evenly w-full px-4 gap-5"
+        >
+          <div class="w-full max-w-[700px] mt-2 block">
+            <input
+              class="formInput w-full"
+              type="text"
+              name="searchBar"
+              id="searchBar"
+              placeholder="Search.."
+            />
+          </div>
+          <div class="mt-2">
+            <button
+              class="font-playfairDisplay text-lg md:text-2xl py-2 px-4 bg-brandYellow text-brandBlack hover:bg-brandBlack hover:text-brandYellow rounded-md"
+            >
+              Search
+            </button>
+          </div>
+        </form>
+      </div>
+      <div
+        class="w-full flex flex-wrap justify-center gap-6"
+        id="searchListings"
+      ></div>
+      <div
+        class="w-full flex items-center justify-evenly mt-4"
+        id="pagination"
+      ></div>
+    </main>
+  </body>
+</html>

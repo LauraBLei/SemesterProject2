@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body>
+    <header></header>
+    <main class="flex flex-col gap-10">
+      <img
+        class="w-[250px] h-auto"
+        src="/Logo-green.png"
+        alt="Luxora Auction Logo in Green"
+      />
+      <h1
+        class="font-playfairDisplay tracking-[10px] text-3xl font-bold text-brandBlack"
+      >
+        Register
+      </h1>
+      <section class="max-w-[600px] w-full">
+        <form
+          class="flex flex-col items-center gap-5 w-full"
+          id="register"
+          name="register"
+        >
+          <div
+            class="border-2 border-brandYellow py-20 px-20 w-full flex flex-col items-center gap-6"
+          >
+            <input
+              class="formInput"
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Username..."
+              required
+            />
+            <input
+              class="formInput"
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Email..."
+              required
+            />
+            <div
+              id="error-message-register"
+              class="hidden text-brandBlack text-center"
+            >
+              You must use an @stud.noroff.no email address.
+            </div>
+            <input
+              class="formInput"
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Password..."
+              required
+            />
+          </div>
+          <div class="flex flex-col gap-6 items-center">
+            <button
+              class="bg-brandGreen px-5 py-2 text-brandWhite rounded-md text-2xl font-playfairDisplay tracking-[8px] scale-95 hover:scale-100 transition ease-in-out duration-300 transform hover:bg-brandBlack hover:text-brandYellow font-semibold shadow-md shadow-black"
+              type="submit"
+            >
+              Register
+            </button>
+            <p
+              class="font-playfairDisplay text-xl font-semibold text-brandGreen"
+            >
+              OR
+            </p>
+            <a
+              class="text-xl font-playfairDisplay text-brandGreen tracking-[8px] font-semibold scale-95 hover:scale-100 transition ease-in-out duration-300 transform"
+              href="/auth/login/"
+              >Login</a
+            >
+          </div>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>

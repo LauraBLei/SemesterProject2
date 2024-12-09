@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body>
+    <header></header>
+    <main>
+      <div class="flex flex-col max-w-[1400px] w-full">
+        <div
+          id="banner"
+          class="w-full border-b-2 border-brandGreen shadow-sm shadow-brandBlack"
+        ></div>
+        <div
+          id="profileInfo"
+          class="max-w-[1200px] w-full h-full flex flex-col justify-center items-center"
+        >
+          <div class="w-full flex justify-center h-auto items-center">
+            <div
+              class="w-[100px] h-[100px] md:w-[200px] md:h-[200px] mt-[-50px] md:mt-[-100px] overflow-hidden rounded-full border-2 border-brandGreen shadow-sm shadow-brandBlack"
+              id="avatar"
+            ></div>
+          </div>
+          <div
+            class="flex flex-col gap-6 items-center justify-center mt-4 px-4"
+          >
+            <div class="flex gap-2 items-center justify-between w-full">
+              <div id="updateProfile"></div>
+              <div
+                class="text-lg md:text-2xl font-playfairDisplay font-semibold"
+                id="username"
+              ></div>
+              <div
+                class="flex gap-2 items-center justify-self-end"
+                id="credits"
+              ></div>
+            </div>
+            <div
+              id="bio"
+              class="w-full flex justify-center mt-3 max-w-[500px] text-sm md:text-lg text-brandBlack font-lato font-semibold"
+            ></div>
+          </div>
+        </div>
+        <div
+          id="userListings"
+          class="flex flex-wrap gap-5 w-full justify-evenly mt-4"
+        >
+          <section class="w-full max-w-[600px]">
+            <h2
+              class="text-center font-playfairDisplay text-brandBlack tracking-widest text-2xl font-semibold my-4"
+            >
+              Latest listings
+            </h2>
+            <div
+              id="activeListings"
+              class="flex flex-col gap-4 w-full max-h-[400px] overflow-y-auto"
+            ></div>
+          </section>
+
+          <section class="w-full max-w-[600px]">
+            <h2
+              class="text-center font-playfairDisplay text-brandBlack tracking-widest text-2xl font-semibold my-4"
+            >
+              Closed listings
+            </h2>
+            <div
+              id="closedListings"
+              class="flex flex-col gap-4 w-full max-h-[400px] overflow-y-auto"
+            ></div>
+          </section>
+
+          <section class="w-full max-w-[600px]">
+            <h2
+              class="text-center font-playfairDisplay text-brandBlack tracking-widest text-2xl font-semibold my-4"
+            >
+              Your bids
+            </h2>
+            <div
+              class="flex flex-col gap-4 w-full max-h-[400px] overflow-y-auto"
+              id="userBids"
+            ></div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

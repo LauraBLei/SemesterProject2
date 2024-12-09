@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@400;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply flex h-dvh max-w-full;
+}
+
+main {
+  @apply ml-16 md:ml-0 flex flex-col w-full h-full items-center gap-8 md:gap-14 z-0 overflow-y-auto;
+}
+
+header {
+  @apply h-dvh z-50 block;
+}
+
+svg {
+  transition: rotate 150ms ease;
+}
+
+@layer components {
+  .active {
+    @apply bg-brandBlack shadow-sm shadow-black;
+  }
+
+  .idle {
+    @apply scale-75 hover:scale-110;
+  }
+
+  .dot {
+    @apply w-[15px] h-[15px] md:w-[20px] md:h-[20px] rounded-full  hover:bg-white border-2 border-brandBlack cursor-pointer transition-transform duration-300 ease-in-out transform;
+  }
+}
+
+@layer components {
+  .sidebar {
+    @apply w-[240px] border-l-2 border-brandBlack flex flex-col bg-brandGreen text-white h-dvh gap-4 overflow-hidden text-nowrap transition-all duration-500 ease-in-out absolute md:static;
+  }
+
+  .sidebar.closed {
+    @apply w-[64px] overflow-hidden pl-0;
+  }
+
+  .sidebar.closed #navSpan {
+    @apply hidden;
+  }
+
+  .sidebar #profileNav {
+    @apply max-w-[40px] max-h-[40px] min-h-[40px] min-w-[40px] transition-all duration-500 ease-in-out;
+  }
+  .sidebar.closed #profileNav {
+    @apply max-w-[30px] max-h-[30px] min-h-[30px] min-w-[30px] transition-all duration-500 ease-in-out;
+  }
+}
+
+@layer components {
+  .navAnchor {
+    @apply font-playfairDisplay text-xl hover:bg-brandBlack w-full px-4 py-2 font-semibold cursor-pointer hover:shadow-md hover:shadow-black scale-95 hover:scale-100 transition ease-in-out duration-300 transform;
+  }
+
+  .navAnchor.active {
+    @apply bg-brandBlack scale-100 w-full items-center h-auto shadow-sm shadow-black;
+  }
+}
+
+@layer components {
+  .toggle-btn {
+    @apply px-5 py-1 border-none cursor-pointer scale-95 hover:scale-100 transition ease-in-out duration-300 transform;
+  }
+
+  .toggle-btn svg {
+    transition: rotate 400ms ease;
+  }
+
+  .rotate svg {
+    rotate: 180deg;
+  }
+}
+
+@layer components {
+  .formInput {
+    @apply bg-brandGreen text-brandWhite placeholder:text-brandWhite/85 placeholder:font-lato rounded-md px-4 py-2 shadow-sm shadow-brandBlack;
+  }
+  .formInput:focus {
+    @apply bg-brandBlack text-brandYellow placeholder:text-brandYellow;
+  }
+}
