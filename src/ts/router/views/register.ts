@@ -1,7 +1,6 @@
 import { onRegister } from '../../ui/auth/register';
 
-const runPage = () => {
+export const runRegister = () => {
   const form = document.getElementById('register');
   form?.addEventListener('submit', onRegister);
 };
-runPage();

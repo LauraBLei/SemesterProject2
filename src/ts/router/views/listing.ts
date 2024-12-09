@@ -9,7 +9,7 @@ import { onBid } from '../../ui/listing/bid';
 import { iconPaths } from '../../utilities/enums';
 import { Bid, ListingObject, Media } from '../../utilities/types';
 
-const runPage = async () => {
+export const runListingPage = async () => {
   const id = JSON.parse(localStorage.getItem('id') ?? '');
   const form = document.getElementById('bidForm');
   const listing = await readListing(id);
@@ -135,5 +135,3 @@ const MakeBids = (bids: Bid[]) => {
     imageDiv.append(image);
   });
 };
-
-runPage();

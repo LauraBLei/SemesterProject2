@@ -1,7 +1,6 @@
 import { onLogin } from '../../ui/auth/login';
 
-const runPage = () => {
+export const runLogin = () => {
   const form = document.getElementById('login');
   form?.addEventListener('submit', onLogin);
 };
-runPage();

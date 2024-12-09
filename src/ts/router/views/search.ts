@@ -1,7 +1,7 @@
 import { CreateCategory } from '../../ui/global/components/createCategory';
 import { MakeListing } from '../../ui/global/components/makeListing';
 
-const runPage = async () => {
+export const runSearchPage = async () => {
   const categoryContainer = document.getElementById('searchCategories');
   if (categoryContainer) CreateCategory(categoryContainer);
   const paginationDiv = document.getElementById('pagination') as HTMLDivElement;

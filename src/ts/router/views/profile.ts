@@ -12,7 +12,7 @@ import { iconPaths } from '../../utilities/enums';
 import { Bid, ListingObject, UserProfileAPI } from '../../utilities/types';
 import { MakeCreateOrEditForm } from './listingCreateEdit';
 
-const runPage = async () => {
+export const runProfile = async () => {
   const user = JSON.parse(localStorage.getItem('userInfo') ?? '');
   const userInfo: UserProfileAPI = await readProfile(user.name);
   const form = document.getElementById('updateProfile');
@@ -324,4 +324,3 @@ const MakeUserBids = (
   container.append(title, bid, countDown, seePost);
   listingsContainer.append(container);
 };
-runPage();
