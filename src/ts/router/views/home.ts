@@ -2,7 +2,7 @@ import { readPosts } from '../../api/listing/read';
 import { carousel } from '../../ui/global/carousel';
 import { MakeListing } from '../../ui/global/components/makeListing';
 
-const runPage = async () => {
+export const runPage = async () => {
   const section = document.getElementById('mostRecent') as HTMLDivElement;
   const paginationDiv = document.getElementById('pagination') as HTMLDivElement;
 
@@ -25,4 +25,4 @@ const runPage = async () => {
   });
 };
 
-runPage();
+// runPage();

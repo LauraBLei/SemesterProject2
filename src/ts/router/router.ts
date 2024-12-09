@@ -1,7 +1,10 @@
+import { runPage } from './views/home.ts';
+
 export default async function router(pathname = window.location.pathname) {
   switch (pathname) {
     case '/':
       await import('./views/home.ts');
+      await runPage();
       break;
     case '/auth/':
       await import('./views/auth.ts');
