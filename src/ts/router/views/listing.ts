@@ -50,7 +50,6 @@ const MakeImages = (images: Media[]) => {
 const MakeContent = (listing: ListingObject) => {
   const loggedIn = localStorage.getItem('token');
   const form = document.getElementById('bidForm');
-  const userInfo = JSON.parse(localStorage.getItem('userInfo') ?? '');
   const auctionClosed = document.getElementById('auctionClosed');
   if (!loggedIn) form?.classList.add('hidden');
   const title = document.getElementById('listingTitle');

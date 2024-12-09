@@ -278,12 +278,6 @@ const MakeClosedListings = (
     return;
   }
   MakeListings(listing, listingsContainer);
-  const container = CreateElement({
-    element: 'div',
-    id: listing.id,
-    styling:
-      'bg-black text-white p-2 w-full flex justify-evenly items-center gap-4',
-  });
 };
 
 const MakeUserBids = (
