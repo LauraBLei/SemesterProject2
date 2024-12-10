@@ -1,4 +1,6 @@
 export const initializeGlobalLoader = () => {
+  document.documentElement.classList.add('loading');
+  document.body.classList.add('loading');
   const loader = document.createElement('div');
   loader.id = 'global-loader';
   loader.className =

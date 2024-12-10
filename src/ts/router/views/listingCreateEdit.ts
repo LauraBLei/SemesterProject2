@@ -29,6 +29,7 @@ export const MakeCreateOrEditForm = async ({
     'createEditContainer'
   ) as HTMLDivElement;
   let listing: ListingObject | undefined;
+
   if (edit && id) {
     listing = await readListing(id);
   }

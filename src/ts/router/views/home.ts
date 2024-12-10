@@ -5,6 +5,7 @@ import { MakeListing } from '../../ui/global/components/makeListing';
 export const runPage = async () => {
   const section = document.getElementById('mostRecent') as HTMLDivElement;
   const paginationDiv = document.getElementById('pagination') as HTMLDivElement;
+  console.log('tittei');
 
   const carouselPosts = await readPosts({
     limit: 10,
