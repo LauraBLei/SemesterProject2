@@ -6,6 +6,7 @@ export default {
     './**/*.{html,js,ts}',
     '!./node_modules//*',
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {

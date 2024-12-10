@@ -24,5 +24,3 @@ export const runPage = async () => {
     sort: 'created',
   });
 };
-
-// runPage();
