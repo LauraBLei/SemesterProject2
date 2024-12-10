@@ -63,7 +63,6 @@ export async function readPosts({
 
     if (response.ok) {
       const data = await response.json();
-      console.log('blob', data);
 
       return data;
     }
@@ -134,7 +133,6 @@ export async function searchPosts({
     }
   } catch (error) {
     alert('something went wrong trying to fetch user posts');
-    console.log(error);
   }
 }
 
@@ -160,11 +158,8 @@ export async function readBidsByUser({
       const data = await response.json();
 
       return data;
-    } else {
-      console.log(response);
     }
   } catch (error) {
     alert('something went wrong trying to fetch user posts');
-    console.log(error);
   }
 }

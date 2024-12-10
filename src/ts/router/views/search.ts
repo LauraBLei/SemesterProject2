@@ -16,7 +16,7 @@ export const runSearchPage = async () => {
     const form = event.target as HTMLFormElement;
     const formData = new FormData(form);
     const search = formData.get('searchBar') ?? '';
-    console.log('hello from eventlistener:', search);
+
     MakeListing({
       API: 'search',
       limit: 12,

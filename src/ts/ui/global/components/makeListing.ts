@@ -43,7 +43,7 @@ export const MakeListing = async ({
   }
 
   if (data.data.length === 0) {
-    const errorMessage = CreateElement({
+    const errorMessage = CreateElement<HTMLHeadingElement>({
       element: 'h1',
       text: 'No posts found!',
     });
@@ -77,19 +77,19 @@ export const makeSingleListing = (
   const croppedTitle = truncateText(post.title, 15);
   const croppedDescription = truncateText(post.description, 50);
 
-  const container = CreateElement({
+  const container = CreateElement<HTMLDivElement>({
     element: 'div',
     styling:
-      'w-full md:w-[350px] h-auto bg-brandBlack shadow-sm shadow-brandBlack p-3 rounded-md flex flex-col justify-evenly',
+      'w-full md:w-[350px] h-auto bg-brandBlack dark:bg-brandGreen shadow-sm shadow-brandBlack p-3 rounded-md flex flex-col justify-evenly',
   });
 
-  const imageDiv = CreateElement({
+  const imageDiv = CreateElement<HTMLDivElement>({
     element: 'div',
     styling:
       'w-full h-[200px] flex items-center justify-center rounded-md overflow-hidden',
   });
   if (post.media[0]) {
-    const image = CreateElement({
+    const image = CreateElement<HTMLImageElement>({
       element: 'img',
       styling: 'w-full h-full object-cover',
       src: `${post.media[0].url}`,
@@ -97,7 +97,7 @@ export const makeSingleListing = (
     });
     imageDiv.append(image);
   } else {
-    const image = CreateElement({
+    const image = CreateElement<HTMLImageElement>({
       element: 'img',
       styling: 'w-full h-full object-cover',
       src: `/placeholder.jpg`,
@@ -106,14 +106,14 @@ export const makeSingleListing = (
     imageDiv.append(image);
   }
 
-  const title = CreateElement({
+  const title = CreateElement<HTMLHeadingElement>({
     element: 'h2',
     styling:
       'text-white font-playfairDisplay font-semibold  text-center text-lg md:text-2xl py-2',
     text: croppedTitle,
   });
 
-  const description = CreateElement({
+  const description = CreateElement<HTMLParagraphElement>({
     element: 'p',
     text: croppedDescription,
     styling:
@@ -123,33 +123,33 @@ export const makeSingleListing = (
   const countDown = createCountdownHTML(post.endsAt);
   countDown.className = 'text-2xl text-center py-2 text-brandWhite';
 
-  const userInfoDiv = CreateElement({
+  const userInfoDiv = CreateElement<HTMLDivElement>({
     element: 'div',
     styling: 'flex gap-5 items-center py-4',
   });
 
-  const profileImageDiv = CreateElement({
+  const profileImageDiv = CreateElement<HTMLDivElement>({
     element: 'div',
     styling: 'h-[40px] w-[40px] overflow-hidden rounded-full',
   });
 
-  const profileImage = CreateElement({
+  const profileImage = CreateElement<HTMLImageElement>({
     element: 'img',
     styling: 'object-cover w-full h-full',
     src: `${post.seller.avatar.url}`,
   });
 
-  const username = CreateElement({
+  const username = CreateElement<HTMLParagraphElement>({
     element: 'p',
     styling: 'text-lg lg:text-2xl text-white font-lato',
     text: `${post.seller.name}`,
   });
 
-  const seePost = CreateElement({
+  const seePost = CreateElement<HTMLAnchorElement>({
     element: 'a',
     href: '/listing/',
     styling:
-      'scale-90 border-2 border-brandGreen rounded-md hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer p-2 hover:bg-brandGreen w-full flex justify-center text-white text-2xl items-end gap-3',
+      'scale-90 border-2 border-brandGreen dark:border-brandYellow rounded-md hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer p-2 hover:bg-brandGreen w-full flex justify-center text-white text-2xl items-end gap-3',
   });
   seePost.addEventListener('click', () => {
     localStorage.setItem('id', JSON.stringify(post.id));
@@ -183,17 +183,17 @@ export const makePagination = ({
   const lastPage = meta.pageCount;
   paginationDiv.innerHTML = '';
 
-  const pageChoiceContainer = CreateElement({
+  const pageChoiceContainer = CreateElement<HTMLDivElement>({
     element: 'div',
     styling: 'flex gap-4',
   });
 
-  const firstPage = CreateElement({
+  const firstPage = CreateElement<HTMLParagraphElement>({
     element: 'p',
     id: 'firstPage',
     text: 'First page',
     styling:
-      'text-sm md:text-2xl font-playfairDisplay font-semibold cursor-pointer scale-75 hover:scale-100  transition-transform duration-300 ease-in-out transform',
+      'text-sm md:text-2xl text-brandBlack dark:text-brandWhite font-playfairDisplay font-semibold cursor-pointer scale-75 hover:scale-100  transition-transform duration-300 ease-in-out transform',
   });
   paginationDiv.append(firstPage);
   firstPage.addEventListener('click', () =>
@@ -209,12 +209,12 @@ export const makePagination = ({
   );
   paginationDiv.append(pageChoiceContainer);
   if (meta.isFirstPage === false) {
-    const previousPageElement = CreateElement({
+    const previousPageElement = CreateElement<HTMLParagraphElement>({
       element: 'p',
       id: 'prev',
       text: `${previousPage}`,
       styling:
-        'text-lg md:text-2xl font-playfairDisplay font-semibold cursor-pointer scale-75 hover:scale-100  transition-transform duration-300 ease-in-out transform',
+        'text-lg md:text-2xl text-brandBlack dark:text-brandWhite font-playfairDisplay font-semibold cursor-pointer scale-75 hover:scale-100  transition-transform duration-300 ease-in-out transform',
     });
     pageChoiceContainer.append(previousPageElement);
 
@@ -231,19 +231,20 @@ export const makePagination = ({
     );
   }
 
-  const currentPageElement = CreateElement({
+  const currentPageElement = CreateElement<HTMLParagraphElement>({
     element: 'p',
     id: 'current',
     text: `${currentPage}`,
-    styling: 'font-bold font-playfairDisplay text-2xl md:text-3xl',
+    styling:
+      'font-bold text-brandBlack dark:text-brandWhite font-playfairDisplay text-2xl md:text-3xl',
   });
   pageChoiceContainer.append(currentPageElement);
 
-  const lastPageNumber = CreateElement({
+  const lastPageNumber = CreateElement<HTMLParagraphElement>({
     element: 'p',
     text: `Last page`,
     styling:
-      'text-sm md:text-2xl font-playfairDisplay font-semibold cursor-pointer scale-75 hover:scale-100  transition-transform duration-300 ease-in-out transform',
+      'text-sm md:text-2xl text-brandBlack dark:text-brandWhite font-playfairDisplay font-semibold cursor-pointer scale-75 hover:scale-100  transition-transform duration-300 ease-in-out transform',
   });
   paginationDiv.append(lastPageNumber);
   lastPageNumber.addEventListener('click', () =>
@@ -258,12 +259,12 @@ export const makePagination = ({
     })
   );
   if (meta.isLastPage === false) {
-    const nextPageElement = CreateElement({
+    const nextPageElement = CreateElement<HTMLParagraphElement>({
       element: 'p',
       id: 'next',
       text: `${nextPage}`,
       styling:
-        'text-lg md:text-2xl font-playfairDisplay font-semibold cursor-pointer scale-75 hover:scale-100  transition-transform duration-300 ease-in-out transform',
+        'text-lg md:text-2xl text-brandBlack dark:text-brandWhite font-playfairDisplay font-semibold cursor-pointer scale-75 hover:scale-100  transition-transform duration-300 ease-in-out transform',
     });
     pageChoiceContainer.append(nextPageElement);
 

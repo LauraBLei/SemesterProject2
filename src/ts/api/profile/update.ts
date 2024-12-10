@@ -37,8 +37,6 @@ export async function updateProfile(
       window.location.reload();
     }
   } catch (error) {
-    console.log(error);
-
     alert('something went wrong trying to update your profile');
   }
 }

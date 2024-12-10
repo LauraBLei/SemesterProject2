@@ -8,17 +8,17 @@ export const CreateCategory = (section: HTMLElement) => {
     'searchListings'
   ) as HTMLDivElement;
   categories.forEach((key) => {
-    const container = CreateElement({
-      element: 'a',
+    const container = CreateElement<HTMLDivElement>({
+      element: 'div',
       styling:
-        'flex flex-col items-center scale-90 hover:scale-100 transition-transform duration-300 ease-in-out transform',
+        'flex flex-col cursor-pointer items-center scale-90 hover:scale-100 transition-transform duration-300 ease-in-out transform',
     });
-    const imageDiv = CreateElement({
+    const imageDiv = CreateElement<HTMLDivElement>({
       element: 'div',
       styling:
         'rounded-full h-[100px] w-[100px] md:h-[162px] md:w-[162px] overflow-hidden',
     });
-    const image = CreateElement({
+    const image = CreateElement<HTMLImageElement>({
       element: 'img',
       src: `${key.src}`,
       alt: `${key.text}`,
@@ -26,8 +26,6 @@ export const CreateCategory = (section: HTMLElement) => {
     });
 
     container.addEventListener('click', () => {
-      console.log('tag: ', key.tag);
-
       MakeListing({
         API: 'category',
         limit: 12,
@@ -38,7 +36,11 @@ export const CreateCategory = (section: HTMLElement) => {
       });
     });
 
-    const category = CreateElement({ element: 'p', text: `${key.text}` });
+    const category = CreateElement<HTMLParagraphElement>({
+      element: 'p',
+      text: `${key.text}`,
+      styling: 'font-lato text-lg text-brandBlack dark:text-brandWhite',
+    });
     section?.appendChild(container);
     container.append(imageDiv, category);
     imageDiv.appendChild(image);

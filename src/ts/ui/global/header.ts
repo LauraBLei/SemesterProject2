@@ -3,9 +3,11 @@ import { CreateElement } from './components/createElement';
 import { Icon } from './components/makeIcon';
 import { onLogout } from '../auth/logout';
 import { MakeCreateOrEditForm } from '../../router/views/listingCreateEdit';
+import { initializeDarkMode, toggleDarkMode } from './darkmode';
 
 export const MakeHeader = () => {
   Header();
+  initializeDarkMode();
 };
 
 const toggleSideBar = (sidebarID: string, btn: string) => {
@@ -40,14 +42,21 @@ const Header = () => {
   const authIconColor = isAuthPage ? '#DAA520' : '#FFFFFF';
   const searchIconColor = isSearchPage ? '#DAA520' : '#FFFFFF';
   const header = document.querySelector('header');
-  const sidebar = CreateElement({
+  const sidebar = CreateElement<HTMLElement>({
     element: 'nav',
     id: 'sidebar',
     styling: 'sidebar closed',
   });
   header?.appendChild(sidebar);
 
-  const button = CreateElement({
+  const darkMode = CreateElement<HTMLButtonElement>({
+    element: 'button',
+    text: 'Dark',
+    id: 'darkMode',
+  });
+  darkMode.addEventListener('click', () => toggleDarkMode());
+
+  const button = CreateElement<HTMLButtonElement>({
     element: 'button',
     id: 'toggle-btn',
     styling: 'toggle-btn flex items-center',
@@ -61,7 +70,7 @@ const Header = () => {
 
   if (loggedIn) {
     const user = JSON.parse(localStorage.getItem('userInfo') ?? '');
-    const profile = CreateElement({
+    const profile = CreateElement<HTMLAnchorElement>({
       element: 'a',
       styling: 'flex gap-2 items-center navAnchor',
       href: '/profile/',
@@ -74,7 +83,7 @@ const Header = () => {
 `;
     sidebar.append(profile);
   } else {
-    const auth = CreateElement({
+    const auth = CreateElement<HTMLAnchorElement>({
       element: 'a',
       href: '/auth/',
       styling: 'flex gap-4 items-center navAnchor',
@@ -85,7 +94,7 @@ const Header = () => {
     sidebar.append(auth);
   }
 
-  const home = CreateElement({
+  const home = CreateElement<HTMLAnchorElement>({
     element: 'a',
     href: '/',
     styling: 'flex gap-4 px-4 py-2 navAnchor items-center ',
@@ -94,7 +103,7 @@ const Header = () => {
     <div>${Icon(iconPaths.home, homeIconColor)}</div>
     <span id="navSpan" class='navSpan'>Home</span> `;
 
-  const search = CreateElement({
+  const search = CreateElement<HTMLAnchorElement>({
     element: 'a',
     styling: 'flex gap-4 px-4 py-2 items-center navAnchor',
     href: '/listing/search/',
@@ -102,9 +111,9 @@ const Header = () => {
   search.innerHTML = `<div>${Icon(iconPaths.search, searchIconColor)}</div>
   <span id="navSpan" class='navSpan'>Search...</span>
   `;
-  sidebar.append(home, search);
+  sidebar.append(home, search, darkMode);
   if (loggedIn) {
-    const createListing = CreateElement({
+    const createListing = CreateElement<HTMLAnchorElement>({
       element: 'a',
       styling: 'flex gap-4 navAnchor items-center',
       id: 'createListingButton',
@@ -112,11 +121,18 @@ const Header = () => {
     createListing.innerHTML = `<div>${Icon(iconPaths.plus)}</div>
     <span id="navSpan">Create Listing</span>`;
     createListing.addEventListener('click', () => {
-      const div = document.getElementById('createEditContainer');
-      div?.classList.remove('hidden');
-      MakeCreateOrEditForm({ create: true });
+      const div = document.getElementById(
+        'createEditContainer'
+      ) as HTMLDivElement;
+      if (div?.classList.contains('hidden')) {
+        div?.classList.remove('hidden');
+        MakeCreateOrEditForm({ create: true });
+      } else {
+        div.classList.add('hidden');
+        div.innerHTML = '';
+      }
     });
-    const logOut = CreateElement({
+    const logOut = CreateElement<HTMLAnchorElement>({
       element: 'a',
       styling: 'flex gap-4 navAnchor items-center',
     });

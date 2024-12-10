@@ -86,6 +86,7 @@ export type ElementHelper = {
   required?: boolean;
   forLabel?: string;
   placeholder?: string;
+  maxLength?: number;
 };
 
 export type ReadPostsAPI = {

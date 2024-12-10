@@ -1,6 +1,6 @@
 import { ElementHelper } from '../../../utilities/types';
 
-export const CreateElement = ({
+export const CreateElement = <T>({
   element,
   styling,
   text,
@@ -14,7 +14,8 @@ export const CreateElement = ({
   required,
   forLabel,
   placeholder,
-}: ElementHelper) => {
+  maxLength,
+}: ElementHelper): T => {
   const item = document.createElement(element);
   if (text) item.innerText = text;
   if (id) item.id = id;
@@ -28,5 +29,6 @@ export const CreateElement = ({
   if (required) item.required;
   if (forLabel) item.htmlFor = forLabel;
   if (placeholder) item.placeholder = placeholder;
+  if (maxLength) item.maxLength = maxLength;
   return item;
 };

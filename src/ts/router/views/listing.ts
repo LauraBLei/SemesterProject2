@@ -13,9 +13,8 @@ export const runListingPage = async () => {
   const id = JSON.parse(localStorage.getItem('id') ?? '');
   const form = document.getElementById('bidForm');
   const listing = await readListing(id);
-  const userInfo = JSON.parse(localStorage.getItem('userInfo') ?? '');
+  const userInfo = JSON.parse(localStorage.getItem('userInfo') ?? '{}');
 
-  console.log(listing?.bids);
   if (userInfo.name === listing?.seller.name) form?.classList.add('hidden');
 
   if (listing) MakeImages(listing.media);
@@ -85,10 +84,7 @@ const MakeContent = (listing: ListingObject) => {
 };
 
 const MakeBids = (bids: Bid[]) => {
-  console.log(bids);
-
   const bidContainer = document.getElementById('bids');
-  console.log('length', bids.length);
 
   if (bids.length === 0 && bidContainer) {
     bidContainer.innerText = 'There are currently no bids!';
@@ -98,32 +94,32 @@ const MakeBids = (bids: Bid[]) => {
   }
 
   bids.forEach((bid) => {
-    const container = CreateElement({
+    const container = CreateElement<HTMLDivElement>({
       element: 'div',
       styling:
-        'bg-brandBlack rounded-md max-w-[460px] min-w-[250px] w-full h-auto p-2 flex justify-between items-center ',
+        'bg-brandBlack dark:bg-brandGreen rounded-md max-w-[460px] min-w-[250px] w-full h-auto p-2 flex justify-between items-center ',
     });
-    const userInfoDiv = CreateElement({
+    const userInfoDiv = CreateElement<HTMLDivElement>({
       element: 'div',
       styling: 'flex gap-4 items-center',
     });
-    const imageDiv = CreateElement({
+    const imageDiv = CreateElement<HTMLDivElement>({
       element: 'div',
       styling:
         'rounded-full w-[40px] h-[40px] md:w-[70px] md:h-[70px]  overflow-hidden',
     });
-    const image = CreateElement({
+    const image = CreateElement<HTMLImageElement>({
       element: 'img',
       src: `${bid.bidder.avatar.url}`,
       styling: 'w-full h-full object-cover',
     });
-    const bidderName = CreateElement({
+    const bidderName = CreateElement<HTMLParagraphElement>({
       element: 'p',
       text: `${bid.bidder.name}`,
       styling: 'text-brandWhite text-lg md:text-2xl ',
     });
 
-    const bidValue = CreateElement({
+    const bidValue = CreateElement<HTMLDivElement>({
       element: 'div',
       styling: 'text-brandWhite text-lg md:text-2xl flex gap-4 items-center',
     });

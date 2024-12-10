@@ -8,7 +8,7 @@ body {
 }
 
 main {
-  @apply ml-16 md:ml-0 flex flex-col w-full h-full items-center gap-8 md:gap-14 z-0 overflow-y-auto;
+  @apply bg-brandWhite dark:bg-brandBlack ml-16 md:ml-0 flex flex-col w-full h-full items-center gap-8 md:gap-14 z-0 overflow-y-auto;
 }
 
 header {
@@ -21,7 +21,7 @@ svg {
 
 @layer components {
   .active {
-    @apply bg-brandBlack shadow-sm shadow-black;
+    @apply bg-brandBlack dark:bg-brandYellow shadow-sm shadow-black;
   }
 
   .idle {
@@ -29,7 +29,7 @@ svg {
   }
 
   .dot {
-    @apply w-[15px] h-[15px] md:w-[20px] md:h-[20px] rounded-full  hover:bg-white border-2 border-brandBlack cursor-pointer transition-transform duration-300 ease-in-out transform;
+    @apply w-[15px] h-[15px] md:w-[20px] md:h-[20px] rounded-full  hover:bg-white dark:hover:bg-brandYellow border-2 border-brandBlack dark:border-brandYellow cursor-pointer transition-transform duration-300 ease-in-out transform;
   }
 }
 

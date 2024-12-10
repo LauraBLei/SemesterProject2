@@ -30,9 +30,6 @@ export const onCreate = (event: SubmitEvent) => {
     endsAt: formData.get('auctionDate') ?? '',
     media: images,
   };
-  console.log('tag ', formData.get('category'));
-
-  console.log('create data: ', data);
 
   createPost(data);
 };

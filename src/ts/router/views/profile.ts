@@ -22,6 +22,8 @@ export const runProfile = async () => {
 };
 
 const MakeProfile = async (userInfo: UserProfileAPI) => {
+  const savedTheme = localStorage.getItem('theme');
+
   const fetchActiveListings = await readListingsByUser({
     username: userInfo.name,
     sort: 'created',
@@ -46,12 +48,8 @@ const MakeProfile = async (userInfo: UserProfileAPI) => {
 
   const userBids: Bid[] = fetchUserBids.data;
 
-  console.log('active: ', activeListings);
-  console.log('closed: ', closedListings);
-  console.log('user bids: ', fetchUserBids);
-
   const bannerDiv = document.getElementById('banner');
-  const banner = CreateElement({
+  const banner = CreateElement<HTMLImageElement>({
     element: 'img',
     src: userInfo.banner.url,
     alt: userInfo.banner.alt,
@@ -62,15 +60,14 @@ const MakeProfile = async (userInfo: UserProfileAPI) => {
   const updateProfileDiv = document.getElementById(
     'updateProfile'
   ) as HTMLDivElement;
-  const details = CreateElement({ element: 'details' });
-  const summary = CreateElement({
+  const details = CreateElement<HTMLDetailsElement>({ element: 'details' });
+  const summary = CreateElement<HTMLElement>({
     element: 'summary',
     styling:
       ' list-none cursor-pointer scale-95 hover:scale-100 transition ease-in-out duration-300 transform',
   });
-  summary.innerHTML = `${Icon(iconPaths.setting, '#1D1D1D', '30px')}
-  `;
-  const div = CreateElement({
+
+  const div = CreateElement<HTMLDivElement>({
     element: 'div',
     styling:
       'absolute z-20 bg-brandWhite border-2 rounded-md border-black w-[300px] md:w-[500px] p-4 h-auto',
@@ -82,7 +79,7 @@ const MakeProfile = async (userInfo: UserProfileAPI) => {
   details.append(summary, div);
 
   const avatarDiv = document.getElementById('avatar') as HTMLDivElement;
-  const avatar = CreateElement({
+  const avatar = CreateElement<HTMLImageElement>({
     element: 'img',
     src: userInfo.avatar.url,
     alt: userInfo.avatar.alt,
@@ -94,11 +91,26 @@ const MakeProfile = async (userInfo: UserProfileAPI) => {
   userName.innerText = userInfo.name;
 
   const credits = document.getElementById('credits') as HTMLDivElement;
+
   credits.innerHTML = `
   <span class='text-sm md:text-2xl font-semibold font-lato'>${userInfo.credits}</span>
   <span>${Icon(iconPaths.credits, '#00000', '20px')}</span>
   `;
-
+  if (savedTheme === 'dark') {
+    summary.innerHTML = `${Icon(iconPaths.setting, '#FFFFFF', '30px')}
+    `;
+    credits.innerHTML = `
+  <span class='text-sm md:text-2xl font-semibold font-lato'>${userInfo.credits}</span>
+  <span>${Icon(iconPaths.credits, '#FFFFFF', '25px')}</span>
+  `;
+  } else {
+    summary.innerHTML = `${Icon(iconPaths.setting, '#1D1D1D', '30px')}
+    `;
+    credits.innerHTML = `
+  <span class='text-sm md:text-2xl font-semibold font-lato'>${userInfo.credits}</span>
+  <span>${Icon(iconPaths.credits, '#00000', '25px')}</span>
+  `;
+  }
   const bio = document.getElementById('bio') as HTMLDivElement;
   bio.innerText = userInfo.bio;
 
@@ -115,10 +127,10 @@ const MakeProfile = async (userInfo: UserProfileAPI) => {
   ) as HTMLDivElement;
 
   activeListings.forEach((listing: ListingObject) => {
-    MakeListings(listing, activeListingsContainer);
+    MakeListings(listing, activeListingsContainer, 'created');
   });
   closedListings.forEach((listing: ListingObject) => {
-    MakeClosedListings(listing, closedListingsContainer);
+    MakeListings(listing, closedListingsContainer, 'closed');
   });
   userBids.forEach((listing: Bid) => {
     MakeUserBids(listing, userBidsContainer);
@@ -129,30 +141,30 @@ const makeUpdateProfileForm = (
   container: HTMLDivElement,
   userInfo: UserProfileAPI
 ) => {
-  const title = CreateElement({
+  const title = CreateElement<HTMLHeadingElement>({
     element: 'h2',
     text: 'Update Profile',
     styling:
       'font-playfairDisplay font-semibold text-brandBlack text-lg md:text-2xl text-center border-b-2 border-brandBlack py-2',
   });
 
-  const form = CreateElement({
+  const form = CreateElement<HTMLFormElement>({
     element: 'form',
     id: 'updateProfile',
     styling: 'w-full flex flex-col gap-4 mt-2',
   });
 
-  const avatarContainer = CreateElement({
+  const avatarContainer = CreateElement<HTMLDivElement>({
     element: 'div',
     styling: 'flex flex-col gap-2 w-full',
   });
-  const avatarLabel = CreateElement({
+  const avatarLabel = CreateElement<HTMLLabelElement>({
     element: 'label',
     forLabel: 'avatarUrl',
     text: 'Profile picture:',
     styling: 'text-lg font-semibold font-playfairDisplay text-brandBlack',
   });
-  const avatarInput = CreateElement({
+  const avatarInput = CreateElement<HTMLInputElement>({
     element: 'input',
     type: 'url',
     name: 'avatarUrl',
@@ -163,17 +175,17 @@ const makeUpdateProfileForm = (
     required: true,
   });
 
-  const bannerContainer = CreateElement({
+  const bannerContainer = CreateElement<HTMLDivElement>({
     element: 'div',
     styling: 'flex flex-col gap-2 w-full',
   });
-  const bannerLabel = CreateElement({
+  const bannerLabel = CreateElement<HTMLLabelElement>({
     element: 'label',
     forLabel: 'bannerUrl',
     text: 'Cover picture:',
     styling: 'text-lg font-semibold font-playfairDisplay text-brandBlack',
   });
-  const bannerInput = CreateElement({
+  const bannerInput = CreateElement<HTMLInputElement>({
     element: 'input',
     type: 'url',
     name: 'bannerUrl',
@@ -184,7 +196,7 @@ const makeUpdateProfileForm = (
     required: true,
   });
 
-  const bio = CreateElement({
+  const bio = CreateElement<HTMLTextAreaElement>({
     element: 'textarea',
     name: 'bio',
     id: 'bioInput',
@@ -194,7 +206,7 @@ const makeUpdateProfileForm = (
     text: `${userInfo.bio}`,
   });
 
-  const submitButton = CreateElement({
+  const submitButton = CreateElement<HTMLButtonElement>({
     element: 'button',
     text: 'Update',
     type: 'submit',
@@ -210,15 +222,36 @@ const makeUpdateProfileForm = (
 
 const MakeListings = (
   listing: ListingObject,
-  listingsContainer: HTMLDivElement
+  listingsContainer: HTMLDivElement,
+  section: string
 ) => {
-  const container = CreateElement({
+  if (section === 'closed') {
+    if (!isAuctionClosed(listing.endsAt)) {
+      return;
+    }
+  }
+  if (section === 'created') {
+    if (isAuctionClosed(listing.endsAt)) {
+      return;
+    }
+  }
+  const container = CreateElement<HTMLDivElement>({
     element: 'div',
     id: listing.id,
     styling:
-      'bg-brandBlack text-brandWhite text-lg text-nowrap p-2 w-full  flex flex-col items-center gap-4 shadow-sm shadow-brandBlack',
+      'bg-brandBlack dark:bg-brandGreen rounded-md text-brandWhite text-lg text-nowrap p-2 w-full max-w-[400px] flex flex-col items-center gap-4 shadow-sm shadow-brandBlack',
   });
-  const title = CreateElement({
+
+  const imageDiv = CreateElement<HTMLDivElement>({
+    element: 'div',
+    styling: 'h-[200px] w-full',
+  });
+  const image = CreateElement<HTMLImageElement>({
+    element: 'img',
+    styling: 'w-full h-full object-cover',
+    src: listing.media[0].url,
+  });
+  const title = CreateElement<HTMLParagraphElement>({
     element: 'p',
     text: listing.title,
     styling: 'font-playfairDisplay font-semibold text-lg tracking-[8px]',
@@ -227,34 +260,41 @@ const MakeListings = (
   const countDown = createCountdownHTML(listing.endsAt);
   countDown.className =
     'font-playfairDisplay font-semibold text-lg tracking-widest';
-  const editButton = CreateElement({
-    element: 'button',
-    styling:
-      'scale-75 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer  ',
-  });
 
-  const buttonContainer = CreateElement({
+  const buttonContainer = CreateElement<HTMLButtonElement>({
     element: 'div',
     styling: 'w-full flex justify-evenly',
   });
 
-  editButton.innerHTML = `${Icon(iconPaths.edit, '#E0B341')}`;
-  editButton.addEventListener('click', () => {
-    const div = document.getElementById('createEditContainer');
-    div?.classList.remove('hidden');
-    MakeCreateOrEditForm({ id: listing.id, edit: true });
-  });
+  if (section === 'created') {
+    const editButton = CreateElement<HTMLButtonElement>({
+      element: 'button',
+      styling:
+        'scale-75 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer  ',
+    });
+    editButton.innerHTML = `${Icon(iconPaths.edit, '#E0B341')}`;
+    editButton.addEventListener('click', () => {
+      const div = document.getElementById('createEditContainer');
+      div?.classList.remove('hidden');
+      MakeCreateOrEditForm({ id: listing.id, edit: true });
+    });
+    buttonContainer.append(editButton);
+  }
 
-  const deleteButton = CreateElement({
-    element: 'button',
-    styling:
-      'scale-75 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer  ',
-  });
-  deleteButton.innerHTML = `${Icon(iconPaths.delete, '#E0B341')}`;
-  deleteButton.addEventListener('click', () => {
-    onDeletePost(listing.id);
-  });
-  const seePost = CreateElement({
+  if (section === 'created' || section === 'closed') {
+    const deleteButton = CreateElement<HTMLButtonElement>({
+      element: 'button',
+      styling:
+        'scale-75 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer  ',
+    });
+    deleteButton.innerHTML = `${Icon(iconPaths.delete, '#E0B341')}`;
+    deleteButton.addEventListener('click', () => {
+      onDeletePost(listing.id);
+    });
+    buttonContainer.append(deleteButton);
+  }
+
+  const seePost = CreateElement<HTMLAnchorElement>({
     element: 'a',
     href: '/listing/',
     styling:
@@ -265,42 +305,42 @@ const MakeListings = (
   });
   seePost.innerHTML = `${Icon(iconPaths.eye, '#E0B341')}`;
 
-  container.append(title, countDown, buttonContainer);
-  buttonContainer.append(editButton, deleteButton, seePost);
+  container.append(imageDiv, title, countDown, buttonContainer);
+  imageDiv.append(image);
+  buttonContainer.append(seePost);
   listingsContainer.append(container);
-};
-
-const MakeClosedListings = (
-  listing: ListingObject,
-  listingsContainer: HTMLDivElement
-) => {
-  if (!isAuctionClosed(listing.endsAt)) {
-    return;
-  }
-  MakeListings(listing, listingsContainer);
 };
 
 const MakeUserBids = (
   listing: { listing: ListingObject; amount: number },
   listingsContainer: HTMLDivElement
 ) => {
-  console.log(listing);
-
-  const container = CreateElement({
+  if (isAuctionClosed(listing.listing.endsAt)) {
+    return;
+  }
+  const container = CreateElement<HTMLDivElement>({
     element: 'div',
     id: listing.listing.id,
     styling:
-      'bg-brandBlack text-brandWhite text-lg text-nowrap p-2 w-full  flex flex-col items-center gap-4 shadow-sm shadow-brandBlack',
+      'bg-brandBlack dark:bg-brandGreen rounded-md text-brandWhite text-lg text-nowrap p-2 w-full max-w-[400px] flex flex-col items-center gap-4 shadow-sm shadow-brandBlack',
   });
-
-  const title = CreateElement({
+  const imageDiv = CreateElement<HTMLDivElement>({
+    element: 'div',
+    styling: 'h-[200px] w-full',
+  });
+  const image = CreateElement<HTMLImageElement>({
+    element: 'img',
+    styling: 'w-full h-full object-cover',
+    src: listing.listing.media[0].url,
+  });
+  const title = CreateElement<HTMLParagraphElement>({
     element: 'p',
     text: listing.listing.title,
     styling:
       'font-playfairDisplay font-semibold text-lg tracking-[8px] text-wrap text-center',
   });
 
-  const bid = CreateElement({
+  const bid = CreateElement<HTMLParagraphElement>({
     element: 'p',
     text: `Bid: ${listing.amount}`,
     styling: 'font-lato font-semibold text-lg text-brandYellow tracking-[8px]',
@@ -310,7 +350,7 @@ const MakeUserBids = (
   countDown.className =
     'font-playfairDisplay font-semibold text-lg tracking-[8px]';
 
-  const seePost = CreateElement({
+  const seePost = CreateElement<HTMLAnchorElement>({
     element: 'a',
     href: '/listing/',
     styling:
@@ -321,6 +361,7 @@ const MakeUserBids = (
   });
   seePost.innerHTML = `${Icon(iconPaths.eye, '#E0B341')}`;
 
-  container.append(title, bid, countDown, seePost);
+  container.append(imageDiv, title, bid, countDown, seePost);
+  imageDiv.append(image);
   listingsContainer.append(container);
 };
