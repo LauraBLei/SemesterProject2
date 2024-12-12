@@ -142,6 +142,7 @@ const makeNavElement = ({
     styling: 'navSpan',
     id: 'navSpan',
   });
+
   const navIcon = CreateElement<HTMLDivElement>({ element: 'div' });
   if (icon) navIcon.innerHTML = `${Icon(icon, color)}`;
 

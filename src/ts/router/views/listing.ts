@@ -93,6 +93,9 @@ const MakeBids = (bids: Bid[]) => {
       'text-lg text-brandBlack text-center font-lato font-semibold';
     return;
   }
+  console.log(bids);
+
+  bids.sort((a, b) => b.amount - a.amount);
 
   bids.forEach((bid) => {
     const container = CreateElement<HTMLDivElement>({
