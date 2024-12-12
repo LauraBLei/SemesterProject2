@@ -1,5 +1,5 @@
-import { ListingObject } from '../../utilities/types';
-import { CreateElement } from './components/createElement';
+import { ListingObject } from '../../../utilities/types';
+import { CreateElement } from './createElement';
 
 export const carousel = (posts: ListingObject[]) => {
   const prevBtn = document.querySelector('div.prev-arrow')!;
@@ -66,7 +66,7 @@ const makeImage = (
   const truncateText = (text: string, maxLength: number) => {
     return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
   };
-  const imageContainer = CreateElement({
+  const imageContainer = CreateElement<HTMLDivElement>({
     element: 'div',
     styling:
       'flex items-center justify-center w-full h-full overflow-hidden object-cover h-full',
@@ -82,13 +82,13 @@ const makeImage = (
 
         `;
   }
-  const dot = CreateElement({
+  const dot = CreateElement<HTMLDivElement>({
     element: 'div',
     styling: 'dot',
   });
 
   const croppedTitle = truncateText(post.title, 20);
-  const title = CreateElement({
+  const title = CreateElement<HTMLParagraphElement>({
     element: 'p',
     text: croppedTitle,
     styling:

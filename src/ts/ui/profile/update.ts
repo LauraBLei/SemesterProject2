@@ -17,12 +17,12 @@ export async function onUpdateProfile(event: SubmitEvent) {
 
   const formData = new FormData(form);
 
-  const avatar = {
+  const avatar: { url: FormDataEntryValue; alt: string } = {
     url: formData.get('avatarUrl') ?? '',
     alt: 'Profile Image',
   };
 
-  const banner = {
+  const banner: { url: FormDataEntryValue; alt: string } = {
     url: formData.get('bannerUrl') ?? '',
     alt: 'Cover image',
   };

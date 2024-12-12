@@ -1,4 +1,4 @@
-import { hideLoader, showLoader } from '../ui/global/loader.ts';
+import { hideLoader, showLoader } from '../ui/global/components/loader.ts';
 import { runPage } from './views/home.ts';
 import { runListingPage } from './views/listing.ts';
 import { runLogin } from './views/login.ts';

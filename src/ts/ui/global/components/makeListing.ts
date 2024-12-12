@@ -1,14 +1,12 @@
 import { readPosts, searchPosts } from '../../../api/listing/read';
-import { Icon } from './makeIcon';
-import { iconPaths } from '../../../utilities/enums';
 import {
   APIData,
   ListingObject,
   MakeListingType,
-  MakePaginationType,
 } from '../../../utilities/types';
+import { makeSingleListing } from '../makeListings/homePageListing';
 import { CreateElement } from './createElement';
-import { createCountdownHTML } from '../countdown';
+import { makePagination } from './pagination';
 
 export const MakeListing = async ({
   paginationDiv,
@@ -51,7 +49,7 @@ export const MakeListing = async ({
     return;
   }
 
-  data.data.forEach((post) => {
+  data.data.forEach((post: ListingObject) => {
     makeSingleListing(post, section);
   });
 
@@ -63,221 +61,4 @@ export const MakeListing = async ({
     tag: tag,
     search: search,
   });
-};
-
-export const makeSingleListing = (
-  post: ListingObject,
-  section: HTMLDivElement
-) => {
-  const truncateText = (text: string, maxLength: number) => {
-    if (!text) return '*No text found*';
-    if (text.length === 0) return '*No text found*';
-    return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
-  };
-  const croppedTitle = truncateText(post.title, 15);
-  const croppedDescription = truncateText(post.description, 50);
-
-  const container = CreateElement<HTMLDivElement>({
-    element: 'div',
-    styling:
-      'w-full md:w-[350px] h-auto bg-brandBlack dark:bg-brandGreen shadow-sm shadow-brandBlack p-3 rounded-md flex flex-col justify-evenly',
-  });
-
-  const imageDiv = CreateElement<HTMLDivElement>({
-    element: 'div',
-    styling:
-      'w-full h-[200px] flex items-center justify-center rounded-md overflow-hidden',
-  });
-  if (post.media[0]) {
-    const image = CreateElement<HTMLImageElement>({
-      element: 'img',
-      styling: 'w-full h-full object-cover',
-      src: `${post.media[0].url}`,
-      alt: `${post.media[0].alt}`,
-    });
-    imageDiv.append(image);
-  } else {
-    const image = CreateElement<HTMLImageElement>({
-      element: 'img',
-      styling: 'w-full h-full object-cover',
-      src: `/placeholder.jpg`,
-      alt: `Image not found`,
-    });
-    imageDiv.append(image);
-  }
-
-  const title = CreateElement<HTMLHeadingElement>({
-    element: 'h2',
-    styling:
-      'text-white font-playfairDisplay font-semibold  text-center text-lg md:text-2xl py-2',
-    text: croppedTitle,
-  });
-
-  const description = CreateElement<HTMLParagraphElement>({
-    element: 'p',
-    text: croppedDescription,
-    styling:
-      'text-white border-y-2 border-white font-lato text-sm md:text-lg py-2 overflow-x-auto max-h-[100px]  py-4 overflow-hidden ',
-  });
-
-  const countDown = createCountdownHTML(post.endsAt);
-  countDown.className = 'text-2xl text-center py-2 text-brandWhite';
-
-  const userInfoDiv = CreateElement<HTMLDivElement>({
-    element: 'div',
-    styling: 'flex gap-5 items-center py-4',
-  });
-
-  const profileImageDiv = CreateElement<HTMLDivElement>({
-    element: 'div',
-    styling: 'h-[40px] w-[40px] overflow-hidden rounded-full',
-  });
-
-  const profileImage = CreateElement<HTMLImageElement>({
-    element: 'img',
-    styling: 'object-cover w-full h-full',
-    src: `${post.seller.avatar.url}`,
-  });
-
-  const username = CreateElement<HTMLParagraphElement>({
-    element: 'p',
-    styling: 'text-lg lg:text-2xl text-white font-lato',
-    text: `${post.seller.name}`,
-  });
-
-  const seePost = CreateElement<HTMLAnchorElement>({
-    element: 'a',
-    href: '/listing/',
-    styling:
-      'scale-90 border-2 border-brandGreen dark:border-brandYellow rounded-md hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer p-2 hover:bg-brandGreen w-full flex justify-center text-white text-2xl items-end gap-3',
-  });
-  seePost.addEventListener('click', () => {
-    localStorage.setItem('id', JSON.stringify(post.id));
-  });
-  seePost.innerHTML = `${Icon(iconPaths.eye, '#E0B341', '30px')}`;
-
-  section?.append(container);
-  container.append(
-    imageDiv,
-    title,
-    description,
-    countDown,
-    userInfoDiv,
-    seePost
-  );
-  userInfoDiv.append(profileImageDiv, username);
-  profileImageDiv.appendChild(profileImage);
-};
-
-export const makePagination = ({
-  meta,
-  container,
-  API,
-  tag,
-  search,
-  paginationDiv,
-}: MakePaginationType) => {
-  const currentPage = meta.currentPage;
-  const nextPage = meta.nextPage;
-  const previousPage = meta.previousPage;
-  const lastPage = meta.pageCount;
-  paginationDiv.innerHTML = '';
-
-  const pageChoiceContainer = CreateElement<HTMLDivElement>({
-    element: 'div',
-    styling: 'flex gap-4',
-  });
-
-  const firstPage = CreateElement<HTMLParagraphElement>({
-    element: 'p',
-    id: 'firstPage',
-    text: 'First page',
-    styling:
-      'text-sm md:text-2xl text-brandBlack dark:text-brandWhite font-playfairDisplay font-semibold cursor-pointer scale-75 hover:scale-100  transition-transform duration-300 ease-in-out transform',
-  });
-  paginationDiv.append(firstPage);
-  firstPage.addEventListener('click', () =>
-    MakeListing({
-      limit: 12,
-      page: 1,
-      search: search,
-      tag: tag,
-      paginationDiv: paginationDiv,
-      section: container,
-      API: API,
-    })
-  );
-  paginationDiv.append(pageChoiceContainer);
-  if (meta.isFirstPage === false) {
-    const previousPageElement = CreateElement<HTMLParagraphElement>({
-      element: 'p',
-      id: 'prev',
-      text: `${previousPage}`,
-      styling:
-        'text-lg md:text-2xl text-brandBlack dark:text-brandWhite font-playfairDisplay font-semibold cursor-pointer scale-75 hover:scale-100  transition-transform duration-300 ease-in-out transform',
-    });
-    pageChoiceContainer.append(previousPageElement);
-
-    previousPageElement.addEventListener('click', () =>
-      MakeListing({
-        limit: 12,
-        page: previousPage,
-        search: search,
-        tag: tag,
-        paginationDiv: paginationDiv,
-        section: container,
-        API: API,
-      })
-    );
-  }
-
-  const currentPageElement = CreateElement<HTMLParagraphElement>({
-    element: 'p',
-    id: 'current',
-    text: `${currentPage}`,
-    styling:
-      'font-bold text-brandBlack dark:text-brandWhite font-playfairDisplay text-2xl md:text-3xl',
-  });
-  pageChoiceContainer.append(currentPageElement);
-
-  const lastPageNumber = CreateElement<HTMLParagraphElement>({
-    element: 'p',
-    text: `Last page`,
-    styling:
-      'text-sm md:text-2xl text-brandBlack dark:text-brandWhite font-playfairDisplay font-semibold cursor-pointer scale-75 hover:scale-100  transition-transform duration-300 ease-in-out transform',
-  });
-  paginationDiv.append(lastPageNumber);
-  lastPageNumber.addEventListener('click', () =>
-    MakeListing({
-      limit: 12,
-      page: lastPage,
-      search: search,
-      tag: tag,
-      paginationDiv: paginationDiv,
-      section: container,
-      API: API,
-    })
-  );
-  if (meta.isLastPage === false) {
-    const nextPageElement = CreateElement<HTMLParagraphElement>({
-      element: 'p',
-      id: 'next',
-      text: `${nextPage}`,
-      styling:
-        'text-lg md:text-2xl text-brandBlack dark:text-brandWhite font-playfairDisplay font-semibold cursor-pointer scale-75 hover:scale-100  transition-transform duration-300 ease-in-out transform',
-    });
-    pageChoiceContainer.append(nextPageElement);
-
-    nextPageElement.addEventListener('click', () =>
-      MakeListing({
-        limit: 12,
-        page: nextPage,
-        search: search,
-        tag: tag,
-        paginationDiv: paginationDiv,
-        section: container,
-        API: API,
-      })
-    );
-  }
 };

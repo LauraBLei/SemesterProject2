@@ -1,11 +1,9 @@
 import { readPosts } from '../../api/listing/read';
-import { carousel } from '../../ui/global/carousel';
-import { MakeListing } from '../../ui/global/components/makeListing';
-
+import { MakeListing } from '../../ui/listing/makeListing';
+import { carousel } from '../../ui/global/components/carousel';
 export const runPage = async () => {
   const section = document.getElementById('mostRecent') as HTMLDivElement;
   const paginationDiv = document.getElementById('pagination') as HTMLDivElement;
-  console.log('tittei');
 
   const carouselPosts = await readPosts({
     limit: 10,
@@ -15,7 +13,7 @@ export const runPage = async () => {
     active: true,
   });
   carousel(carouselPosts.data);
-  MakeListing({
+  await MakeListing({
     paginationDiv: paginationDiv,
     section: section,
     API: 'category',

@@ -11,13 +11,13 @@ export const runSearchPage = async () => {
 
   const form = document.getElementById('sortListings');
 
-  form?.addEventListener('submit', (event) => {
+  form?.addEventListener('submit', async (event) => {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
     const formData = new FormData(form);
     const search = formData.get('searchBar') ?? '';
 
-    MakeListing({
+    await MakeListing({
       API: 'search',
       limit: 12,
       page: 1,

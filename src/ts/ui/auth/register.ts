@@ -8,10 +8,11 @@ import { RegisterForm } from '../../utilities/types';
  * form.addEventListener("submit", onRegister)
  * ```
  */
-export async function onRegister(event: any) {
+export async function onRegister(event: SubmitEvent) {
   event.preventDefault();
 
-  const formData = new FormData(event.target);
+  const form = event.target as HTMLFormElement;
+  const formData = new FormData(form);
 
   const registerData: RegisterForm = {
     name: formData.get('name') ?? '',

@@ -25,8 +25,8 @@ export const CreateCategory = (section: HTMLElement) => {
       styling: 'object-cover h-full w-full',
     });
 
-    container.addEventListener('click', () => {
-      MakeListing({
+    container.addEventListener('click', async () => {
+      await MakeListing({
         API: 'category',
         limit: 12,
         page: 1,

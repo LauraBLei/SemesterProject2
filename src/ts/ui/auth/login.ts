@@ -9,10 +9,10 @@ import { loginForm } from '../../utilities/types';
  * ```
  */
 
-export async function onLogin(event: any) {
+export async function onLogin(event: SubmitEvent) {
   event.preventDefault();
-
-  const formData = new FormData(event.target);
+  const form = event.target as HTMLFormElement;
+  const formData = new FormData(form);
   const loginData: loginForm = {
     email: formData.get('email') ?? '',
     password: formData.get('password') ?? '',

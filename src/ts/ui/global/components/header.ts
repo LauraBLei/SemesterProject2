@@ -1,8 +1,8 @@
-import { iconPaths } from '../../utilities/enums';
-import { CreateElement } from './components/createElement';
-import { Icon } from './components/makeIcon';
-import { onLogout } from '../auth/logout';
-import { MakeCreateOrEditForm } from '../../router/views/listingCreateEdit';
+import { iconPaths } from '../../../utilities/enums';
+import { CreateElement } from './createElement';
+import { Icon } from './makeIcon';
+import { onLogout } from '../../auth/logout';
+import { MakeCreateOrEditForm } from '../../../router/views/listingCreateEdit';
 import { initializeDarkMode, toggleDarkMode } from './darkmode';
 
 export const MakeHeader = () => {
@@ -69,58 +69,38 @@ const Header = () => {
   sidebar.append(button);
 
   if (loggedIn) {
-    const user = JSON.parse(localStorage.getItem('userInfo') ?? '');
-    const profile = CreateElement<HTMLAnchorElement>({
-      element: 'a',
-      styling: 'flex gap-2 items-center navAnchor',
-      href: '/profile/',
-    });
-    profile.innerHTML = `
-  <div id='profileNav' class="profileNav min-w-[30px] min-h-[30px] max-h-[30px] max-w-[30px] flex items-center bg-brandBlack rounded-full overflow-hidden">
-      <img class="object-cover w-full h-full" src="${user.avatar.url}" alt="User profile image">
-  </div>
-  <span id="navSpan">${user.name}</span>
-`;
+    const profile = makeNavProfile();
     sidebar.append(profile);
   } else {
-    const auth = CreateElement<HTMLAnchorElement>({
-      element: 'a',
+    const auth = makeNavElement({
+      icon: iconPaths.profile,
+      color: authIconColor,
+      text: 'Login',
       href: '/auth/',
-      styling: 'flex gap-4 items-center navAnchor',
     });
-    auth.innerHTML = `
-      <div>${Icon(iconPaths.profile, authIconColor)}</div>
-      <span id="navSpan" class='navSpan'>Login</span> `;
     sidebar.append(auth);
   }
 
-  const home = CreateElement<HTMLAnchorElement>({
-    element: 'a',
+  const home = makeNavElement({
+    icon: iconPaths.home,
+    color: homeIconColor,
+    text: 'Home',
     href: '/',
-    styling: 'flex gap-4 px-4 py-2 navAnchor items-center ',
   });
-  home.innerHTML = `
-    <div>${Icon(iconPaths.home, homeIconColor)}</div>
-    <span id="navSpan" class='navSpan'>Home</span> `;
-
-  const search = CreateElement<HTMLAnchorElement>({
-    element: 'a',
-    styling: 'flex gap-4 px-4 py-2 items-center navAnchor',
+  const search = makeNavElement({
+    icon: iconPaths.search,
+    color: searchIconColor,
+    text: 'Search',
     href: '/listing/search/',
   });
-  search.innerHTML = `<div>${Icon(iconPaths.search, searchIconColor)}</div>
-  <span id="navSpan" class='navSpan'>Search...</span>
-  `;
+
   sidebar.append(home, search, darkMode);
   if (loggedIn) {
-    const createListing = CreateElement<HTMLAnchorElement>({
-      element: 'a',
-      styling: 'flex gap-4 navAnchor items-center',
-      id: 'createListingButton',
+    const create = makeNavElement({
+      icon: iconPaths.plus,
+      text: 'Create Listing',
     });
-    createListing.innerHTML = `<div>${Icon(iconPaths.plus)}</div>
-    <span id="navSpan">Create Listing</span>`;
-    createListing.addEventListener('click', () => {
+    create.addEventListener('click', () => {
       const div = document.getElementById(
         'createEditContainer'
       ) as HTMLDivElement;
@@ -132,15 +112,70 @@ const Header = () => {
         div.innerHTML = '';
       }
     });
-    const logOut = CreateElement<HTMLAnchorElement>({
-      element: 'a',
-      styling: 'flex gap-4 navAnchor items-center',
-    });
-    logOut.innerHTML = `<div>${Icon(iconPaths.logOut)}</div>
-    <span id="navSpan" class='navSpan'>Log Out</span>`;
+    const logOut = makeNavElement({ icon: iconPaths.logOut, text: 'Log Out' });
     logOut.addEventListener('click', onLogout);
 
-    sidebar.append(createListing, logOut);
+    sidebar.append(create, logOut);
   }
   toggleActive();
+};
+
+const makeNavElement = ({
+  icon,
+  text,
+  color,
+  href,
+}: {
+  icon?: iconPaths;
+  text: string;
+  color?: string;
+  href?: string;
+}) => {
+  const link = CreateElement<HTMLAnchorElement>({
+    element: 'a',
+    styling: 'flex gap-4 items-center navAnchor',
+    href: href,
+  });
+  const span = CreateElement<HTMLDivElement>({
+    element: 'span',
+    text: text,
+    styling: 'navSpan',
+    id: 'navSpan',
+  });
+  const navIcon = CreateElement<HTMLDivElement>({ element: 'div' });
+  if (icon) navIcon.innerHTML = `${Icon(icon, color)}`;
+
+  link.append(navIcon, span);
+  return link;
+};
+
+const makeNavProfile = () => {
+  const user = JSON.parse(localStorage.getItem('userInfo') ?? '');
+  const profile = CreateElement<HTMLAnchorElement>({
+    element: 'a',
+    styling: 'flex gap-2 items-center navAnchor',
+    href: '/profile/',
+  });
+  const imageContainer = CreateElement<HTMLDivElement>({
+    element: 'div',
+    id: 'profileNav',
+    styling:
+      'profileNav min-w-[30px] min-h-[30px] max-h-[30px] max-w-[30px] flex items-center bg-brandBlack rounded-full overflow-hidden',
+  });
+  const profileImage = CreateElement<HTMLImageElement>({
+    element: 'img',
+    src: user.avatar.url,
+    styling: 'object-cover w-full h-full',
+  });
+  const userName = CreateElement<HTMLSpanElement>({
+    element: 'span',
+    text: user.name,
+    styling: 'navSpan',
+    id: 'navSpan',
+  });
+
+  profile.append(imageContainer, userName);
+  imageContainer.append(profileImage);
+
+  return profile;
 };

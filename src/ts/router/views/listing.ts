@@ -4,24 +4,25 @@ import { Icon } from '../../ui/global/components/makeIcon';
 import {
   createCountdownHTML,
   isAuctionClosed,
-} from '../../ui/global/countdown';
+} from '../../ui/global/components/countdown';
 import { onBid } from '../../ui/listing/bid';
 import { iconPaths } from '../../utilities/enums';
 import { Bid, ListingObject, Media } from '../../utilities/types';
 
 export const runListingPage = async () => {
-  const id = JSON.parse(localStorage.getItem('id') ?? '');
+  const id = JSON.parse(localStorage.getItem('id') ?? '{}');
   const form = document.getElementById('bidForm');
   const listing = await readListing(id);
   const userInfo = JSON.parse(localStorage.getItem('userInfo') ?? '{}');
 
   if (userInfo.name === listing?.seller.name) form?.classList.add('hidden');
 
-  if (listing) MakeImages(listing.media);
-  if (listing) MakeContent(listing);
-  if (listing) MakeBids(listing.bids);
-  if (listing)
+  if (listing) {
+    MakeImages(listing.media);
+    MakeContent(listing);
+    MakeBids(listing.bids);
     form?.addEventListener('submit', (event) => onBid(event, id, listing));
+  }
 };
 
 const MakeImages = (images: Media[]) => {
