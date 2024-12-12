@@ -1,9 +1,14 @@
 export const initializeDarkMode = () => {
   const savedTheme = localStorage.getItem('theme');
+  const lightMode = document.getElementById('lightMode');
+  const darkMode = document.getElementById('darkMode');
+
   if (savedTheme === 'dark') {
     document.documentElement.classList.add('dark');
+    lightMode?.classList.add('hidden');
   } else {
     document.documentElement.classList.remove('dark');
+    darkMode?.classList.add('hidden');
   }
 };
 

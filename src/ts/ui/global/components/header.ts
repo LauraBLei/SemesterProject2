@@ -49,12 +49,26 @@ const Header = () => {
   });
   header?.appendChild(sidebar);
 
-  const darkMode = CreateElement<HTMLButtonElement>({
-    element: 'button',
-    text: 'Dark',
-    id: 'darkMode',
+  const darkMode = makeNavElement({ icon: iconPaths.darkMode, text: 'Dark' });
+  darkMode.id = 'darkMode';
+
+  const lightMode = makeNavElement({
+    icon: iconPaths.lightMode,
+    text: 'Light',
   });
-  darkMode.addEventListener('click', () => toggleDarkMode());
+  lightMode.id = 'lightMode';
+
+  darkMode.addEventListener('click', () => {
+    toggleDarkMode();
+    darkMode.classList.add('hidden');
+    lightMode.classList.remove('hidden');
+  });
+
+  lightMode.addEventListener('click', () => {
+    toggleDarkMode();
+    darkMode.classList.remove('hidden');
+    lightMode.classList.add('hidden');
+  });
 
   const button = CreateElement<HTMLButtonElement>({
     element: 'button',
@@ -94,7 +108,7 @@ const Header = () => {
     href: '/listing/search/',
   });
 
-  sidebar.append(home, search, darkMode);
+  sidebar.append(home, search, darkMode, lightMode);
   if (loggedIn) {
     const create = makeNavElement({
       icon: iconPaths.plus,
