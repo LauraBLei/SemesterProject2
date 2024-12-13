@@ -97,6 +97,12 @@ export const MakeCreateOrEditForm = async ({
     maxLength: 300,
   });
 
+  const descriptionCounter = CreateElement<HTMLSpanElement>({
+    element: 'span',
+    styling: 'text-lg text-brandBlack dark:text-brandWhite font-lato',
+    text: `${edit && listing ? listing.description.length : 0} / 300`,
+  });
+
   const sectionTwo = CreateElement<HTMLDivElement>({
     element: 'div',
     styling: 'flex flex-wrap justify-evenly w-full items-center',
@@ -158,7 +164,7 @@ export const MakeCreateOrEditForm = async ({
     element: 'input',
     id: 'auctionDate',
     styling:
-      'border-brandGreen border-2 cursor-pointer appearance-none px-4 py-2 rounded-md bg-brandWhite dark:bg-brandGreen text-brandWhite',
+      'border-brandGreen border-2 cursor-pointer appearance-none px-4 py-2 rounded-md bg-brandWhite dark:bg-brandGreen text-brandBlack dark:text-brandWhite',
     type: 'date',
     name: 'auctionDate',
     required: true,
@@ -248,7 +254,7 @@ export const MakeCreateOrEditForm = async ({
   outerDiv.append(exitDiv, headline, form);
   exitDiv.appendChild(exitButton);
   form.append(sectionOne, sectionTwo, sectionThree, submitButton);
-  sectionOne.append(titleInput, description);
+  sectionOne.append(titleInput, description, descriptionCounter);
   sectionTwo.append(select, dateInput);
   select.append(
     defaultOption,
@@ -278,6 +284,11 @@ export const MakeCreateOrEditForm = async ({
   });
   addImageInputButton?.addEventListener('click', () => {
     imageInputs(additionalImageInputs);
+  });
+
+  description.addEventListener('input', (event) => {
+    const currentLength = (event.target as HTMLTextAreaElement).value.length;
+    descriptionCounter.innerText = `${currentLength} / 300`;
   });
 };
 

@@ -13,15 +13,22 @@ import { Bid, ListingObject, UserProfileAPI } from '../../utilities/types';
 export const runProfile = async () => {
   const user = JSON.parse(localStorage.getItem('userInfo') ?? '{}');
   const userInfo: UserProfileAPI = await readProfile(user.name);
-  const form = document.getElementById('updateProfile');
+  const exitUpdateProfile = document.getElementById(
+    'exitUpdateProfile'
+  ) as HTMLParagraphElement;
+  const updateProfileDiv = document.getElementById(
+    'updateProfileDiv'
+  ) as HTMLDivElement;
+  const form = document.getElementById('updateProfileForm');
   form?.addEventListener('submit', onUpdateProfile);
-
+  exitUpdateProfile.addEventListener('click', () => {
+    updateProfileDiv.classList.add('hidden');
+  });
   await MakeProfile(userInfo);
+  fillUpdateProfile(userInfo);
 };
 
 const MakeProfile = async (userInfo: UserProfileAPI) => {
-  const savedTheme = localStorage.getItem('theme');
-
   const fetchActiveListings = await readListingsByUser({
     username: userInfo.name,
     sort: 'created',
@@ -55,26 +62,14 @@ const MakeProfile = async (userInfo: UserProfileAPI) => {
   });
   bannerDiv?.appendChild(banner);
 
-  const updateProfileDiv = document.getElementById(
+  const updateProfile = document.getElementById(
     'updateProfile'
   ) as HTMLDivElement;
-  const details = CreateElement<HTMLDetailsElement>({ element: 'details' });
-  const summary = CreateElement<HTMLElement>({
-    element: 'summary',
-    styling:
-      ' list-none cursor-pointer scale-95 hover:scale-100 transition ease-in-out duration-300 transform',
-  });
-
-  const div = CreateElement<HTMLDivElement>({
-    element: 'div',
-    styling:
-      'absolute z-20 bg-brandWhite border-2 rounded-md border-black w-[300px] md:w-[500px] p-4 h-auto',
-  });
-
-  makeUpdateProfileForm(div, userInfo);
-
-  updateProfileDiv.append(details);
-  details.append(summary, div);
+  updateProfile.innerHTML = `${Icon(iconPaths.setting, '#E0B341', '30px')}
+    `;
+  updateProfile.addEventListener('click', () =>
+    document.getElementById('updateProfileDiv')?.classList.remove('hidden')
+  );
 
   const avatarDiv = document.getElementById('avatar') as HTMLDivElement;
   const avatar = CreateElement<HTMLImageElement>({
@@ -92,23 +87,9 @@ const MakeProfile = async (userInfo: UserProfileAPI) => {
 
   credits.innerHTML = `
   <span class='text-sm md:text-2xl font-semibold font-lato'>${userInfo.credits}</span>
-  <span>${Icon(iconPaths.credits, '#00000', '20px')}</span>
+  <span>${Icon(iconPaths.credits, '#E0B341', '25px')}</span>
   `;
-  if (savedTheme === 'dark') {
-    summary.innerHTML = `${Icon(iconPaths.setting, '#FFFFFF', '30px')}
-    `;
-    credits.innerHTML = `
-  <span class='text-sm md:text-2xl font-semibold font-lato'>${userInfo.credits}</span>
-  <span>${Icon(iconPaths.credits, '#FFFFFF', '25px')}</span>
-  `;
-  } else {
-    summary.innerHTML = `${Icon(iconPaths.setting, '#1D1D1D', '30px')}
-    `;
-    credits.innerHTML = `
-  <span class='text-sm md:text-2xl font-semibold font-lato'>${userInfo.credits}</span>
-  <span>${Icon(iconPaths.credits, '#00000', '25px')}</span>
-  `;
-  }
+
   const bio = document.getElementById('bio') as HTMLDivElement;
   bio.innerText = userInfo.bio;
 
@@ -135,85 +116,21 @@ const MakeProfile = async (userInfo: UserProfileAPI) => {
   });
 };
 
-const makeUpdateProfileForm = (
-  container: HTMLDivElement,
-  userInfo: UserProfileAPI
-) => {
-  const title = CreateElement<HTMLHeadingElement>({
-    element: 'h2',
-    text: 'Update Profile',
-    styling:
-      'font-playfairDisplay font-semibold text-brandBlack text-lg md:text-2xl text-center border-b-2 border-brandBlack py-2',
-  });
+const fillUpdateProfile = (userInfo: UserProfileAPI) => {
+  const avatar = document.getElementById('updateAvatar') as HTMLInputElement;
+  avatar.value = userInfo.avatar.url;
 
-  const form = CreateElement<HTMLFormElement>({
-    element: 'form',
-    id: 'updateProfile',
-    styling: 'w-full flex flex-col gap-4 mt-2',
-  });
+  const banner = document.getElementById('updateBanner') as HTMLInputElement;
+  banner.value = userInfo.banner.url;
 
-  const avatarContainer = CreateElement<HTMLDivElement>({
-    element: 'div',
-    styling: 'flex flex-col gap-2 w-full',
-  });
-  const avatarLabel = CreateElement<HTMLLabelElement>({
-    element: 'label',
-    forLabel: 'avatarUrl',
-    text: 'Profile picture:',
-    styling: 'text-lg font-semibold font-playfairDisplay text-brandBlack',
-  });
-  const avatarInput = CreateElement<HTMLInputElement>({
-    element: 'input',
-    type: 'url',
-    name: 'avatarUrl',
-    id: 'avatarUrl',
-    placeholder: 'Profile Img url',
-    value: `${userInfo.avatar.url}`,
-    styling: 'w-full formInput',
-    required: true,
-  });
+  const bio = document.getElementById('updateBio') as HTMLTextAreaElement;
+  if (userInfo.bio) bio.value = userInfo.bio; // Correctly set the textarea value
 
-  const bannerContainer = CreateElement<HTMLDivElement>({
-    element: 'div',
-    styling: 'flex flex-col gap-2 w-full',
-  });
-  const bannerLabel = CreateElement<HTMLLabelElement>({
-    element: 'label',
-    forLabel: 'bannerUrl',
-    text: 'Cover picture:',
-    styling: 'text-lg font-semibold font-playfairDisplay text-brandBlack',
-  });
-  const bannerInput = CreateElement<HTMLInputElement>({
-    element: 'input',
-    type: 'url',
-    name: 'bannerUrl',
-    id: 'bannerUrl',
-    placeholder: 'Cover img url...',
-    value: `${userInfo.banner.url}`,
-    styling: 'w-full formInput',
-    required: true,
-  });
+  const bioCounter = document.getElementById('bioCounter') as HTMLDivElement;
+  bioCounter.innerHTML = `${userInfo.bio ? userInfo.bio.length : 0} / 200`;
 
-  const bio = CreateElement<HTMLTextAreaElement>({
-    element: 'textarea',
-    name: 'bio',
-    id: 'bioInput',
-    placeholder: 'Write something about yourself...',
-    required: true,
-    styling: 'w-full min-h-[100px] formInput',
-    text: `${userInfo.bio}`,
+  bio.addEventListener('input', (event) => {
+    const currentLength = (event.target as HTMLTextAreaElement).value.length;
+    bioCounter.innerText = `${currentLength} / 200`; // Update counter as user types
   });
-
-  const submitButton = CreateElement<HTMLButtonElement>({
-    element: 'button',
-    text: 'Update',
-    type: 'submit',
-    styling:
-      'border-2 text-brandGreen tracking-widest font-semibold text-2xl border-brandGreen hover:bg-brandBlack hover:text-brandYellow py-2 px-4 scale-95 hover:scale-100 transition ease-in-out duration-300 transform',
-  });
-
-  container.append(title, form);
-  form.append(avatarContainer, bannerContainer, bio, submitButton);
-  avatarContainer.append(avatarLabel, avatarInput);
-  bannerContainer.append(bannerLabel, bannerInput);
 };

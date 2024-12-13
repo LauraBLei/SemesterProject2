@@ -9,6 +9,78 @@
   <body>
     <header></header>
     <main>
+      <div
+        class="hidden absolute w-full h-full z-50 items-center justify-center bg-brandBlack/50"
+        id="updateProfileDiv"
+      >
+        <div class="w-full h-full flex items-center justify-center">
+          <form
+            name="updateProfile"
+            id="updateProfileForm"
+            class="bg-brandWhite dark:bg-brandBlack p-4 border-2 border-brandGreen max-w-[500px] w-dvw rounded-md flex flex-col gap-2 mx-14"
+          >
+            <p
+              id="exitUpdateProfile"
+              class="font-playfairDisplay text-xl md:text-3xl text-brandBlack dark:text-brandYellow scale-95 hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer place-self-end"
+            >
+              X
+            </p>
+            <h2
+              class="font-semibold tracking-widest text-2xl text-center text-brandBlack dark:text-brandWhite border-b-2 border-brandBlack dark:border-brandWhite py-2"
+            >
+              Update Profile
+            </h2>
+            <div>
+              <label
+                class="font-semibold font-playfairDisplay text-lg text-brandBlack dark:text-brandWhite"
+                for="avatar"
+                >Profile Picture:</label
+              >
+              <input
+                class="formInput w-full"
+                type="url"
+                name="avatar"
+                id="updateAvatar"
+              />
+            </div>
+            <div>
+              <label
+                class="font-semibold font-playfairDisplay text-lg text-brandBlack dark:text-brandWhite"
+                for="banner"
+                >Cover Picture:</label
+              >
+              <input
+                class="formInput w-full"
+                type="url"
+                name="banner"
+                id="updateBanner"
+              />
+            </div>
+            <div>
+              <label
+                class="font-semibold font-playfairDisplay text-lg text-brandBlack dark:text-brandWhite"
+                for="bio"
+                >Bio:</label
+              >
+              <textarea
+                class="formInput w-full min-h-[200px]"
+                name="bio"
+                id="updateBio"
+                maxlength="200"
+              ></textarea>
+            </div>
+            <div
+              class="text-sm text-center py-2 text-brandBlack dark:text-brandYellow"
+              id="bioCounter"
+            ></div>
+            <button
+              class="font-playfairDisplay font-semibold text-brandBlack dark:text-brandYellow text-xl md:text-3xl border-2 border-brandBlack w-full hover:bg-brandBlack dark:border-brandYellow hover:text-brandYellow dark:hover:bg-brandYellow dark:hover:text-brandBlack scale-95 hover:scale-100 transition ease-in-out duration-300 transform py-2 rounded-md"
+            >
+              Update
+            </button>
+          </form>
+        </div>
+      </div>
       <div class="flex flex-col max-w-[1400px] w-full">
         <div
           id="banner"
@@ -28,11 +100,14 @@
             class="flex flex-col gap-6 items-center justify-center mt-4 px-4"
           >
             <div class="flex gap-2 items-center justify-between w-full">
-              <div id="updateProfile"></div>
               <div
+                class="cursor-pointer scale-90 hover:scale-100 transition ease-in-out duration-300 transform"
+                id="updateProfile"
+              ></div>
+              <h1
                 class="text-lg text-brandBlack dark:text-brandWhite md:text-2xl font-playfairDisplay font-semibold"
                 id="username"
-              ></div>
+              ></h1>
               <div
                 class="flex text-brandBlack dark:text-brandWhite gap-2 items-center justify-self-end"
                 id="credits"
