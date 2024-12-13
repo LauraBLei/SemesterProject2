@@ -14,6 +14,7 @@ export default {
         brandWhite: '#FFFFFF',
         brandYellow: '#E0B341',
         brandBlack: '#1D1D1D',
+        error: '#D32F2F',
       },
       fontFamily: {
         lato: ['Lato', 'sans-serif'],

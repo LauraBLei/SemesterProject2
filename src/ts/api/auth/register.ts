@@ -30,8 +30,12 @@ export async function register({ name, email, password }: RegisterForm) {
     if (response.ok) {
       alert(`Successfully created user "${name}"`);
       window.location.href = '/auth/login/';
+    } else {
+      document
+        .getElementById('error-acount-already-exists')
+        ?.classList.remove('hidden');
     }
   } catch (error) {
-    alert('Something went wrong trying to register an account');
+    window.location.href = '/error/';
   }
 }

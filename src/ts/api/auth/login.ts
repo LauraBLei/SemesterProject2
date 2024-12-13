@@ -36,6 +36,6 @@ export async function login({ email, password }: loginForm) {
       if (errorMessage) errorMessage.classList.remove('hidden');
     }
   } catch (error) {
-    if (errorMessage) errorMessage.classList.remove('hidden');
+    window.location.href = '/error/';
   }
 }

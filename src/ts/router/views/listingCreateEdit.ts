@@ -106,13 +106,14 @@ export const MakeCreateOrEditForm = async ({
     styling:
       'formInput font-lato h-[40px] text-center list-none appearance-none cursor-pointer hover:bg-brandBlack hover:text-brandYellow',
     name: 'category',
+    text: 'Category',
     required: true,
   });
 
   const defaultOption = CreateElement<HTMLOptionElement>({
     element: 'option',
     text: 'Category',
-    value: '',
+    value: 'default',
   });
   defaultOption.disabled;
   defaultOption.selected;
@@ -162,9 +163,15 @@ export const MakeCreateOrEditForm = async ({
     name: 'auctionDate',
     required: true,
   });
-  if (edit && listing) {
-    const formattedDate = new Date(listing.endsAt).toISOString().split('T')[0];
-    dateInput.value = formattedDate || '';
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
+  const nextAvailableDate = tomorrow.toISOString().split('T')[0];
+  dateInput.min = nextAvailableDate;
+  dateInput.value = nextAvailableDate;
+
+  if (edit) {
+    dateInput.classList.add('hidden');
   }
 
   const sectionThree = CreateElement<HTMLDivElement>({
@@ -198,8 +205,7 @@ export const MakeCreateOrEditForm = async ({
   });
   if (edit && listing) {
     if (listing.media && listing.media.length > 0) {
-      imageInput.value = listing.media[0].url || ''; // Populate the first image input
-      // Optionally, dynamically add additional image inputs for other URLs
+      imageInput.value = listing.media[0].url || '';
       listing.media.slice(1).forEach((mediaItem) => {
         const additionalInput = CreateElement<HTMLInputElement>({
           element: 'input',
@@ -256,9 +262,12 @@ export const MakeCreateOrEditForm = async ({
   sectionThree.append(imageText, divImageInput);
   divImageInput.append(imageInput, additionalImageInputs, addImageInputButton);
   if (edit && listing) {
-    if (listing.tags.length > 0) {
-      select.value = listing.tags[0];
-    }
+    const selectedCategory = listing.tags[0];
+    const isValidCategory = Array.from(select.options).some(
+      (option) => option.value === selectedCategory
+    );
+
+    select.value = isValidCategory ? selectedCategory : 'default';
   }
 
   exitButton?.addEventListener('click', () => {

@@ -46,9 +46,16 @@
             />
             <div
               id="error-message-register"
-              class="hidden text-brandBlack text-center"
+              class="hidden text-error text-center"
             >
               You must use an @stud.noroff.no email address.
+            </div>
+            <div
+              class="hidden text-error text-center"
+              id="error-acount-already-exists"
+            >
+              An account with this email already exists. Please log in or use a
+              different email.
             </div>
             <input
               class="formInput"
@@ -56,6 +63,7 @@
               id="password"
               name="password"
               placeholder="Password..."
+              minlength="8"
               required
             />
           </div>
