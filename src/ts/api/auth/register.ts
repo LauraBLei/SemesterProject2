@@ -1,3 +1,4 @@
+import { confirmText } from '../../ui/global/components/confirm';
 import { RegisterForm } from '../../utilities/types';
 import { API } from '../APIEndPoints';
 import { headers } from '../headers';
@@ -28,14 +29,11 @@ export async function register({ name, email, password }: RegisterForm) {
       body: JSON.stringify(body),
     });
     if (response.ok) {
-      alert(`Successfully created user "${name}"`);
-      window.location.href = '/auth/login/';
+      confirmText('registeredAccount', '/auth/login/');
     } else {
       document
-        .getElementById('error-acount-already-exists')
+        .getElementById('error-account-already-exists')
         ?.classList.remove('hidden');
     }
-  } catch (error) {
-    window.location.href = '/error/';
-  }
+  } catch (error) {}
 }

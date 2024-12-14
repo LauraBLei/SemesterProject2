@@ -42,7 +42,10 @@
           id="content"
           class="flex flex-wrap justify-center md:flex-nowrap md:justify-between gap-10 mt-6"
         >
-          <div id="information" class="flex flex-col w-full md:max-w-[500px]">
+          <section
+            id="information"
+            class="flex flex-col w-full md:max-w-[500px]"
+          >
             <div id="listingInfo" class="flex flex-col">
               <h1
                 class="font-playfairDisplay font-semibold text-2xl md:text-3xl py-4 text-brandBlack dark:text-brandWhite text-center tracking-widest md:tracking-[10px]"
@@ -115,8 +118,11 @@
                 Your bid needs to be higher than the last bid.
               </div>
             </div>
-          </div>
-          <div class="flex flex-col w-full max-w-[500px] gap-6 items-center">
+          </section>
+          <section
+            id="bidsSection"
+            class="flex flex-col w-full max-w-[500px] gap-6 items-center"
+          >
             <h2
               class="text-2xl lg:text-3xl text-brandBlack dark:text-brandWhite font-semibold font-playfairDisplay tracking-widest md:tracking-[10px]"
             >
@@ -126,7 +132,7 @@
               id="bids"
               class="flex flex-col gap-4 w-full max-w-[500px] max-h-[400px] overflow-y-auto"
             ></div>
-          </div>
+          </section>
         </div>
       </div>
     </main>

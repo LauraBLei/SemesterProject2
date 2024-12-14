@@ -1,6 +1,7 @@
 import { API } from '../APIEndPoints';
 import { headers } from '../headers';
 import { loginForm } from '../../utilities/types';
+import { confirmText } from '../../ui/global/components/confirm';
 /**
  * Will login user - and store information in local storage - if email and password are correct.
  * @param {object} userinfo = object that contains email and password.
@@ -27,11 +28,10 @@ export async function login({ email, password }: loginForm) {
       body: JSON.stringify(body),
     });
     if (response.ok) {
-      alert(`Successfully logged in"`);
       const data = await response.json();
       localStorage.setItem('userInfo', JSON.stringify(data.data));
       localStorage.setItem('token', JSON.stringify(data.data.accessToken));
-      window.location.href = '/';
+      confirmText('loggedIn', '/');
     } else {
       if (errorMessage) errorMessage.classList.remove('hidden');
     }

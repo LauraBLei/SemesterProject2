@@ -14,8 +14,11 @@ export const runListingPage = async () => {
   const form = document.getElementById('bidForm');
   const listing = await readListing(id);
   const userInfo = JSON.parse(localStorage.getItem('userInfo') ?? '{}');
+  const loggedIn = localStorage.getItem('userInfo');
 
   if (userInfo.name === listing?.seller.name) form?.classList.add('hidden');
+  if (!loggedIn)
+    document.getElementById('bidsSection')?.classList.add('hidden');
 
   if (listing) {
     MakeImages(listing.media);
