@@ -5,7 +5,6 @@ import { onDeletePost } from '../../listing/delete';
 import { CreateElement } from '../components/createElement';
 import { Icon } from '../components/makeIcon';
 import { createCountdownHTML, isAuctionClosed } from '../components/countdown';
-import { list } from 'postcss';
 
 export const MakeListings = (
   listing: ListingObject,

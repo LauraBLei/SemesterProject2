@@ -34,8 +34,22 @@ const MakeProfile = async (userInfo: UserProfileAPI) => {
     sort: 'created',
     sortOrder: 'desc',
   });
+  const latestListingsHeadline = document.getElementById(
+    'activeListingsHeadline'
+  );
+  const closedListingsHeadline = document.getElementById(
+    'closedListingsHeadline'
+  );
+  const userBidsHeadline = document.getElementById('userBidsHeadline');
+  const exploreHeadline = document.getElementById('exploreListingsHeadline');
+
+  if (userInfo.wins.length === 0)
+    document.getElementById('bidsWonHeadline')?.classList.add('hidden');
 
   const activeListings: ListingObject[] = fetchActiveListings.data;
+  console.log('active:', activeListings);
+  if (activeListings.length === 0)
+    latestListingsHeadline?.classList.add('hidden');
 
   const fetchClosedListings = await readListingsByUser({
     username: userInfo.name,
@@ -44,6 +58,8 @@ const MakeProfile = async (userInfo: UserProfileAPI) => {
   });
 
   const closedListings: ListingObject[] = fetchClosedListings.data;
+  if (closedListings.length === 0)
+    closedListingsHeadline?.classList.add('hidden');
 
   const fetchUserBids = await readBidsByUser({
     username: userInfo.name,
@@ -52,6 +68,13 @@ const MakeProfile = async (userInfo: UserProfileAPI) => {
   });
 
   const userBids: Bid[] = fetchUserBids.data;
+  if (userBids.length === 0) userBidsHeadline?.classList.add('hidden');
+
+  const noListings =
+    userBids.length === 0 &&
+    closedListings.length === 0 &&
+    activeListings.length === 0;
+  if (noListings) exploreHeadline?.classList.remove('hidden');
 
   const bannerDiv = document.getElementById('banner');
   const banner = CreateElement<HTMLImageElement>({
@@ -105,6 +128,8 @@ const MakeProfile = async (userInfo: UserProfileAPI) => {
     'userBids'
   ) as HTMLDivElement;
 
+  const userWinContainer = document.getElementById('bidsWon') as HTMLDivElement;
+
   activeListings.forEach((listing: ListingObject) => {
     MakeListings(listing, activeListingsContainer, 'created');
   });
@@ -113,6 +138,9 @@ const MakeProfile = async (userInfo: UserProfileAPI) => {
   });
   userBids.forEach((listing: Bid) => {
     MakeUserBids(listing, userBidsContainer);
+  });
+  userInfo.wins.forEach((listing: ListingObject) => {
+    MakeListings(listing, userWinContainer, 'wins');
   });
 };
 

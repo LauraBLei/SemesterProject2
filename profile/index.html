@@ -123,38 +123,64 @@
           id="userListings"
           class="flex flex-wrap gap-10 md:gap-14 w-full justify-evenly mt-4 md:mt-10 mb-10"
         >
+          <h2
+            id="exploreListingsHeadline"
+            class="hidden text-center font-playfairDisplay text-brandBlack dark:text-brandWhite tracking-widest text-2xl font-semibold my-4"
+          >
+            Explore auction listings
+            <a
+              class="text-brandGreen dark:text-brandYellow cursor-pointer"
+              href="/"
+              >here!</a
+            >
+            or create one yourself!
+          </h2>
           <section class="w-full">
             <h2
+              id="activeListingsHeadline"
               class="text-center font-playfairDisplay text-brandBlack dark:text-brandWhite tracking-widest text-2xl font-semibold my-4"
             >
               Latest listings
             </h2>
             <div
               id="activeListings"
-              class="flex flex-wrap justify-center gap-4 w-full max-h-[1000px] overflow-y-auto"
+              class="flex flex-wrap justify-center gap-4 w-full max-h-[1100px] overflow-y-auto"
             ></div>
           </section>
-
           <section class="w-full">
             <h2
+              id="bidsWonHeadline"
+              class="text-center font-playfairDisplay text-brandBlack dark:text-brandWhite tracking-widest text-2xl font-semibold my-4"
+            >
+              Bids Won
+            </h2>
+            <div
+              class="flex flex-wrap justify-center gap-4 w-full max-h-[1100px] overflow-y-auto"
+              id="bidsWon"
+            ></div>
+          </section>
+          <section class="w-full">
+            <h2
+              id="closedListingsHeadline"
               class="text-center font-playfairDisplay text-brandBlack dark:text-brandWhite tracking-widest text-2xl font-semibold my-4"
             >
               Closed listings
             </h2>
             <div
               id="closedListings"
-              class="flex flex-wrap justify-center gap-4 w-full max-h-[1000px] overflow-y-auto"
+              class="flex flex-wrap justify-center gap-4 w-full max-h-[1100px] overflow-y-auto"
             ></div>
           </section>
 
           <section class="w-full">
             <h2
+              id="userBidsHeadline"
               class="text-center font-playfairDisplay text-brandBlack dark:text-brandWhite tracking-widest text-2xl font-semibold my-4"
             >
               Your bids
             </h2>
             <div
-              class="flex flex-wrap justify-center gap-4 w-full max-h-[1000px] overflow-y-auto"
+              class="flex flex-wrap justify-center gap-4 w-full max-h-[1100px] overflow-y-auto"
               id="userBids"
             ></div>
           </section>

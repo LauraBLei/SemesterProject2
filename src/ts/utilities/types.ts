@@ -129,6 +129,7 @@ export type UserProfileAPI = {
   banner: Media;
   credits: number;
   listings: ListingObject[];
+  wins: ListingObject[];
 };
 
 export type UpdateProfileInfo = {

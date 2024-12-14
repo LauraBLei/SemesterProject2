@@ -28,7 +28,6 @@ export const makeSingleListing = (
       'w-full h-[200px] flex items-center justify-center rounded-md overflow-hidden',
   });
   if (post.media[0]) {
-    console.log(post);
     const image = CreateElement<HTMLImageElement>({
       element: 'img',
       styling: 'w-full h-full object-cover',
