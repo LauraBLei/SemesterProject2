@@ -5,6 +5,7 @@ import { onDeletePost } from '../../listing/delete';
 import { CreateElement } from '../components/createElement';
 import { Icon } from '../components/makeIcon';
 import { createCountdownHTML, isAuctionClosed } from '../components/countdown';
+import { list } from 'postcss';
 
 export const MakeListings = (
   listing: ListingObject,
@@ -36,6 +37,7 @@ export const MakeListings = (
     element: 'img',
     styling: 'w-full h-full object-cover',
     src: listing.media[0].url,
+    alt: listing.media[0].alt ? listing.media[0].alt : listing.title,
   });
   const title = CreateElement<HTMLParagraphElement>({
     element: 'p',
@@ -118,6 +120,9 @@ export const MakeUserBids = (
     element: 'img',
     styling: 'w-full h-full object-cover',
     src: listing.listing.media[0].url,
+    alt: listing.listing.media[0].alt
+      ? listing.listing.media[0].alt
+      : listing.listing.title,
   });
   const title = CreateElement<HTMLParagraphElement>({
     element: 'p',

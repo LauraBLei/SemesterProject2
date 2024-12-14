@@ -11,7 +11,7 @@ export const CreateCategory = (section: HTMLElement) => {
     const container = CreateElement<HTMLDivElement>({
       element: 'div',
       styling:
-        'flex flex-col cursor-pointer items-center scale-90 hover:scale-100 transition-transform duration-300 ease-in-out transform',
+        'flex flex-col cursor-pointer items-center mb-2 h-full scale-90 hover:scale-100 transition-transform duration-300 ease-in-out transform',
     });
     const imageDiv = CreateElement<HTMLDivElement>({
       element: 'div',
@@ -39,7 +39,8 @@ export const CreateCategory = (section: HTMLElement) => {
     const category = CreateElement<HTMLParagraphElement>({
       element: 'p',
       text: `${key.text}`,
-      styling: 'font-lato text-lg text-brandBlack dark:text-brandWhite',
+      styling:
+        'font-lato text-sm md:text-lg text-brandBlack dark:text-brandWhite',
     });
     section?.appendChild(container);
     container.append(imageDiv, category);

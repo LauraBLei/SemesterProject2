@@ -215,7 +215,7 @@ export const MakeCreateOrEditForm = async ({
       listing.media.slice(1).forEach((mediaItem) => {
         const additionalInput = CreateElement<HTMLInputElement>({
           element: 'input',
-          styling: 'w-full border-2 border-black p-2',
+          styling: 'w-full formInput',
           type: 'url',
           name: 'url',
           value: mediaItem.url || '',

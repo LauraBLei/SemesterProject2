@@ -4,7 +4,7 @@
 @tailwind utilities;
 
 body {
-  @apply flex h-dvh max-w-full;
+  @apply flex h-dvh max-w-full overflow-x-hidden;
 }
 
 main {

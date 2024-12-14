@@ -19,7 +19,7 @@ export const makeSingleListing = (
   const container = CreateElement<HTMLDivElement>({
     element: 'div',
     styling:
-      'w-full md:w-[350px] h-auto bg-brandBlack dark:bg-brandGreen shadow-sm shadow-brandBlack p-3 rounded-md flex flex-col justify-evenly',
+      'w-full max-w-[400px] md:max-w-[350px]  h-auto bg-brandBlack dark:bg-brandGreen shadow-sm shadow-brandBlack p-3 rounded-md flex flex-col justify-evenly',
   });
 
   const imageDiv = CreateElement<HTMLDivElement>({
@@ -28,11 +28,12 @@ export const makeSingleListing = (
       'w-full h-[200px] flex items-center justify-center rounded-md overflow-hidden',
   });
   if (post.media[0]) {
+    console.log(post);
     const image = CreateElement<HTMLImageElement>({
       element: 'img',
       styling: 'w-full h-full object-cover',
       src: `${post.media[0].url}`,
-      alt: `${post.media[0].alt}`,
+      alt: post.media[0].alt ? post.media[0].alt : post.title,
     });
     imageDiv.append(image);
   } else {
@@ -88,7 +89,7 @@ export const makeSingleListing = (
     element: 'a',
     href: '/listing/',
     styling:
-      'scale-90 border-2 border-brandGreen dark:border-brandYellow rounded-md hover:scale-100 transition ease-in-out duration-300 transform cursor-pointer p-2 hover:bg-brandGreen w-full flex justify-center text-white text-2xl items-end gap-3',
+      'scale-90 border-2 border-brandGreen dark:border-brandYellow rounded-md hover:scale-100 dark:hover:bg-brandBlack dark:hover:border-brandBlack transition ease-in-out duration-300 transform cursor-pointer p-2 hover:bg-brandGreen w-full flex justify-center text-white text-2xl items-end gap-3',
   });
   seePost.addEventListener('click', () => {
     localStorage.setItem('id', JSON.stringify(post.id));
