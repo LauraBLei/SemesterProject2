@@ -45,8 +45,7 @@ export const MakeListings = (
   });
 
   const countDown = createCountdownHTML(listing.endsAt);
-  countDown.className =
-    'font-playfairDisplay font-semibold text-lg tracking-widest';
+  countDown.className = 'font-lato font-semibold text-lg tracking-widest';
 
   const buttonContainer = CreateElement<HTMLButtonElement>({
     element: 'div',
@@ -140,8 +139,7 @@ export const MakeUserBids = (
   });
 
   const countDown = createCountdownHTML(listing.listing.endsAt);
-  countDown.className =
-    'font-playfairDisplay font-semibold text-lg tracking-[8px]';
+  countDown.className = 'font-lato font-semibold text-lg tracking-widest';
 
   const seePost = CreateElement<HTMLAnchorElement>({
     element: 'a',
