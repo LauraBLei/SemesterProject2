@@ -105,7 +105,7 @@ export const MakeCreateOrEditForm = async ({
 
   const sectionTwo = CreateElement<HTMLDivElement>({
     element: 'div',
-    styling: 'flex flex-wrap justify-evenly w-full items-center',
+    styling: 'flex flex-wrap justify-evenly w-full items-center gap-4',
   });
   const select = CreateElement<HTMLSelectElement>({
     element: 'select',
@@ -202,6 +202,7 @@ export const MakeCreateOrEditForm = async ({
     name: 'url',
     placeholder: 'Add Image Url...',
     required: true,
+    maxLength: 300,
   });
 
   const additionalImageInputs = CreateElement<HTMLDivElement>({
@@ -219,6 +220,7 @@ export const MakeCreateOrEditForm = async ({
           type: 'url',
           name: 'url',
           value: mediaItem.url || '',
+          maxLength: 300,
         });
 
         additionalImageInputs.appendChild(additionalInput);
@@ -250,8 +252,15 @@ export const MakeCreateOrEditForm = async ({
     edit && listing ? onEdit(event, listing.id) : create ? onCreate(event) : '';
   });
 
+  const confirmMessage = CreateElement<HTMLParagraphElement>({
+    element: 'p',
+    text: edit ? 'Post Updated!' : 'Post Created!',
+    styling: 'hidden font-lato text-sm md:text-lg text-confirm text-center',
+    id: 'createEditMessage',
+  });
+
   container.append(outerDiv);
-  outerDiv.append(exitDiv, headline, form);
+  outerDiv.append(exitDiv, headline, form, confirmMessage);
   exitDiv.appendChild(exitButton);
   form.append(sectionOne, sectionTwo, sectionThree, submitButton);
   sectionOne.append(titleInput, description, descriptionCounter);
@@ -302,6 +311,7 @@ const imageInputs = (container: Element) => {
       element: 'div',
       styling: 'w-full flex justify-between gap-2',
     });
+
     const newInput = document.createElement('input');
     (newInput.type = 'url'), (newInput.className = 'w-full formInput');
     newInput.placeholder = 'Add Image url...';

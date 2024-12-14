@@ -11,11 +11,6 @@ export const MakeListings = (
   listingsContainer: HTMLDivElement,
   section: string
 ) => {
-  if (section === 'closed') {
-    if (!isAuctionClosed(listing.endsAt)) {
-      return;
-    }
-  }
   if (section === 'created') {
     if (isAuctionClosed(listing.endsAt)) {
       return;

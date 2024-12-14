@@ -1,5 +1,6 @@
 import { readBidsByUser, readListingsByUser } from '../../api/listing/read';
 import { readProfile } from '../../api/profile/read';
+import { isAuctionClosed } from '../../ui/global/components/countdown';
 import { CreateElement } from '../../ui/global/components/createElement';
 import { Icon } from '../../ui/global/components/makeIcon';
 import {
@@ -55,10 +56,15 @@ const MakeProfile = async (userInfo: UserProfileAPI) => {
     username: userInfo.name,
     sort: 'endsAt',
     sortOrder: 'asc',
+    active: false,
   });
 
   const closedListings: ListingObject[] = fetchClosedListings.data;
-  if (closedListings.length === 0)
+  const filteredClosedListings = closedListings.filter((e) =>
+    isAuctionClosed(e.endsAt)
+  );
+
+  if (filteredClosedListings.length === 0)
     closedListingsHeadline?.classList.add('hidden');
 
   const fetchUserBids = await readBidsByUser({
@@ -133,7 +139,7 @@ const MakeProfile = async (userInfo: UserProfileAPI) => {
   activeListings.forEach((listing: ListingObject) => {
     MakeListings(listing, activeListingsContainer, 'created');
   });
-  closedListings.forEach((listing: ListingObject) => {
+  filteredClosedListings.forEach((listing: ListingObject) => {
     MakeListings(listing, closedListingsContainer, 'closed');
   });
   userBids.forEach((listing: Bid) => {

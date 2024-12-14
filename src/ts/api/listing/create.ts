@@ -1,3 +1,4 @@
+import { confirmText } from '../../ui/global/components/confirm';
 import { CreateForm } from '../../utilities/types';
 import { API } from '../APIEndPoints';
 import { headers } from '../headers';
@@ -41,10 +42,9 @@ export async function createPost({
       const div = document.getElementById('createListing');
       const form = document.getElementById('create') as HTMLFormElement;
 
-      alert('You created a post!');
       div?.classList.add('hidden');
       form?.reset();
-      window.location.href = '/';
+      confirmText('createEditMessage', '/');
     }
   } catch (error) {
     alert('Something went wrong trying to create a post!');

@@ -4,8 +4,15 @@ import { Icon } from './makeIcon';
 import { onLogout } from '../../auth/logout';
 import { MakeCreateOrEditForm } from '../../../router/views/listingCreateEdit';
 import { initializeDarkMode, toggleDarkMode } from './darkmode';
+import { readCredits } from '../../../api/profile/read';
 
-export const MakeHeader = () => {
+export const MakeHeader = async () => {
+  const loggedIn = localStorage.getItem('userInfo');
+  if (loggedIn) {
+    const userInfo = JSON.parse(loggedIn);
+    const userCredits = await readCredits(userInfo.name);
+    localStorage.setItem('credits', JSON.stringify(userCredits.credits));
+  }
   Header();
   initializeDarkMode();
 };

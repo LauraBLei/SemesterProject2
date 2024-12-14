@@ -9,11 +9,14 @@ export const onBid = (
   event.preventDefault();
   const form = event.target as HTMLFormElement;
   const bidError = document.getElementById('wrongBid');
-
+  const credits = JSON.parse(localStorage.getItem('credits') ?? '');
   const formData = new FormData(form);
   const numberInput = formData.get('bid');
   const amount = Number(numberInput);
 
+  if (credits < amount) {
+    document.getElementById('noCredits')?.classList.remove('hidden');
+  }
   if (isNaN(amount)) {
     alert(`Invalid number ${amount}`);
     return;

@@ -53,6 +53,10 @@ const MakeImages = (images: Media[]) => {
 const MakeContent = (listing: ListingObject) => {
   const loggedIn = localStorage.getItem('token');
   const form = document.getElementById('bidForm');
+  let credits;
+  if (loggedIn) {
+    credits = JSON.parse(localStorage.getItem('credits') ?? '');
+  }
   const auctionClosed = document.getElementById('auctionClosed');
   if (!loggedIn) form?.classList.add('hidden');
   const title = document.getElementById('listingTitle');
@@ -63,9 +67,15 @@ const MakeContent = (listing: ListingObject) => {
     auctionClosed?.classList.remove('hidden');
   }
 
-  const description = document.getElementById('description');
-  if (listing.description && description)
-    description.innerText = listing.description;
+  const description = document.getElementById(
+    'description'
+  ) as HTMLParagraphElement;
+  if (description) {
+    description.innerText =
+      listing.description.length > 0
+        ? listing.description
+        : 'No description found';
+  }
 
   const sellerAvatar = document.getElementById(
     'sellerAvatar'
@@ -76,6 +86,12 @@ const MakeContent = (listing: ListingObject) => {
   const sellerName = document.getElementById('sellerName');
   if (listing.seller.name && sellerName)
     sellerName.innerText = listing.seller.name;
+
+  const creditInfo = document.getElementById(
+    'creditInfo'
+  ) as HTMLParagraphElement;
+  if (loggedIn && creditInfo)
+    creditInfo.innerHTML = `You currently have ${credits} ${Icon(iconPaths.credits, '#E0B341', '25px')}`;
 
   const lastBid = document.getElementById('lastBid') as HTMLParagraphElement;
   const bids = listing.bids.reverse();

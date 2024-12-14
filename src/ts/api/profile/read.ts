@@ -31,3 +31,20 @@ export async function readProfile(username: string) {
     alert('something went wrong trying to get your profile information');
   }
 }
+
+export async function readCredits(username: string) {
+  try {
+    const response = await fetch(
+      API.AUCTION_PROFILES + '/' + username + '/credits',
+      {
+        method: 'GET',
+        headers: headers(),
+      }
+    );
+    if (response.ok) {
+      const profileData = await response.json();
+
+      return profileData.data;
+    }
+  } catch (error) {}
+}

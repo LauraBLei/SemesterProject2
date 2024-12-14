@@ -92,6 +92,10 @@
                   ></div>
                 </div>
               </div>
+              <p
+                id="creditInfo"
+                class="text-sm flex items-center justify-center w-full gap-2 text-nowrap md:text-lg text-brandBlack dark:text-brandWhite"
+              ></p>
               <form id="bidForm" class="gap-6 flex items-center">
                 <input
                   class="formInput w-full"
@@ -105,17 +109,27 @@
                   Bid
                 </button>
               </form>
+
               <div
                 id="auctionClosed"
                 class="text-2xl font-lato text-brandBlack hidden"
               >
                 This Auction is closed!
               </div>
-              <div
-                id="wrongBid"
-                class="text-2xl font-lato text-brandBlack hidden"
-              >
+              <div id="wrongBid" class="text-2xl font-lato text-error hidden">
                 Your bid needs to be higher than the last bid.
+              </div>
+              <div
+                id="noCredits"
+                class="text-sm md:text-lg font-lato text-error hidden"
+              >
+                You do not have enough credits.
+              </div>
+              <div
+                id="confirmBid"
+                class="text-sm md:text-lg font-lato text-confirm hidden"
+              >
+                You made a bid!
               </div>
             </div>
           </section>
