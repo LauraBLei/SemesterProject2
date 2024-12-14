@@ -47,7 +47,7 @@ const MakeProfile = async (userInfo: UserProfileAPI) => {
     document.getElementById('bidsWonHeadline')?.classList.add('hidden');
 
   const activeListings: ListingObject[] = fetchActiveListings.data;
-  console.log('active:', activeListings);
+
   if (activeListings.length === 0)
     latestListingsHeadline?.classList.add('hidden');
 

@@ -21,6 +21,8 @@ export const MakeListings = (
       return;
     }
   }
+  const media = listing.media.length > 0;
+
   const container = CreateElement<HTMLDivElement>({
     element: 'div',
     id: listing.id,
@@ -32,12 +34,14 @@ export const MakeListings = (
     element: 'div',
     styling: 'h-[200px] w-full',
   });
-  const image = CreateElement<HTMLImageElement>({
-    element: 'img',
-    styling: 'w-full h-full object-cover',
-    src: listing.media[0].url,
-    alt: listing.media[0].alt ? listing.media[0].alt : listing.title,
-  });
+  let image;
+  if (media)
+    image = CreateElement<HTMLImageElement>({
+      element: 'img',
+      styling: 'w-full h-full object-cover',
+      src: listing.media[0].url,
+      alt: listing.media[0].alt ? listing.media[0].alt : listing.title,
+    });
   const title = CreateElement<HTMLParagraphElement>({
     element: 'p',
     text: listing.title,
@@ -92,7 +96,7 @@ export const MakeListings = (
   seePost.innerHTML = `${Icon(iconPaths.eye, '#E0B341')}`;
 
   container.append(imageDiv, title, countDown, buttonContainer);
-  imageDiv.append(image);
+  if (image) imageDiv.append(image);
   buttonContainer.append(seePost);
   listingsContainer.append(container);
 };
@@ -104,7 +108,7 @@ export const MakeUserBids = (
   if (isAuctionClosed(listing.listing.endsAt)) {
     return;
   }
-  const media = listing.listing.media[0];
+  const media = listing.listing.media.length > 0;
   const container = CreateElement<HTMLDivElement>({
     element: 'div',
     id: listing.listing.id,
@@ -153,6 +157,6 @@ export const MakeUserBids = (
   seePost.innerHTML = `${Icon(iconPaths.eye, '#E0B341')}`;
 
   container.append(imageDiv, title, bid, countDown, seePost);
-  imageDiv.append(image);
+  if (image) imageDiv.append(image);
   listingsContainer.append(container);
 };
