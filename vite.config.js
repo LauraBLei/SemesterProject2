@@ -17,7 +17,6 @@ export default defineConfig({
         profile: resolve(__dirname, './profile/index.html'),
         listing: resolve(__dirname, './listing/index.html'),
         search: resolve(__dirname, './listing/search/index.html'),
-        notFound: resolve(__dirname, '*'),
       },
     },
   },
