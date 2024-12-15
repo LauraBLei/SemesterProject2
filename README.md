@@ -2,6 +2,8 @@
 
 ## Intro
 
+deployed site: here(https://semester-project2-rosy.vercel.app/)
+
 This project is an exam project - and is not an official website!
 
 For this exam project we had to make an auction page, we got some user stories and some restrictions.
