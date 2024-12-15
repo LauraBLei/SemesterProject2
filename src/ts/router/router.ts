@@ -29,10 +29,6 @@ export default async function router(pathname = window.location.pathname) {
         await import('./views/listing.ts');
         await runListingPage();
         break;
-      case '/listing/search/':
-        await import('./views/search.ts');
-        await runSearchPage();
-        break;
       case '/profile/':
         await import('./views/profile.ts');
         await runProfile();

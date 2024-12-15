@@ -1,3 +1,4 @@
+import { confirmText } from '../../ui/global/components/confirm';
 import { UpdateProfileInfo } from '../../utilities/types';
 import { API } from '../APIEndPoints';
 import { headers } from '../headers';
@@ -31,12 +32,9 @@ export async function updateProfile(
       }),
     });
     if (response.ok) {
-      alert('You updated your profile!');
       const data = await response.json();
       localStorage.setItem('userInfo', JSON.stringify(data.data));
-      window.location.reload();
+      confirmText('confirmUpdate', '/profile/');
     }
-  } catch (error) {
-    alert('something went wrong trying to update your profile');
-  }
+  } catch (error) {}
 }

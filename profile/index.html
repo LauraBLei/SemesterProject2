@@ -67,7 +67,7 @@
                 >Bio:</label
               >
               <textarea
-                class="formInput w-full min-h-[200px]"
+                class="formInput w-full min-h-[200px] resize-none"
                 name="bio"
                 id="updateBio"
                 maxlength="200"
@@ -82,6 +82,12 @@
             >
               Update
             </button>
+            <div
+              id="confirmUpdate"
+              class="hidden font-lato text-sm md:text-lg text-confirm text-center"
+            >
+              You have updated your post!
+            </div>
           </form>
         </div>
       </div>

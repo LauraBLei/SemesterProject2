@@ -108,14 +108,8 @@ const Header = () => {
     text: 'Home',
     href: '/',
   });
-  const search = makeNavElement({
-    icon: iconPaths.search,
-    color: searchIconColor,
-    text: 'Search',
-    href: '/listing/search/',
-  });
 
-  sidebar.append(home, search, darkMode, lightMode);
+  sidebar.append(home, darkMode, lightMode);
   if (loggedIn) {
     const create = makeNavElement({
       icon: iconPaths.plus,

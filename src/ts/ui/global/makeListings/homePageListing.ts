@@ -25,7 +25,7 @@ export const makeSingleListing = (
   const imageDiv = CreateElement<HTMLDivElement>({
     element: 'div',
     styling:
-      'w-full h-[200px] flex items-center justify-center rounded-md overflow-hidden',
+      'w-full h-[200px] flex items-center justify-center rounded-md overflow-hidden  bg-[url("/placeholder.jpg")] bg-cover bg-center',
   });
   if (post.media[0]) {
     const image = CreateElement<HTMLImageElement>({

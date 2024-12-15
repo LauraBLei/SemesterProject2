@@ -110,7 +110,7 @@ export const MakeCreateOrEditForm = async ({
   const select = CreateElement<HTMLSelectElement>({
     element: 'select',
     styling:
-      'formInput font-lato h-[40px] text-center list-none appearance-none cursor-pointer hover:bg-brandBlack hover:text-brandYellow',
+      'formInput font-lato h-[40px] text-center list-none appearance-none cursor-pointer hover:bg-brandBlack hover:text-brandYellow ',
     name: 'category',
     text: 'Category',
     required: true,

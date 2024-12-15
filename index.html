@@ -9,12 +9,23 @@
   <body>
     <header></header>
     <main>
-      <section class="w-full max-w-[1400px] h-full">
+      <section id="welcome">
+        <div class="flex items-center justify-center my-4">
+          <img class="max-w-[200px]" src="/Logo-green.png" alt="green logo" />
+        </div>
         <h1
+          id="welcomeText"
+          class="font-playfairDisplay font-black text-xl md:text-3xl text-wrap tracking-widest md:tracking-[10px] text-brandGreen dark:text-brandYellow"
+        >
+          Welcome!
+        </h1>
+      </section>
+      <section class="w-full max-w-[1400px] max-h-[500px] h-full">
+        <h2
           class="text-sm md:text-2xl lg:text-3xl text-brandBlack dark:text-brandWhite font-playfairDisplay tracking-[5px] md:tracking-[8px] font-semibold text-center my-4"
         >
           The Final Countdown
-        </h1>
+        </h2>
         <div
           class="flex w-full h-full relative z-20 max-h-[200px] md:max-h-[400px] shadow-md shadow-brandBlack cursor-pointer scale-[.98] hover:scale-100 transition-transform duration-500 ease-in-out transform"
           id="carousel"
@@ -35,14 +46,47 @@
           class="dot-section flex w-full items-center justify-center gap-2 md:gap-3 mt-4"
         ></div>
       </section>
-      <section class="flex flex-col max-w-[1400px] p-2" id="recentListings">
-        <h1
-          class="text-sm md:text-2xl lg:text-3xl text-brandBlack dark:text-brandWhite font-playfairDisplay tracking-[5px] md:tracking-[8px] font-semibold text-center my-4"
-        >
-          Most Recent Listings
-        </h1>
+      <section
+        class="flex flex-col w-full max-w-[1400px] items-center p-2"
+        id="listings"
+      >
+        <div class="flex items-center justify-center mt-4 mb-8 w-full">
+          <form
+            id="searchListings"
+            name="searchListings"
+            class="flex max-w-[500px] w-full items-center px-4"
+          >
+            <input
+              class="formInput w-full"
+              type="text"
+              name="searchBar"
+              id="searchBar"
+              placeholder="Search.."
+            />
+
+            <div class="mt-2">
+              <button class="hidden">Search</button>
+            </div>
+          </form>
+          <form id="categorySort" class="flex items-center w-auto h-full">
+            <select
+              class="formInput text-sm md:text-lg font-lato p-0 md:py-2 h-[40px] text-center list-none appearance-none cursor-pointer hover:bg-brandBlack hover:text-brandYellow scale-95 hover:scale-100 transition ease-in-out duration-300 transform"
+              name="category"
+              id="categoryHomePage"
+            >
+              <option value="default" disabled selected>Category</option>
+              <option value="fine_art">Fine Art</option>
+              <option value="collectables">Collectables</option>
+              <option value="watches_jewelry">Watches and Jewelry</option>
+              <option value="decorative_art">Decorative Art</option>
+              <option value="classic_cars">Classic Cars</option>
+              <option value="furniture">Furniture</option>
+            </select>
+          </form>
+        </div>
+
         <div
-          id="mostRecent"
+          id="homePageListings"
           class="flex flex-wrap justify-evenly w-full gap-4"
         ></div>
         <div

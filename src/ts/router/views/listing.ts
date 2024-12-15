@@ -30,6 +30,8 @@ export const runListingPage = async () => {
 
 const MakeImages = (images: Media[]) => {
   const mainImage = document.getElementById('mainImage') as HTMLImageElement;
+  if (!images[0]) mainImage.src = '/placeholder.jpg';
+
   if (images[0]) mainImage.src = images[0].url;
 
   const otherImages = document.getElementById('otherImages');
