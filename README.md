@@ -2,7 +2,7 @@
 
 ## Intro
 
-deployed site: here(https://semester-project2-rosy.vercel.app/)
+deployed site: [Here](https://semester-project2-rosy.vercel.app/)
 
 This project is an exam project - and is not an official website!
 
