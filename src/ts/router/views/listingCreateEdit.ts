@@ -37,7 +37,7 @@ export const MakeCreateOrEditForm = async ({
   const outerDiv = CreateElement<HTMLDivElement>({
     element: 'div',
     styling:
-      'border-2 md:border-4 border-brandGreen rounded-md w-[250px] md:w-[400px] lg:w-[600px] h-fit p-6 bg-brandWhite dark:bg-brandBlack mt-6 overflow-y-auto ',
+      'border-2 md:border-4 border-brandGreen rounded-md w-[250px] md:w-[400px] lg:w-[600px] h-fit p-6 bg-brandWhite dark:bg-brandBlack mt-6 overflow-y-auto max-h-[500px] md:max-h-[800px] ',
   });
 
   const exitDiv = CreateElement<HTMLDivElement>({
@@ -99,7 +99,8 @@ export const MakeCreateOrEditForm = async ({
 
   const descriptionCounter = CreateElement<HTMLSpanElement>({
     element: 'span',
-    styling: 'text-lg text-brandBlack dark:text-brandWhite font-lato',
+    styling:
+      'text-sm md:text-lg text-brandBlack dark:text-brandWhite font-lato',
     text: `${edit && listing ? listing.description.length : 0} / 300`,
   });
 
