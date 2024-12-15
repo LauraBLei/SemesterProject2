@@ -2,6 +2,7 @@ import { confirmText } from '../../ui/global/components/confirm';
 import { RegisterForm } from '../../utilities/types';
 import { API } from '../APIEndPoints';
 import { headers } from '../headers';
+import { login } from './login';
 
 /**
  * Function that will register a user
@@ -29,7 +30,9 @@ export async function register({ name, email, password }: RegisterForm) {
       body: JSON.stringify(body),
     });
     if (response.ok) {
-      confirmText('registeredAccount', '/auth/login/');
+      document.getElementById('registeredAccount')?.classList.remove('hidden');
+
+      login({ email, password });
     } else {
       document
         .getElementById('error-account-already-exists')
