@@ -21,6 +21,8 @@ export const runListingPage = async () => {
     document.getElementById('bidsSection')?.classList.add('hidden');
 
   if (listing) {
+    const metaTitle = document.getElementById('metaTitle');
+    if (metaTitle) metaTitle.innerText = listing.title;
     MakeImages(listing.media);
     MakeContent(listing);
     MakeBids(listing.bids);
