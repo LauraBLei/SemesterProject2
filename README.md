@@ -4,7 +4,7 @@
 
 deployed site: [Here](https://semester-project2-rosy.vercel.app/)
 
-This project is an exam project - and is not an official website!
+!!_This project is an exam project - and is not an official website_!!
 
 For this exam project we had to make an auction page, we got some user stories and some restrictions.
 
